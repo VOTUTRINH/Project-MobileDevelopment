@@ -43,13 +43,11 @@ public class FragmentTab2 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
+
         View fragmentTab2 = inflater.inflate(R.layout.fragment_tab2, container, false);
         // Getting reference of recyclerView
         recyclerView2 = (RecyclerView) fragmentTab2.findViewById(R.id.recyclerView2);
 
-        // Setting the layout as linear
-        // layout for vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView2.setLayoutManager(linearLayoutManager);
 
