@@ -66,4 +66,5 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
         }
 
     }
+
 }

@@ -133,17 +133,18 @@
 
 
        <LinearLayout
-           android:layout_width="350dp"
+           android:layout_width="match_parent"
            android:layout_height="match_parent"
            android:orientation="horizontal"
            >
            <TextView
                android:layout_width="wrap_content"
                android:layout_height="wrap_content"
-
+               android:layout_marginLeft="5dp"
                android:text="Forgot password?"
                android:textColor="#0A2ADC"
                android:textSize="18dp"
+               android:fontFamily="@font/quicksand_bold"
                android:textStyle="bold" />
            <Button
                android:id="@+id/btnregister"
@@ -154,9 +155,6 @@
                android:text="Sign Up"
                android:layout_marginLeft="90dp"
                android:textColor="#E91E63" />
-
-
-
 
        </LinearLayout>
 

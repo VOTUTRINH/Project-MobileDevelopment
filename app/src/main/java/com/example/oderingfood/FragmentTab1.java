@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -54,6 +55,7 @@ public class FragmentTab1 extends Fragment {
         AdapterTab adapter = new AdapterTab(getContext(), courseImg, courseName, address);
         // Setting Adapter to RecyclerView
         recyclerView.setAdapter(adapter);
+
 
         return fragmentTab1;
     }

@@ -38,20 +38,25 @@
             android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/txt_mame"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Võ Tú Trình"
-                android:textSize="20sp"
-                android:textStyle="bold" />
 
+                <TextView
+                    android:id="@+id/txt_mame"
+                    android:drawableStart="@drawable/ic_baseline_store_24"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Võ Tú Trình"
+                    android:textSize="20sp"
+                    android:textStyle="bold"
+                />
             <TextView
                 android:id="@+id/txt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:drawableStart="@drawable/ic_baseline_location_on_24"
                 android:text="Dia chi: Thu duc, thanh pho HCM"
-                android:textSize="15sp" />
+                android:textSize="15sp"
+                android:textStyle="italic"/>
+
 
 
         </LinearLayout>
