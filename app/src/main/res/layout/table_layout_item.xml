@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="@drawable/table_item_background"
+    android:padding="20dp"
+    >
+    <TextView
+        android:id="@+id/btn_moremenu"
+        android:layout_width="40dp"
+        android:layout_gravity="right"
+        android:gravity="right"
+        android:paddingRight="15dp"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:text="&#8942;"
+        android:textAppearance="?android:textAppearanceLarge"
+        android:textColor="#EC808D"
+        android:textSize="25sp"
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/table_item_text"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:text=" Bàn 1"
+        android:textColor="#EC808D"
+        android:textSize="35sp"
+        android:textAlignment="center"/>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="20dp"
+        android:textAlignment="center"
+        android:text="Đang hoạt động"
+        android:textColor="#EC808D"
+        android:layout_marginBottom="5dp"
+        android:layout_marginTop="5dp"/>
+
+</LinearLayout>
