@@ -2,6 +2,7 @@ package com.example.oderingfood;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class ListTablesAdapter extends ArrayAdapter<String> {
         name.setText("Bàn " + listTables[position]);
 
         TextView btnMoreAction = (TextView) row.findViewById(R.id.btn_moremenu);
+
         btnMoreAction.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -39,6 +41,7 @@ public class ListTablesAdapter extends ArrayAdapter<String> {
                 popupMenu.show();
             }
         });
+
         return (row);
     }
 }

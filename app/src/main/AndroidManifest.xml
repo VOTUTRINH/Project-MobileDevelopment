@@ -41,6 +41,9 @@
             android:name=".Register"
             android:exported="false" />
         <activity
+            android:name=".MonAnActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>

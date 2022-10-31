@@ -7,31 +7,39 @@
     tools:context=".TablesActivity"
     android:orientation="vertical">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/tab_list_table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#f48fb1"
-        app:tabTextColor="#ffffff"
-        app:tabSelectedTextColor="@color/black"
-        app:tabIndicatorColor="@color/black"
-        app:tabIndicatorFullWidth="false"
-        >
-    </com.google.android.material.tabs.TabLayout>
-
-    <androidx.viewpager2.widget.ViewPager2
-        android:id="@+id/view_pager_list_table"
+    <LinearLayout
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    </androidx.viewpager2.widget.ViewPager2>
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/tab_list_table"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#f48fb1"
+            app:tabTextColor="#ffffff"
+            app:tabSelectedTextColor="@color/black"
+            app:tabIndicatorColor="@color/black"
+            app:tabIndicatorFullWidth="false"
+            >
+        </com.google.android.material.tabs.TabLayout>
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/add_table_button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end|bottom"
-        android:src="@android:drawable/ic_input_add"
-        android:layout_margin="16dp"
-        android:backgroundTint="#f48fb1"/>
+        <androidx.viewpager2.widget.ViewPager2
+            android:id="@+id/view_pager_list_table"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+        </androidx.viewpager2.widget.ViewPager2>
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/add_table_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end|bottom"
+            android:src="@android:drawable/ic_input_add"
+            android:layout_margin="16dp"
+            android:backgroundTint="#f48fb1"/>
+
+    </LinearLayout>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

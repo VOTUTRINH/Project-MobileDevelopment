@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -63,6 +64,13 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
             images = (ImageView) view.findViewById(R.id.profile_image);
             text = (TextView) view.findViewById(R.id.txt_mame);
             txt_address = (TextView) view.findViewById(R.id.txt_address);
+            view.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent=new Intent(context,TablesActivity.class);
+                    context.startActivity(intent);
+                }
+            });
         }
 
     }
