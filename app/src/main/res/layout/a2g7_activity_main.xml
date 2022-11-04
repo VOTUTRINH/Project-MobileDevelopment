@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+
+    >
+    <LinearLayout
+        android:layout_height="match_parent"
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        >
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:textSize="30dp"
+            android:text="Bàn 1"
+            android:layout_gravity="center"
+            android:gravity="center"
+            />
+
+        <ListView
+            android:id="@+id/afo_listview"
+            android:layout_width="match_parent"
+            android:layout_height="542dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:divider="@android:color/transparent"
+            android:dividerHeight="10.0sp"
+
+            />
+        <TextView
+            android:id="@+id/afo_txtTotal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:textSize="20dp"
+            android:text="Tổng tiền tất cả: "
+            android:background="@drawable/border_set"/>
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textColor="@color/black"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:textStyle="italic"
+            android:text="Chú ý: Xem thông tin món ăn và tổng tiền trước khi nhấn Hoàn Thành" />
+
+        <Button
+            android:id="@+id/afo_btnFinish"
+            android:layout_width="wrap_content"
+            android:layout_height="43dp"
+            android:layout_gravity="center"
+            android:text="Hoàn thành" />
+        <!--        <LinearLayout-->
+        <!--            android:layout_width="match_parent"-->
+        <!--            android:layout_height="match_parent"-->
+        <!--            android:orientation="vertical"-->
+        <!--            >-->
+
+        <!--            -->
+        <!--        </LinearLayout>-->
+
+    </LinearLayout>
+</ScrollView>
