@@ -11,6 +11,9 @@ import com.google.android.material.navigation.NavigationBarView;
 
 public class Bottomnavigation extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
+    HomeFragment homeFragment = new HomeFragment();
+    TablesActivity orderFragment = new TablesActivity();
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,12 +26,20 @@ public class Bottomnavigation extends AppCompatActivity {
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                 switch (item.getItemId()){
                     case R.id.home:
-                        //      getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+                            getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                         return true;
-                    case R.id.notification:
+                    case R.id.booking:
                         //      getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
                         return true;
-
+                    case R.id.order:
+                              getSupportFragmentManager().beginTransaction().replace(R.id.container,orderFragment).commit();
+                        return true;
+                    case R.id.employee:
+                        //      getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
+                        return true;
+                    case R.id.menu:
+                        //      getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
+                        return true;
 
                 }
 

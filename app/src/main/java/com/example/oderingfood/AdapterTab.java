@@ -67,7 +67,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    Intent intent=new Intent(context,TablesActivity.class);
+                    Intent intent=new Intent(context,Bottomnavigation.class);
                     context.startActivity(intent);
                 }
             });

@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
 import android.widget.TextView;
 
-import com.airbnb.epoxy.EpoxyModel;
+
 
 import java.security.acl.Group;
 import java.util.ArrayList;

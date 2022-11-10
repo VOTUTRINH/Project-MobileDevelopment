@@ -4,10 +4,12 @@ package com.example.oderingfood;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.GridView;
 import android.widget.Toast;
@@ -15,28 +17,29 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
-public class TablesActivity extends AppCompatActivity {
+public class TablesActivity extends Fragment {
     TabLayout tabLayout;
     ViewPager2 viewPager2;
     FloatingActionButton btnAddTable;
 
-    @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_tables);
 
 
-        viewPager2 = (ViewPager2) findViewById(R.id.view_pager_list_table);
-        tabLayout = (TabLayout) findViewById(R.id.tab_list_table);
-        btnAddTable = (FloatingActionButton) findViewById(R.id.add_table_button);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        View orderFragment = inflater.inflate(R.layout.activity_tables, container, false);
 
-        ListTableViewPagerAdapter adapter = new ListTableViewPagerAdapter(this);
+        viewPager2 = (ViewPager2) orderFragment.findViewById(R.id.view_pager_list_table);
+        tabLayout = (TabLayout) orderFragment.findViewById(R.id.tab_list_table);
+        btnAddTable = (FloatingActionButton) orderFragment.findViewById(R.id.add_table_button);
+
+        ListTableViewPagerAdapter adapter = new ListTableViewPagerAdapter(getActivity());
 
         viewPager2.setAdapter(adapter);
 
@@ -72,11 +75,13 @@ public class TablesActivity extends AppCompatActivity {
                 ShowDialogAddTable();
             }
         });
+
+        return  orderFragment;
     }
 
-    private void ShowDialogAddTable()
+        private void ShowDialogAddTable()
     {
-        Dialog dialog = new Dialog(this);
+        Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.add_table_layout);
         dialog.show();
 
@@ -93,7 +98,7 @@ public class TablesActivity extends AppCompatActivity {
         btn_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(TablesActivity.this, "Accept", Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "Accept", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
             }
         });

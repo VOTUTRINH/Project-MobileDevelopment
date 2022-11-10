@@ -65,7 +65,9 @@ public class TableListPage3 extends Fragment {
 
         try {
             context = getActivity();
-            tablesActivity = (TablesActivity)getActivity();
+            //tablesActivity = (TablesActivity)getActivity();
+
+            tablesActivity = new TablesActivity();
         }catch (Exception e)
         {
         }
