@@ -11,7 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:background="@color/white"
+        android:background="@color/color_main"
         >
 
         <androidx.appcompat.widget.Toolbar
@@ -25,8 +25,9 @@
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand_bold"
                 android:text="Ordering Food"
-                android:textColor="@color/color_main"
                 android:textSize="20sp" />
+                android:textColor="@color/white"
+                />
 
         </androidx.appcompat.widget.Toolbar>
 

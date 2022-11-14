@@ -5,7 +5,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainActivity"
 
     >
     <LinearLayout
@@ -15,8 +14,8 @@
         >
 
 
-        <ListView
-            android:id="@android:id/list"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/list_booking"
             android:layout_width="match_parent"
             android:layout_height="712dp"
             android:layout_marginLeft="10dp"

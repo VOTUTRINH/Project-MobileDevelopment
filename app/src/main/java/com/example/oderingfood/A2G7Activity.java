@@ -29,9 +29,7 @@ public class A2G7Activity extends Activity {
     List<Food> dataList = new ArrayList<>();
     FoodAdapter foodAdapter;
     int currentIndex = -1;
-    TextView txtName;
-    TextView txtPrice;
-    TextView txtQuantity;
+
 
 
 
@@ -39,8 +37,7 @@ public class A2G7Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a2g7_activity_main);
-        txtPrice = findViewById(R.id.ifo_price);
-        txtQuantity = findViewById(R.id.ifo_quantity);
+
         listView = findViewById(R.id.afo_listview);
         double TotalPrice;
         double total1 = 0;
