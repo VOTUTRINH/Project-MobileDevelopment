@@ -60,6 +60,4 @@ public class FragmentTab1 extends Fragment {
 
         return fragmentTab1;
     }
-
-
 }
