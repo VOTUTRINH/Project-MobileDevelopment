@@ -15,6 +15,7 @@ public class Bottomnavigation extends AppCompatActivity {
     TablesActivity orderFragment = new TablesActivity();
     BookingFragment bookingFragment = new BookingFragment();
     TuyChon_Fragment tuyChon_fragment = new TuyChon_Fragment();
+    EmployeeManageActivity employeeManagerFragment = new EmployeeManageActivity();
 
 
     @Override
@@ -37,7 +38,7 @@ public class Bottomnavigation extends AppCompatActivity {
                               getSupportFragmentManager().beginTransaction().replace(R.id.container,orderFragment).commit();
                         return true;
                     case R.id.employee:
-                        //      getSupportFragmentManager().beginTransaction().replace(R.id.container,notificationFragment).commit();
+                              getSupportFragmentManager().beginTransaction().replace(R.id.container,employeeManagerFragment).commit();
                         return true;
                     case R.id.menu:
                          getSupportFragmentManager().beginTransaction().replace(R.id.container,tuyChon_fragment).commit();
