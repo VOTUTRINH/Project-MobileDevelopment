@@ -21,7 +21,7 @@ public class a2g18Activity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a2g18activity_main);
-
+//
         this.buttonOpenDialog = (Button) this.findViewById(R.id.afo_txtEdit);
 
         this.buttonOpenDialog.setOnClickListener(new View.OnClickListener() {
