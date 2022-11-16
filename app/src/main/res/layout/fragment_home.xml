@@ -13,7 +13,6 @@
         android:orientation="vertical"
         >
 
-        <!-- TODO: Update blank fragment layout -->
         <TextView
             android:id="@+id/txt_home_tenquan"
             android:layout_width="match_parent"
