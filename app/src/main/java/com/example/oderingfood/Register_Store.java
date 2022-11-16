@@ -15,6 +15,7 @@ public class Register_Store extends Activity {
 
     ImageView add_image1;
     ImageView add_image2;
+    ImageView add_image3;
     Button button;
     int SELECT_IMAGE_CODE=1;
     @Override
@@ -32,6 +33,26 @@ public class Register_Store extends Activity {
 
             }
         });
+        add_image2=(ImageView) findViewById(R.id.add_image1);
+        add_image2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"title"),2);
+            }
+        });
+        add_image3=(ImageView) findViewById(R.id.add_image2);
+        add_image3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"title"),3);
+            }
+        });
     }
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -40,7 +61,14 @@ public class Register_Store extends Activity {
         if(requestCode==1){
             Uri uri=data.getData();
             add_image1.setImageURI(uri);
-
+        }
+        else if(requestCode==2){
+            Uri uri=data.getData();
+            add_image2.setImageURI(uri);
+        }
+        else if(requestCode==3){
+            Uri uri=data.getData();
+            add_image3.setImageURI(uri);
         }
     }
 }

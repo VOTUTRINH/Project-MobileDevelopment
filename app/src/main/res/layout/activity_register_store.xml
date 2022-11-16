@@ -113,18 +113,33 @@
 
                  />
         </com.google.android.material.textfield.TextInputLayout>
-
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/add_image" />
-        <Button
-            android:id="@+id/btn_add_img"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Thêm hình ảnh"
-            android:backgroundTint="#EC808D"
-            />
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/add_image1"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/add_image" />
+
+            <ImageView
+                android:id="@+id/add_image2"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:src="@drawable/add_image"
+                android:layout_marginLeft="20dp"/>
+
+        </LinearLayout>
+
+<!--        <Button-->
+<!--            android:id="@+id/btn_add_img"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="Thêm hình ảnh"-->
+<!--            android:backgroundTint="#EC808D"-->
+<!--            />-->
 
     </LinearLayout>
 
