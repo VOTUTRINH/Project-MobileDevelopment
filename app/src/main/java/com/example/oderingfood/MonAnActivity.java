@@ -2,14 +2,19 @@ package com.example.oderingfood;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class MonAnActivity extends Activity {
+public class MonAnActivity extends AppCompatActivity {
 
     RecyclerView dataList;
     List<String> titles;
@@ -18,7 +23,7 @@ public class MonAnActivity extends Activity {
 
     AdapterMonAn adapter;
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mon_an);
         dataList = findViewById(R.id.dishesList);
@@ -55,5 +60,8 @@ public class MonAnActivity extends Activity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         dataList.setLayoutManager(gridLayoutManager);
         dataList.setAdapter(adapter);
+
     }
+
+
 }

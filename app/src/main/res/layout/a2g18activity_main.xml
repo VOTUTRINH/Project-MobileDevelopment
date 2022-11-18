@@ -22,7 +22,8 @@
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         android:layout_marginTop="1dp"
-        android:background="#f48fb1"        />
+        android:background="#f48fb1"
+        android:fontFamily="@font/quicksand_bold"/>
 
     <Button
         android:id="@+id/afo_txtEdit"
@@ -39,7 +40,8 @@
         android:id="@+id/imageView"
         android:layout_width="wrap_content"
         android:layout_height="130dp"
-        android:src="@drawable/food"/>
+        android:src="@drawable/food"
+        tools:ignore="MissingClass" />
 
 
 
@@ -51,7 +53,8 @@
         android:textSize="20dp"
         android:layout_marginLeft="70dp"
         android:textColor="@color/black"
-        android:layout_marginTop="20dp"/>
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/quicksand_bold"/>
 
     <TextView
         android:id="@+id/afo_txtId"
@@ -62,7 +65,7 @@
         android:textSize="20dp"
 
         android:textColor="@color/black"
-
+        android:fontFamily="@font/quicksand_bold"
         android:layout_marginTop="10dp"/>
 
     <TextView
@@ -72,7 +75,7 @@
         android:layout_marginLeft="70dp"
         android:textColor="@color/black"
         android:textSize="20dp"
-
+        android:fontFamily="@font/quicksand_bold"
         android:layout_marginTop="10dp"
         android:text="Số điện thoại: " />
 
@@ -84,7 +87,7 @@
         android:layout_marginTop="10dp"
         android:text="Email: "
         android:textSize="20dp"
-
+        android:fontFamily="@font/quicksand_bold"
         android:textColor="@color/black"
         />
 
@@ -95,7 +98,7 @@
         android:layout_marginLeft="70dp"
         android:textColor="@color/black"
         android:textSize="20dp"
-
+        android:fontFamily="@font/quicksand_bold"
         android:layout_marginTop="10dp"
         android:text="Địa chỉ: " />
 
@@ -108,6 +111,7 @@
         android:text="Lương theo giờ: "
         android:textSize="20dp"
         android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
         />
 
     <TextView
@@ -118,7 +122,9 @@
         android:layout_marginTop="10dp"
         android:textColor="#f50057"
         android:textSize="25dp"
-        android:text="Tổng tiền lương còn nợ: " />
+        android:fontFamily="@font/quicksand_bold"
+        android:text="Tổng tiền lương còn nợ: "
+        />
 
     <Button
         android:id="@+id/button2"
@@ -129,5 +135,6 @@
         android:textColor="@color/black"
 
         android:backgroundTint="#f48fb1"
-        android:text="Thanh toán" />
+        android:text="Thanh toán"
+        android:fontFamily="@font/quicksand_bold"/>
 </LinearLayout>

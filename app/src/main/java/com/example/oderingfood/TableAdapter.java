@@ -9,7 +9,10 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-public class TableAdapter extends ArrayAdapter<String>
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 
 {
     Context context;
@@ -21,8 +24,8 @@ public class TableAdapter extends ArrayAdapter<String>
     Integer[] calenders;
     Integer[] locations;
     Integer[] users;
-    public TableAdapter(Context context, int layout_custom, String[] froms, String[] tos, String[] names,String[] tables, String[] dates, Integer[] calenders, Integer[] locations, Integer[] users){
-        super(context,R.layout.item_table,names);
+    public TableAdapter(Context context, String[] froms, String[] tos, String[] names,String[] tables, String[] dates, Integer[] calenders, Integer[] locations, Integer[] users){
+
         this.context=context;
         this.froms = froms;
         this.names=names;
@@ -34,28 +37,52 @@ public class TableAdapter extends ArrayAdapter<String>
         this.users = users;
 
     }
+
+
+
+    @NonNull
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        LayoutInflater inflater = ((Activity) context).getLayoutInflater();
-        View row = inflater.inflate(R.layout.item_table, null);
-        TextView name = (TextView) row.findViewById(R.id.txtName);
-        TextView from = (TextView) row.findViewById(R.id.txtFrom);
-        TextView to = (TextView) row.findViewById(R.id.txtTo);
-        TextView table = (TextView) row.findViewById(R.id.txtTable);
-        TextView date = (TextView) row.findViewById(R.id.txtDate);
-        ImageView calender = (ImageView) row.findViewById(R.id.imgCalender);
-        ImageView location = (ImageView) row.findViewById(R.id.imgLocation);
-        ImageView user = (ImageView) row.findViewById(R.id.imgUser);
-        name.setText(names[position]);
-        from.setText(froms[position]);
-        to.setText(tos[position]);
-        table.setText(tables[position]);
-        date.setText(dates[position]);
-        calender.setImageResource(calenders[position]);
-        location.setImageResource(locations[position]);
-        user.setImageResource(users[position]);
-        return (row);
+    public TableAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_table, parent, false);
+
+        // Passing view to ViewHolder
+        TableAdapter.ViewHolder viewHolder = new TableAdapter.ViewHolder(view);
+
+        return viewHolder;
+    }
+
+    @Override
+    public void onBindViewHolder(@NonNull TableAdapter.ViewHolder holder, int position) {
+        holder.name.setText((String) names[position]);
+        holder.from.setText(froms[position]);
+        holder.to.setText(tos[position]);
+        holder.table.setText(tables[position]);
+        holder.date.setText(dates[position]);
+        holder.calender.setImageResource(calenders[position]);
+        holder.location.setImageResource(locations[position]);
+        holder.user.setImageResource(users[position]);
+    }
+
+    @Override
+    public int getItemCount() {
+        return tables.length;
     }
 
 
+    public class ViewHolder extends RecyclerView.ViewHolder {
+
+        TextView name,from,to,table,date;
+        ImageView calender,location,user;
+        public ViewHolder(View view) {
+            super(view);
+             name = (TextView) view.findViewById(R.id.txtName);
+             from = (TextView) view.findViewById(R.id.txtFrom);
+            to = (TextView) view.findViewById(R.id.txtTo);
+            table = (TextView) view.findViewById(R.id.txtTable);
+            date = (TextView) view.findViewById(R.id.txtDate);
+            calender = (ImageView) view.findViewById(R.id.imgCalender);
+            location = (ImageView) view.findViewById(R.id.imgLocation);
+            user = (ImageView) view.findViewById(R.id.imgUser);
+        }
+    }
 }

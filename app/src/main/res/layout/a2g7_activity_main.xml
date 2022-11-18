@@ -44,6 +44,7 @@
             android:gravity="center"
             android:textSize="20dp"
             android:text="Tổng tiền tất cả: "
+            android:fontFamily="@font/quicksand_bold"
             android:background="@drawable/border_set"/>
 
         <TextView
@@ -54,6 +55,7 @@
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:textStyle="italic"
+            android:fontFamily="@font/quicksand_bold"
             android:text="Chú ý: Xem thông tin món ăn và tổng tiền trước khi nhấn Hoàn Thành" />
 
         <Button

@@ -57,8 +57,7 @@ public class FragmentTab1 extends Fragment {
         recyclerView.setAdapter(adapter);
 
 
+
         return fragmentTab1;
     }
-
-
 }

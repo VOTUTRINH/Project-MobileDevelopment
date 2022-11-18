@@ -11,21 +11,22 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fitsSystemWindows="true"
-        android:background="@color/white"
+        android:background="@color/color_main"
         >
+
         <androidx.appcompat.widget.Toolbar
+            android:id="@+id/bna_toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:menu="@menu/toolbar_menu"
-            >
+            app:menu="@menu/toolbar_menu">
 
             <TextView
                 android:layout_width="100dp"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/quicksand_bold"
-                android:textSize="20sp"
                 android:text="Ordering Food"
-                android:textColor="@color/color_main"
+                android:textSize="20sp"
+                android:textColor="@color/white"
                 />
 
         </androidx.appcompat.widget.Toolbar>
@@ -40,21 +41,22 @@
         android:layout_below="@id/toolbar"
 
         />
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/buttom_navigation"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:id="@+id/buttom_navigation"
         android:layout_alignParentBottom="true"
-        app:itemIconTint="@color/color_main"
-        app:itemTextColor="@color/color_main"
-        app:itemIconSize="30dp"
-        app:menu="@menu/buttom_nav_menu"
-        app:labelVisibilityMode="labeled"
         android:layout_gravity="bottom"
+        android:layout_marginBottom="5dp"
+        android:background="@color/color_main"
+        app:itemIconSize="30dp"
+        app:itemIconTint="@color/white"
+        app:itemTextColor="@color/white"
+        app:labelVisibilityMode="labeled"
 
 
-        />
-
+        app:menu="@menu/buttom_nav_menu" />
 
 
 </RelativeLayout>

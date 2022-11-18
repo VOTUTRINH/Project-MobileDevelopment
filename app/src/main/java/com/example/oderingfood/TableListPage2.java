@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -8,6 +9,7 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
@@ -64,7 +66,8 @@ public class TableListPage2 extends Fragment {
 
         try {
             context = getActivity();
-            tablesActivity = (TablesActivity)getActivity();
+            // tablesActivity = (TablesActivity)getActivity();
+            tablesActivity = new TablesActivity();
         }catch (Exception e)
         {
         }
@@ -78,7 +81,13 @@ public class TableListPage2 extends Fragment {
         gv = (GridView) layout_page2.findViewById(R.id.grid_view);
         ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item,arrayName);
         gv.setAdapter(tablesAdapter);
-
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Intent intent=new Intent(context,ChatActivity.class);
+                context.startActivity(intent);
+            }
+        });
         return layout_page2;
     }
 }
