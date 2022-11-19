@@ -2,6 +2,7 @@ package com.example.oderingfood;
 
 
 
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.DefaultItemAnimator;
@@ -9,6 +10,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.DatePickerDialog;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -38,20 +40,21 @@ public class EmployeeManageActivity extends Fragment {
         listEmployeesWorking = (RecyclerView) employeeManagerFragment.findViewById(R.id.employee_working);
 
         txtDateChosen.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
                 Calendar calender =Calendar.getInstance();
                 int year= calender.get(calender.YEAR);
                 int month= calender.get(calender.MONTH);
-                int day= calender.get(calender.DATE);
+                int day=calender.get(calender.DATE);
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
-                    public void onDateSet(DatePicker datePicker, int year, int month, int date) {
-                        calender.set(year,month,date);
-                        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("yyyy/mm/dd");
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        calender.set(i,i1,i2);
+                        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
                         txtDateChosen.setText(simpleDateFormat.format(calender.getTime()));
                     }
-                },year, month, day);
+                },year, month,day);
                 datePickerDialog.show();
             }
         });
