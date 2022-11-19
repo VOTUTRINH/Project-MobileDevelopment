@@ -3,7 +3,10 @@ package com.example.oderingfood;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -22,6 +25,7 @@ public class Bottomnavigation extends AppCompatActivity {
     TablesActivity orderFragment = new TablesActivity();
 
     FragmentNotification noticeFragment = new FragmentNotification();
+    ChatActivity chatActivity = new ChatActivity();
     Toolbar toolbar;
     BookingFragment bookingFragment = new BookingFragment();
     TuyChon_Fragment tuyChon_fragment = new TuyChon_Fragment();
@@ -73,9 +77,15 @@ public class Bottomnavigation extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
-            case R.id.notification:
-                getSupportFragmentManager().beginTransaction().replace(R.id.container,noticeFragment).commit();
+            case R.id.notification: {
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, noticeFragment).commit();
                 break;
+            }
+            case R.id.message:{
+                Intent intent = new Intent(homeFragment.getContext(), ChatActivity.class);
+                startActivity(intent);
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
     }

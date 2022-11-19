@@ -54,7 +54,7 @@
             app:layout_constraintTop_toBottomOf="@+id/foodImage"
             app:layout_constraintVertical_bias="0.13999999" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/btn_plus"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -70,7 +70,7 @@
             app:layout_constraintTop_toTopOf="@+id/textView" />
 
 
-        <Button
+        <android.widget.Button
             android:id="@+id/btn_minus"
             android:layout_width="40dp"
             android:layout_height="40dp"
@@ -104,13 +104,13 @@
             tools:ignore="TouchTargetSizeCheck"
             tools:text="1" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/btn_order"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="20dp"
             android:background="@drawable/round_button"
-            android:text="Oder"
+            android:text="Order"
             android:textColor="#FFFFFF"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="@+id/foodImage"

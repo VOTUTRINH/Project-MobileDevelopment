@@ -53,6 +53,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 FromOtherViewHolder fromOtherViewHolder = (FromOtherViewHolder) holder;
                 fromOtherViewHolder.message.setText(user.getMessage());
                 fromOtherViewHolder.img.setImageResource(user.getImg());
+                fromOtherViewHolder.name.setText(user.name);
                 break;
             case TO_OTHER:
                 messageToOther you = (messageToOther) mObjects.get(position);
@@ -71,11 +72,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class FromOtherViewHolder extends RecyclerView.ViewHolder {
         private TextView message;
         private ImageView img;
+        private TextView name;
         public FromOtherViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.ac_txt_from_other);
             img = (ImageView) itemView.findViewById(R.id.ac_img_from_other);
-
+            name = (TextView) itemView.findViewById(R.id.ac_txt_name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -88,6 +90,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     public class ToOtherViewHolder extends RecyclerView.ViewHolder {
         private TextView message;
         private ImageView img;
+
         public ToOtherViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.ac_txt_to_other);
@@ -104,11 +107,13 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 }
 
 class messageFromOther{
+    public String name;
     public String message;
     public Integer img;
     messageFromOther(){
         message = "Test tin nhắn gửi đến Test tin nhắn gửi đến Test tin nhắn gửi đến Test tin nhắn gửi đến ";
         img = R.drawable.img_1;
+        name = "Boss";
     }
     public String getMessage() {
         return message;
