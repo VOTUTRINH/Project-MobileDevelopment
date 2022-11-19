@@ -57,17 +57,14 @@ public class Bottomnavigation extends AppCompatActivity {
                     case R.id.menu:
                          getSupportFragmentManager().beginTransaction().replace(R.id.container,tuyChon_fragment).commit();
                         return true;
-
                 }
-
-
-
                 return false;
             }
         });
         toolbar = findViewById(R.id.bna_toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
+
 }
 
     @Override
