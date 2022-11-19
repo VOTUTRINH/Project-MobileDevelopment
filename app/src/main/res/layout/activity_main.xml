@@ -53,17 +53,16 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Username"
+            android:hint="Email"
             app:startIconDrawable="@drawable/ic_person"
             app:helperText="Required*"
-            app:counterEnabled="true"
-            app:counterMaxLength="20"
             android:layout_marginTop="10dp"
             app:endIconMode="clear_text"
             app:helperTextEnabled="false"
             app:helperTextTextColor="@android:color/holo_red_dark">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/username"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="25"
@@ -83,6 +82,7 @@
             app:helperTextTextColor="@android:color/holo_red_dark">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
