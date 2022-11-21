@@ -126,8 +126,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Tôi cam kết những thông tin trên là sự thật"
-                android:onClick="onCheckboxClicked"
-                tools:ignore="OnClick" />
+                 />
 
         </LinearLayout>
 

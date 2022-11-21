@@ -111,8 +111,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I agree to the Teams of Services and Privacy Policy"
-                android:onClick="onCheckboxClicked"
-                tools:ignore="OnClick" />
+
+                 />
 
         </LinearLayout>
 
@@ -146,8 +146,6 @@
                 tools:ignore="MissingConstraints" />
 
         </LinearLayout>
-
-
 
     </LinearLayout>
     ></RelativeLayout>
