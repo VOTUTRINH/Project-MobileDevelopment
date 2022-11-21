@@ -30,7 +30,7 @@
             android:layout_height="match_parent"
             android:hint="Name"
 
-            app:startIconDrawable="@drawable/ic_person"
+            app:startIconDrawable="@drawable/ic_baseline_account_circle_24"
             android:layout_marginTop="10dp"
             app:endIconMode="clear_text"
             app:helperTextEnabled="false"
@@ -48,6 +48,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Ngày sinh"
+            app:startIconDrawable="@drawable/ic_date"
+
 
             android:layout_marginTop="10dp"
 
@@ -57,7 +59,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="date"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -66,7 +68,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Giới tính"
-
+            app:startIconDrawable="@drawable/ic_gender"
             android:layout_marginTop="10dp"
 
             app:helperTextEnabled="false"
@@ -75,7 +77,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -95,7 +97,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -113,7 +115,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:inputType="text"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
