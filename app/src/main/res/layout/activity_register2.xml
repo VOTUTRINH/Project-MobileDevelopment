@@ -18,9 +18,10 @@
 
 
         <ImageView
+            android:id="@+id/add_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/logo"
+            android:src="@drawable/add_img"
             android:layout_marginBottom="30dp"/>
 
         <com.google.android.material.textfield.TextInputLayout

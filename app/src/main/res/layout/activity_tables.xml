@@ -14,7 +14,7 @@
             android:id="@+id/tab_list_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#f48fb1"
+            android:background="#CDEC808D"
             app:tabTextColor="#ffffff"
             app:tabSelectedTextColor="@color/black"
             app:tabIndicatorColor="@color/black"

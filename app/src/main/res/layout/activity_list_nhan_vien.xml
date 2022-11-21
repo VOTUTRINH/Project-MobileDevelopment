@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ListNhanVien">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp">
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="10dp"
+            android:text="   Danh sách nhân viên"
+            android:backgroundTint="#E91E63"
+            android:background="#E91E63"
+            android:textSize="30dp"
+            android:textStyle="bold"/>
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Tìm nhân viên"
+            app:startIconDrawable="@drawable/ic_search"
+            android:layout_marginTop="10dp"
+            app:endIconMode="clear_text"
+            app:helperTextEnabled="false">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:maxLength="25" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <GridView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/gvNhanvien"
+            android:layout_marginTop="20dp"
+            android:numColumns="3"/>
+    </LinearLayout>
+</RelativeLayout>
