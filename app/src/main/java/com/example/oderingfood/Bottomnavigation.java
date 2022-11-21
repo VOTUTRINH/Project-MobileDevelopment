@@ -82,7 +82,7 @@ public class Bottomnavigation extends AppCompatActivity {
                 break;
             }
             case R.id.message:{
-                Intent intent = new Intent(homeFragment.getContext(), ChatActivity.class);
+                Intent intent = new Intent(bottomNavigationView.getContext(), ChatActivity.class);
                 startActivity(intent);
                 break;
             }
