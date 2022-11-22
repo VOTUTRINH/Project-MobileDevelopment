@@ -30,7 +30,7 @@
         <ListView
             android:id="@+id/afo_listview"
             android:layout_width="match_parent"
-            android:layout_height="542dp"
+            android:layout_height="580dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:divider="@android:color/transparent"
@@ -42,33 +42,43 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:textColor="@color/black"
+            android:textColor="@color/white"
+            android:layout_marginLeft="15dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginBottom="5dp"
+            android:padding="5dp"
             android:gravity="center"
             android:textSize="20dp"
             android:text="Tổng tiền tất cả: "
             android:fontFamily="@font/quicksand_bold"
-            android:background="@drawable/border_set"/>
+            android:background="@drawable/round_button"
+            android:backgroundTint="#E42E44"/>
 
         <TextView
             android:id="@+id/textView2"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textColor="@color/black"
-            android:layout_marginLeft="10dp"
-            android:layout_marginRight="10dp"
+            android:textColor="#70757A"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:textStyle="italic"
             android:fontFamily="@font/quicksand_bold"
             android:text="Chú ý: Xem thông tin món ăn và tổng tiền trước khi nhấn Hoàn Thành" />
 
-        <Button
+        <android.widget.Button
             android:id="@+id/afo_btnFinish"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="43dp"
             android:layout_gravity="center"
-            android:textColor="@color/color_main"
-            android:background="#eeeee4"
+            android:background="@drawable/round_button"
+            android:padding="5dp"
+            android:layout_marginRight="15dp"
+            android:layout_marginLeft="15dp"
+            android:layout_marginTop="10dp"
+            android:text="Hoàn thành"
 
-            android:text="Hoàn thành" />
+            android:textColor="@color/white" />
         <!--        <LinearLayout-->
         <!--            android:layout_width="match_parent"-->
         <!--            android:layout_height="match_parent"-->
