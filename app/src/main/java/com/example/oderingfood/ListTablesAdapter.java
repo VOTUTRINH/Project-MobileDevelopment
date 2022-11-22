@@ -41,9 +41,10 @@ public class ListTablesAdapter extends ArrayAdapter<String> {
                 popupMenu.getMenuInflater().inflate(R.menu.menu_table_action, popupMenu.getMenu());
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
+
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
-                            case R.id.home:
+                            case R.id.menu_thanhtoan:
 
                                 Intent intdn = new Intent((Activity)context,A2G7Activity.class); // Your nxt activity name instead of List_Activity
                                 intdn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -54,7 +55,6 @@ public class ListTablesAdapter extends ArrayAdapter<String> {
                         return false;
                     }
                 });
-
                 popupMenu.show();
             }
         });
