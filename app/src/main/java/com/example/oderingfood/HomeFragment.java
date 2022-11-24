@@ -15,7 +15,9 @@ import java.util.Arrays;
 
 public class HomeFragment extends Fragment {
     RecyclerView recyclerView1,recyclerView2;
-    ArrayList Img =new ArrayList<>();
+    ArrayList Img =new ArrayList<>(Arrays.asList(R.drawable.img_1,R.drawable.img_2,R.drawable.img_3,R.drawable.img_4));
+
+    ArrayList Img2 =new ArrayList<>(Arrays.asList(R.drawable.res_1,R.drawable.res_2,R.drawable.res_3,R.drawable.res_4));
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -34,7 +36,7 @@ public class HomeFragment extends Fragment {
         recyclerView1.setLayoutManager(linearLayoutManager);
         recyclerView2.setLayoutManager(linearLayoutManager2);
         // Sending reference and data to Adapter
-        AdapterImage adapter1 = new AdapterImage(getContext(), Img);
+        AdapterImage adapter1 = new AdapterImage(getContext(), Img2);
         AdapterImage adapter2 = new AdapterImage(getContext(), Img);
         // Setting Adapter to RecyclerView
         recyclerView1.setAdapter(adapter1);
