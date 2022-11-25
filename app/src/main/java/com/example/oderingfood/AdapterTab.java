@@ -11,9 +11,12 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
+
     ArrayList courseImg, courseName, address;
     Context context;
 
@@ -41,8 +44,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TypeCast Object to int type
-        int res = (int) courseImg.get(position);
-        holder.images.setImageResource(res);
+        Glide.with(context).load(courseImg.get(position)).into(holder.images);
         holder.text.setText((String) courseName.get(position));
         holder.txt_address.setText((String) address.get(position));
     }
