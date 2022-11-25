@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
+import com.example.oderingfood.models.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 

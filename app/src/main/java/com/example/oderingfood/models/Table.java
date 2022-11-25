@@ -1,4 +1,6 @@
-package com.example.oderingfood;
+package com.example.oderingfood.models;
+
+import com.example.oderingfood.models.Food;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +57,7 @@ public class Table {
     {
         float totalMoney = 0;
         for (int i = 0; i < menu.size(); i++) {
-            totalMoney += menu.get(i).price;
+            totalMoney += menu.get(i).getPrice();
         }
         return totalMoney;
     }

@@ -3,17 +3,15 @@ package com.example.oderingfood;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
-import android.widget.Toast;
+
+import com.example.oderingfood.models.Table;
 
 import java.util.List;
 

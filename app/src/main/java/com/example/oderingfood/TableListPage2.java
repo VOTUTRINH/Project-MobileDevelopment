@@ -13,6 +13,8 @@ import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
+import com.example.oderingfood.models.Table;
+
 import java.util.ArrayList;
 import java.util.List;
 

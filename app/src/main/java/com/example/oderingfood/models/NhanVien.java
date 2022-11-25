@@ -1,4 +1,4 @@
-package com.example.oderingfood;
+package com.example.oderingfood.models;
 
 public class NhanVien {
     public String tenNhanVien;
