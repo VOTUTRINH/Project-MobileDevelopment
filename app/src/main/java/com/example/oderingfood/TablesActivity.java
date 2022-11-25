@@ -64,7 +64,7 @@ public class TablesActivity extends Fragment {
                                 tab.setText("Còn trống");
                                 break;
                             }
-                            default: tab.setText("Quên chưa case nè");
+                            default: tab.setText("");
                         }
                     }
                 }).attach();
@@ -79,7 +79,8 @@ public class TablesActivity extends Fragment {
         return  orderFragment;
     }
 
-        private void ShowDialogAddTable()
+    // Show dialog to add table
+    private void ShowDialogAddTable()
     {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.add_table_layout);

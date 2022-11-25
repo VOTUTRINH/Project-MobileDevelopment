@@ -32,7 +32,8 @@ public class TableListPage1 extends Fragment {
     TablesActivity tablesActivity;
     Context context;
     GridView gv;
-    String[] arrayName = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+    Table[] tableList;
+
 
     public TableListPage1() {
         // Required empty public constructor
@@ -72,6 +73,13 @@ public class TableListPage1 extends Fragment {
         }catch (Exception e)
         {
         }
+
+
+    }
+
+    private void ReadTables()
+    {
+
     }
 
     @Override
@@ -80,7 +88,7 @@ public class TableListPage1 extends Fragment {
         LinearLayout layout_page1 =(LinearLayout)inflater.inflate(R.layout.fragment_table_list_page1,null);
 
         gv = (GridView) layout_page1.findViewById(R.id.grid_view);
-        ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item,arrayName);
+        ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, tableList);
         gv.setAdapter(tablesAdapter);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
