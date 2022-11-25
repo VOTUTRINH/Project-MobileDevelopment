@@ -31,7 +31,7 @@ public class TableListPage3 extends Fragment {
     TablesActivity tablesActivity;
     Context context;
     GridView gv;
-    String[] arrayName = {"5","6","7","8","9","10","11","12"};
+    Table[] arrayName;
 
     public TableListPage3() {
         // Required empty public constructor

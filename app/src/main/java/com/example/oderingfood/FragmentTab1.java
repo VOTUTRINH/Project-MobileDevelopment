@@ -10,9 +10,16 @@ import android.widget.LinearLayout;
 import android.widget.SearchView;
 
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,21 +28,45 @@ public class FragmentTab1 extends Fragment {
 
     RecyclerView recyclerView;
     Context context;
-    // Using ArrayList to store images data
-    ArrayList courseImg = new ArrayList<>(Arrays.asList(R.drawable.ic_launcher_background, R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background, R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background, R.drawable.ic_launcher_background,
-            R.drawable.ic_launcher_background, R.drawable.ic_launcher_background));
-    ArrayList courseName = new ArrayList<>(Arrays.asList("Data Structure", "C++", "C#", "JavaScript", "Java",
-            "C-Language", "HTML 5", "CSS"));
-    ArrayList address = new ArrayList<>(Arrays.asList("Thu duc, Thanh pho Ho chi Minh", "Thu duc, Thanh pho Ho chi Minh", "Thu duc, Thanh pho Ho chi Minh", "Thu duc, Thanh pho Ho chi Minh", "Thu duc, Thanh pho Ho chi Minh",
-            "Thu duc, Thanh pho Ho chi Minh", "Thu duc, Thanh pho Ho chi Minh", "Thu duc, Thanh pho Ho chi Minh"));
 
+    // Using ArrayList to store images data
+    ArrayList courseImg = new ArrayList<>();
+    ArrayList courseName = new ArrayList<>();
+    ArrayList address = new ArrayList<>();
+    AdapterTab adapter ;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         context = getActivity();
+
+        adapter = new AdapterTab(getContext(), courseImg, courseName, address);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference myRef = database.getReference("restaurant");
+
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+                    String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
+                    String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
+                    String urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
+
+                    courseName.add(name);
+                    address.add(diaChi);
+                    courseImg.add(urlImage);
+
+                }
+
+                adapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
 
     }
 
@@ -52,7 +83,7 @@ public class FragmentTab1 extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView.setLayoutManager(linearLayoutManager);
         // Sending reference and data to Adapter
-        AdapterTab adapter = new AdapterTab(getContext(), courseImg, courseName, address);
+
         // Setting Adapter to RecyclerView
         recyclerView.setAdapter(adapter);
 

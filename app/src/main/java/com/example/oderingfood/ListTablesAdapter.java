@@ -3,6 +3,7 @@ package com.example.oderingfood;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Debug;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,17 +13,19 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
 
-public class ListTablesAdapter extends ArrayAdapter<String> {
+public class ListTablesAdapter extends ArrayAdapter<Table> {
     private  Context context;
-    private  String[] listTables;
+    private  Table[] listTables;
 
 
-    public ListTablesAdapter(Context context, int resource, String[] listTables) {
+    public ListTablesAdapter(Context context, int resource, Table[] listTables) {
         super(context,R.layout.table_layout_item,listTables);
         this.context = context;
         this.listTables = listTables;
     }
+
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent)
@@ -30,7 +33,7 @@ public class ListTablesAdapter extends ArrayAdapter<String> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(R.layout.table_layout_item, null);
         TextView name = (TextView) row.findViewById(R.id.table_item_text);
-        name.setText("Bàn " + listTables[position]);
+        name.setText("Bàn " + listTables[position].Name());
 
         TextView btnMoreAction = (TextView) row.findViewById(R.id.btn_moremenu);
 
@@ -50,7 +53,11 @@ public class ListTablesAdapter extends ArrayAdapter<String> {
                                 intdn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 ((Activity)context).startActivity(intdn);
                                 break;
+                            case R.id.menu_xoabanan:
+                                break;
+                            default:
 
+                                break;
                         }
                         return false;
                     }
