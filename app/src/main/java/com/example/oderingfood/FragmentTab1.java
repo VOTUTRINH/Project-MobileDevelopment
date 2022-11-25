@@ -15,6 +15,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oderingfood.models.Restaurant;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -30,9 +31,7 @@ public class FragmentTab1 extends Fragment {
     Context context;
 
     // Using ArrayList to store images data
-    ArrayList courseImg = new ArrayList<>();
-    ArrayList courseName = new ArrayList<>();
-    ArrayList address = new ArrayList<>();
+    ArrayList<Restaurant> Restaurants = new ArrayList<>();
     AdapterTab adapter ;
 
     @Override
@@ -40,7 +39,7 @@ public class FragmentTab1 extends Fragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
 
-        adapter = new AdapterTab(getContext(), courseImg, courseName, address);
+        adapter = new AdapterTab(getContext(),Restaurants);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("restaurant");
 
@@ -48,16 +47,16 @@ public class FragmentTab1 extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
+
                     String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
                     String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
                     String urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
 
-                    courseName.add(name);
-                    address.add(diaChi);
-                    courseImg.add(urlImage);
+                    String id= postSnapshot.getKey();
+                    Restaurant restaurant = new Restaurant(name,diaChi,urlImage,id);
+                    Restaurants.add(restaurant);
 
                 }
-
                 adapter.notifyDataSetChanged();
             }
 

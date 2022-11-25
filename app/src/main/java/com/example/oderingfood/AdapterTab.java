@@ -12,20 +12,20 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.Restaurant;
 
 import java.util.ArrayList;
 
 public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
 
-    ArrayList courseImg, courseName, address;
+    ArrayList<Restaurant> list;
     Context context;
 
     // Constructor for initialization
-    public AdapterTab(Context context, ArrayList courseImg, ArrayList courseName, ArrayList address) {
+    public AdapterTab(Context context, ArrayList<Restaurant> list) {
         this.context = context;
-        this.courseImg = courseImg;
-        this.courseName = courseName;
-        this.address = address;
+        this.list = list;
+
     }
     @NonNull
     @Override
@@ -44,16 +44,16 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TypeCast Object to int type
-        Glide.with(context).load(courseImg.get(position)).into(holder.images);
-        holder.text.setText((String) courseName.get(position));
-        holder.txt_address.setText((String) address.get(position));
+        Glide.with(context).load(list.get(position).getUrlImage()).into(holder.images);
+        holder.text.setText((String) list.get(position).getName());
+        holder.txt_address.setText((String) list.get(position).getAddress());
     }
 
     @Override
     public int getItemCount() {
         // Returns number of items
         // currently available in Adapter
-        return courseImg.size();
+        return list.size();
     }
 
     // Initializing the Views
@@ -69,6 +69,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
+
                     Intent intent=new Intent(context,Bottomnavigation.class);
                     context.startActivity(intent);
                 }

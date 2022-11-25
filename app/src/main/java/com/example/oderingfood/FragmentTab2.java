@@ -1,8 +1,8 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,6 +13,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oderingfood.models.Restaurant;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -21,7 +22,6 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class FragmentTab2 extends Fragment {
 
@@ -32,12 +32,7 @@ public class FragmentTab2 extends Fragment {
     ListRestaurant listRestaurant;
     AdapterTab adapter;
 
-
-    // Using ArrayList to store images data
-    ArrayList courseImg = new ArrayList<>();
-    ArrayList courseName = new ArrayList<>();
-    ArrayList address = new ArrayList<>();
-
+    ArrayList<Restaurant> Restaurants = new ArrayList<>();
 
 
     @Override
@@ -45,9 +40,9 @@ public class FragmentTab2 extends Fragment {
         super.onCreate(savedInstanceState);
         context=getActivity();
         listRestaurant =(ListRestaurant) getActivity();
-        idOwner = listRestaurant.getIdOwner();
+        idOwner = listRestaurant.getUser();
 
-        adapter = new AdapterTab(getContext(), courseImg, courseName, address);
+        adapter = new AdapterTab(getContext(), Restaurants);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("restaurant");
 
@@ -55,15 +50,16 @@ public class FragmentTab2 extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    String id = postSnapshot.child("ChuQuan").getValue(String.class).toString();
-                    if(id.equals(idOwner)){
+                    String owner = postSnapshot.child("ChuQuan").getValue(String.class).toString();
+                    if(owner.equals(idOwner)){
                         String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
                         String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
                         String urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
 
-                        courseName.add(name);
-                        address.add(diaChi);
-                        courseImg.add(urlImage);
+                        String id= postSnapshot.getKey();
+
+                        Restaurant restaurant = new Restaurant(name,diaChi,urlImage,id);
+                        Restaurants.add(restaurant);
 
                     }
                 }
@@ -89,42 +85,17 @@ public class FragmentTab2 extends Fragment {
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(context);
         recyclerView2.setLayoutManager(linearLayoutManager);
 
-        // Sending reference and data to dapter
-
-
         // Setting Adapter to RecyclerView
         recyclerView2.setAdapter(adapter);
         fab = (FloatingActionButton) fragmentTab2.findViewById(R.id.floating_action_button);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference myRef = database.getReference("restaurant");
 
-                myRef.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot postSnapshot: dataSnapshot.getChildren()) {
-                            String id = postSnapshot.child("ChuQuan").getValue(String.class).toString();
+                Intent intent = new Intent(context, Register_Store.class);
+                intent.putExtra("idOwner",idOwner);
+                context.startActivity(intent);
 
-                            if(id.equals(idOwner)){
-                                String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
-                                String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
-                                String urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
-
-                                Toast.makeText(context,urlImage , Toast.LENGTH_SHORT).show();
-
-                            }
-                        }
-
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError error) {
-                        // Failed to read value
-                        //Log.w(TAG, "Failed to read value.", error.toException());
-                    }
-                });
             }
         });
 
