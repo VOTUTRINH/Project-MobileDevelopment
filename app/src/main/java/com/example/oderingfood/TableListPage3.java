@@ -11,6 +11,9 @@ import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link TableListPage3#newInstance} factory method to
@@ -31,7 +34,7 @@ public class TableListPage3 extends Fragment {
     TablesActivity tablesActivity;
     Context context;
     GridView gv;
-    Table[] arrayName;
+    List<Table> listTable = new ArrayList<Table>();
 
     public TableListPage3() {
         // Required empty public constructor
@@ -79,7 +82,7 @@ public class TableListPage3 extends Fragment {
         LinearLayout layout_page3 =(LinearLayout)inflater.inflate(R.layout.fragment_table_list_page3,null);
 
         gv = (GridView) layout_page3.findViewById(R.id.grid_view);
-        ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item,arrayName);
+        ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, listTable);
         gv.setAdapter(tablesAdapter);
 
         return layout_page3;

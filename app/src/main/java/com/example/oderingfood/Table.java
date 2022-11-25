@@ -4,35 +4,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-enum TableState{
-    IsUsing,
-    Empty
-}
 public class Table {
-    private String name;
+//    private String name;
     private float tongTien;
-    private TableState state;
+    private String state;
     private List<Food> menu;
 
-    public String Name(){return name;}
+    public void TongTien(float tongTien)
+    {
+        this.tongTien = tongTien;
+    }
+
+    public void State(String state)
+    {
+        this.state = state;
+    }
+//    public String Name(){return name;}
     public float TongTien()
     {
         return tongTien;
     }
-    public TableState State()
+    public String State()
     {
         return state;
     }
     public List<Food> Menu()
     {
-        return  menu;
+        return menu;
     }
 
-    public Table(String name)
+    public Table()
     {
-        this.name = name;
+//        this.name = name;
         tongTien = 0;
-        state = TableState.Empty;
+        state = "";
         menu = new ArrayList<Food>();
     }
 
@@ -41,7 +46,7 @@ public class Table {
         menu.add(food);
     }
 
-    public void ChangeState(TableState state)
+    public void ChangeState(String state)
     {
         this.state = state;
     }

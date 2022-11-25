@@ -15,12 +15,14 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.List;
+
 public class ListTablesAdapter extends ArrayAdapter<Table> {
     private  Context context;
-    private  Table[] listTables;
+    private List<Table> listTables;
 
 
-    public ListTablesAdapter(Context context, int resource, Table[] listTables) {
+    public ListTablesAdapter(Context context, int resource, List<Table> listTables) {
         super(context,R.layout.table_layout_item,listTables);
         this.context = context;
         this.listTables = listTables;
@@ -33,7 +35,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(R.layout.table_layout_item, null);
         TextView name = (TextView) row.findViewById(R.id.table_item_text);
-        name.setText("Bàn " + listTables[position].Name());
+        name.setText("Bàn " + position);
 
         TextView btnMoreAction = (TextView) row.findViewById(R.id.btn_moremenu);
 
