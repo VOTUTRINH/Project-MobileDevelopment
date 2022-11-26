@@ -45,6 +45,6 @@ public class Table {
 
     public void AddFood(Pair<String,Integer> food)
     {
-        orderFood.add(food);
+        menu.add(food);
     }
 }
