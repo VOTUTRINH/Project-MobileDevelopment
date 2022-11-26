@@ -12,7 +12,7 @@ public class ListRestaurant extends AppCompatActivity {
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter ;
     TabLayout tabLayout;
-    String idOwner= "xzxHmkiUMHVjqNu67Ewzsv2TQjr2";
+    String user = "xzxHmkiUMHVjqNu67Ewzsv2TQjr2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +36,7 @@ public class ListRestaurant extends AppCompatActivity {
         }).attach();
     }
 
-    public String getIdOwner() {
-        return idOwner;
+    public String getUser() {
+        return user;
     }
 }

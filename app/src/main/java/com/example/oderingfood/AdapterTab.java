@@ -2,30 +2,32 @@ package com.example.oderingfood;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.Restaurant;
 
 import java.util.ArrayList;
 
 public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
 
-    ArrayList courseImg, courseName, address;
-    Context context;
+    ArrayList<Restaurant> list;
+    Context context; String idUser;
 
     // Constructor for initialization
-    public AdapterTab(Context context, ArrayList courseImg, ArrayList courseName, ArrayList address) {
+    public AdapterTab(Context context, ArrayList<Restaurant> list,String idUser) {
         this.context = context;
-        this.courseImg = courseImg;
-        this.courseName = courseName;
-        this.address = address;
+        this.list = list;
+        this.idUser = idUser;
     }
     @NonNull
     @Override
@@ -44,35 +46,45 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TypeCast Object to int type
-        Glide.with(context).load(courseImg.get(position)).into(holder.images);
-        holder.text.setText((String) courseName.get(position));
-        holder.txt_address.setText((String) address.get(position));
+        Restaurant restaurant = list.get(position);
+
+        Glide.with(context).load(restaurant.getUrlImage()).into(holder.images);
+        holder.text.setText((String)restaurant.getName());
+        holder.txt_address.setText((String) restaurant.getAddress());
+
+        holder.layoutItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,Bottomnavigation.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("restaurant",restaurant.getId());
+                bundle.putString("user",idUser);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
     public int getItemCount() {
         // Returns number of items
         // currently available in Adapter
-        return courseImg.size();
+        return list.size();
     }
 
     // Initializing the Views
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView images;
         TextView text, txt_address;
+        LinearLayout layoutItem;
 
         public ViewHolder(View view) {
             super(view);
             images = (ImageView) view.findViewById(R.id.profile_image);
             text = (TextView) view.findViewById(R.id.txt_mame);
             txt_address = (TextView) view.findViewById(R.id.txt_address);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    Intent intent=new Intent(context,Bottomnavigation.class);
-                    context.startActivity(intent);
-                }
-            });
+            layoutItem =(LinearLayout) view.findViewById(R.id.layout_item);
+
+
         }
 
     }
