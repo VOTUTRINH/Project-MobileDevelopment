@@ -4,16 +4,24 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.oderingfood.models.Table;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -77,6 +85,38 @@ public class TableListPage2 extends Fragment {
         }catch (Exception e)
         {
         }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase;
+
+        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Toast.makeText(getActivity(), "Hehhehe", Toast.LENGTH_SHORT).show();
+                for(DataSnapshot postSnapShot: snapshot.getChildren())
+                {
+
+                    String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
+
+                    if(trangThai == "IsUsing")
+                    {
+                        Toast.makeText(getActivity(), "Dang su dung", Toast.LENGTH_SHORT).show();
+                        Table table = new Table();
+                        table.TongTien(( postSnapShot.child("TongTien").getValue(float.class)));
+                        table.State(postSnapShot.child("TrangThai").getValue(String.class));
+
+                        listTable.add(table);
+                    }
+
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
