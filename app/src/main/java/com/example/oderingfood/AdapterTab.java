@@ -59,7 +59,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                pathRestaurentID = restaurant.getIDRes();
+                pathRestaurentID = restaurant.getId();
                 Intent intent=new Intent(context,Bottomnavigation.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurant",restaurant.getId());

@@ -52,13 +52,12 @@ public class FragmentTab1 extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    String IdRes = postSnapshot.getKey();
                     String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
                     String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
                     String urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
 
                     String id= postSnapshot.getKey();
-                    Restaurant restaurant = new Restaurant(IdRes, name,diaChi,urlImage,id);
+                    Restaurant restaurant = new Restaurant(name,diaChi,urlImage,id);
                     Restaurants.add(restaurant);
 
                 }
