@@ -7,10 +7,10 @@ import java.util.List;
 
 
 public class Table {
-//    private String name;
+    //    private String name;
     private float tongTien;
     private String state;
-    private List<Food> menu;
+    private List<Food> orderFood;
 
     public void TongTien(float tongTien)
     {
@@ -21,7 +21,7 @@ public class Table {
     {
         this.state = state;
     }
-//    public String Name(){return name;}
+    //    public String Name(){return name;}
     public float TongTien()
     {
         return tongTien;
@@ -30,9 +30,9 @@ public class Table {
     {
         return state;
     }
-    public List<Food> Menu()
+    public List<Food> OrderFood()
     {
-        return menu;
+        return orderFood;
     }
 
     public Table()
@@ -40,12 +40,12 @@ public class Table {
 //        this.name = name;
         tongTien = 0;
         state = "";
-        menu = new ArrayList<Food>();
+        orderFood = new ArrayList<Food>();
     }
 
     public void AddFood(Food food)
     {
-        menu.add(food);
+        orderFood.add(food);
     }
 
     public void ChangeState(String state)
@@ -56,8 +56,8 @@ public class Table {
     public float CalculateTotalMoney()
     {
         float totalMoney = 0;
-        for (int i = 0; i < menu.size(); i++) {
-            totalMoney += menu.get(i).getPrice();
+        for (int i = 0; i < orderFood.size(); i++) {
+            totalMoney += orderFood.get(i).getPrice();
         }
         return totalMoney;
     }

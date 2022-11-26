@@ -127,7 +127,6 @@ public class TableListPage1 extends Fragment {
         LinearLayout layout_page1 =(LinearLayout)inflater.inflate(R.layout.fragment_table_list_page1,null);
 
         gv = (GridView) layout_page1.findViewById(R.id.grid_view);
-
         gv.setAdapter(tablesAdapter);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
