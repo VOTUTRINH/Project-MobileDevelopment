@@ -1,5 +1,7 @@
 package com.example.oderingfood.models;
 
+import android.util.Pair;
+
 import com.example.oderingfood.models.Food;
 
 import java.util.ArrayList;
@@ -7,60 +9,42 @@ import java.util.List;
 
 
 public class Table {
-    //    private String name;
-    private float tongTien;
+    private String name;
     private String state;
-    private List<Food> orderFood;
+    private List<Pair<String,Integer>> menu; // Su dung Pair: String la ten mon an, Interger la so luong ordered
 
-    public void TongTien(float tongTien)
-    {
-        this.tongTien = tongTien;
+
+    public String getName() {
+        return name;
     }
 
-    public void State(String state)
-    {
-        this.state = state;
+    public void setName(String name) {
+        this.name = name;
     }
-    //    public String Name(){return name;}
-    public float TongTien()
-    {
-        return tongTien;
-    }
-    public String State()
-    {
+    public String getState() {
         return state;
     }
-    public List<Food> OrderFood()
-    {
-        return orderFood;
+
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public Table()
-    {
-//        this.name = name;
-        tongTien = 0;
-        state = "";
-        orderFood = new ArrayList<Food>();
+    public List<Pair<String, Integer>> getMenu() {
+        return menu;
     }
 
-    public void AddFood(Food food)
+    public void setMenu(List<Pair<String, Integer>> menu) {
+        this.menu = menu;
+    }
+    public Table(String name)
+    {
+        this.name = name;
+        state = "Empty";
+        menu = new ArrayList<Pair<String,Integer>>();
+    }
+
+    public void AddFood(Pair<String,Integer> food)
     {
         orderFood.add(food);
     }
-
-    public void ChangeState(String state)
-    {
-        this.state = state;
-    }
-
-    public float CalculateTotalMoney()
-    {
-        float totalMoney = 0;
-        for (int i = 0; i < orderFood.size(); i++) {
-            totalMoney += orderFood.get(i).getPrice();
-        }
-        return totalMoney;
-    }
-
-
 }

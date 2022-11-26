@@ -1,28 +1,31 @@
 package com.example.oderingfood;
 
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.GridView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.view.menu.MenuBuilder;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.oderingfood.models.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class TablesActivity extends Fragment {
     TabLayout tabLayout;
@@ -88,7 +91,7 @@ public class TablesActivity extends Fragment {
 
         Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
         Button btn_accept = (Button) dialog.findViewById(R.id.btn_accept);
-
+        TextInputEditText edtTableName = (TextInputEditText) dialog.findViewById(R.id.edt_add_table);
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -99,8 +102,49 @@ public class TablesActivity extends Fragment {
         btn_accept.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Accept", Toast.LENGTH_SHORT).show();
+                String tableName = String.valueOf(edtTableName.getText());
+
+                if(tableName.isEmpty())
+                {
+                    Toast.makeText(getActivity(), "Tên bàn không được để trống", Toast.LENGTH_SHORT).show();
+                }
+                else
+                {
+                    AddTableToFireBase(tableName.trim());
+                }
                 dialog.dismiss();
+            }
+        });
+    }
+
+
+
+    private void AddTableToFireBase(String tableName)
+    {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase;
+
+        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        Table newTable = new Table(tableName);
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot postSnapShot: snapshot.getChildren())
+                {
+                    if(postSnapShot.getKey().equals(tableName))
+                    {
+                        Toast.makeText(getActivity(),"Tên bàn ăn đã tồn tại",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
+                mDatabase.child(tableName).child("TrangThai").setValue(newTable.getState());
+                mDatabase.child(tableName).child("Order").setValue("");
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
             }
         });
     }

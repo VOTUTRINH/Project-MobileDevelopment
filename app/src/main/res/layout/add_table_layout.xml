@@ -26,6 +26,7 @@
             app:helperTextTextColor="@android:color/holo_red_dark">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_add_table"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="25"
