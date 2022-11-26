@@ -4,13 +4,13 @@ public class Restaurant {
     private String TenQuan;
     private String DiaChi;
     private String urlImage;
-    private String ChuQuan;
+    private String id;
 
     public Restaurant(String name, String address, String urlImage, String id){
         this.TenQuan = name;
         this.DiaChi = address;
         this.urlImage = urlImage;
-        this.ChuQuan= id;
+        this.id= id;
     }
 
     public String getAddress() {
@@ -18,7 +18,7 @@ public class Restaurant {
     }
 
     public String getId() {
-        return ChuQuan;
+        return id;
     }
 
     public String getName() {

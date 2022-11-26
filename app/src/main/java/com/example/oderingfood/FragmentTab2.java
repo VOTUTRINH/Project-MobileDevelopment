@@ -57,7 +57,6 @@ public class FragmentTab2 extends Fragment {
                         String urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
 
                         String id= postSnapshot.getKey();
-
                         Restaurant restaurant = new Restaurant(name,diaChi,urlImage,id);
                         Restaurants.add(restaurant);
 
