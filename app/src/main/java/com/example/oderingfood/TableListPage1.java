@@ -46,6 +46,7 @@ public class TableListPage1 extends Fragment {
     Context context;
     GridView gv;
     List<Table> tableList = new ArrayList<Table>();
+    ListTablesAdapter tablesAdapter ;
 
     public TableListPage1() {
         // Required empty public constructor
@@ -85,6 +86,8 @@ public class TableListPage1 extends Fragment {
         }catch (Exception e)
         {
         }
+
+        tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, tableList);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
@@ -103,6 +106,7 @@ public class TableListPage1 extends Fragment {
 
                     Log.i("Name",postSnapShot.toString());
                 }
+                tablesAdapter.notifyDataSetChanged();
             }
 
             @Override
@@ -123,7 +127,7 @@ public class TableListPage1 extends Fragment {
         LinearLayout layout_page1 =(LinearLayout)inflater.inflate(R.layout.fragment_table_list_page1,null);
 
         gv = (GridView) layout_page1.findViewById(R.id.grid_view);
-        ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, tableList);
+
         gv.setAdapter(tablesAdapter);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override

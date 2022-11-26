@@ -2,10 +2,12 @@ package com.example.oderingfood;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -19,13 +21,13 @@ import java.util.ArrayList;
 public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
 
     ArrayList<Restaurant> list;
-    Context context;
+    Context context; String idUser;
 
     // Constructor for initialization
-    public AdapterTab(Context context, ArrayList<Restaurant> list) {
+    public AdapterTab(Context context, ArrayList<Restaurant> list,String idUser) {
         this.context = context;
         this.list = list;
-
+        this.idUser = idUser;
     }
     @NonNull
     @Override
@@ -44,9 +46,22 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TypeCast Object to int type
-        Glide.with(context).load(list.get(position).getUrlImage()).into(holder.images);
-        holder.text.setText((String) list.get(position).getName());
-        holder.txt_address.setText((String) list.get(position).getAddress());
+        Restaurant restaurant = list.get(position);
+
+        Glide.with(context).load(restaurant.getUrlImage()).into(holder.images);
+        holder.text.setText((String)restaurant.getName());
+        holder.txt_address.setText((String) restaurant.getAddress());
+
+        holder.layoutItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent=new Intent(context,Bottomnavigation.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("restaurant",restaurant.getId());
+                bundle.putString("user",idUser);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -60,20 +75,16 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
     public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView images;
         TextView text, txt_address;
+        LinearLayout layoutItem;
 
         public ViewHolder(View view) {
             super(view);
             images = (ImageView) view.findViewById(R.id.profile_image);
             text = (TextView) view.findViewById(R.id.txt_mame);
             txt_address = (TextView) view.findViewById(R.id.txt_address);
-            view.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
+            layoutItem =(LinearLayout) view.findViewById(R.id.layout_item);
 
-                    Intent intent=new Intent(context,Bottomnavigation.class);
-                    context.startActivity(intent);
-                }
-            });
+
         }
 
     }

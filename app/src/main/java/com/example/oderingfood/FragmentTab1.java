@@ -30,7 +30,8 @@ public class FragmentTab1 extends Fragment {
     RecyclerView recyclerView;
     Context context;
 
-    // Using ArrayList to store images data
+    String user;
+    ListRestaurant listRestaurant;
     ArrayList<Restaurant> Restaurants = new ArrayList<>();
     AdapterTab adapter ;
 
@@ -39,7 +40,10 @@ public class FragmentTab1 extends Fragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
 
-        adapter = new AdapterTab(getContext(),Restaurants);
+        listRestaurant =(ListRestaurant) getActivity();
+        user = listRestaurant.getUser();
+
+        adapter = new AdapterTab(getContext(),Restaurants,user);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("restaurant");
 

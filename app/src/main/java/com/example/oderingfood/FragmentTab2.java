@@ -42,7 +42,7 @@ public class FragmentTab2 extends Fragment {
         listRestaurant =(ListRestaurant) getActivity();
         idOwner = listRestaurant.getUser();
 
-        adapter = new AdapterTab(getContext(), Restaurants);
+        adapter = new AdapterTab(getContext(), Restaurants,idOwner);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference myRef = database.getReference("restaurant");
 
