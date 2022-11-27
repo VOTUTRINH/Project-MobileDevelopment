@@ -140,8 +140,9 @@ public class Register_Store extends Activity {
             db.setValue(mapImage);
 
             Intent intent = new Intent(this,ListRestaurant.class);
-            startActivity(intent);
 
+            startActivity(intent);
+            finish();
 
         }
     }
