@@ -17,6 +17,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -117,11 +118,11 @@ public class TableListPage2 extends Fragment {
                             {
                                 // Get data
                                 String foodName = foodSnapShot.getKey();
-                                Integer quantity = foodSnapShot.child("SoLuong").getValue(int.class);
-
+                                Integer quantity = foodSnapShot.child("SoLuong").getValue(Integer.class);
+                                Food food = new Food(foodName, quantity);
                                 // Add food orderd to table
-                                Pair<String, Integer> foodOrdered = Pair.create(foodName,quantity);
-                                table.AddFood(foodOrdered);
+
+                                table.AddFood(food);
                             }
                         }
                         listTable.add(table);

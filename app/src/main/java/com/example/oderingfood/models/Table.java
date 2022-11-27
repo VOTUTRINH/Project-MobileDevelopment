@@ -11,7 +11,7 @@ import java.util.List;
 public class Table {
     private String name;
     private String state;
-    private List<Pair<String,Integer>> menu; // Su dung Pair: String la ten mon an, Interger la so luong ordered
+    private List<Food> menu; // Su dung Pair: String la ten mon an, Interger la so luong ordered
 
 
     public String getName() {
@@ -29,21 +29,21 @@ public class Table {
         this.state = state;
     }
 
-    public List<Pair<String, Integer>> getMenu() {
+    public List<Food> getMenu() {
         return menu;
     }
 
-    public void setMenu(List<Pair<String, Integer>> menu) {
+    public void setMenu(List<Food> menu) {
         this.menu = menu;
     }
     public Table(String name)
     {
         this.name = name;
         state = "Empty";
-        menu = new ArrayList<Pair<String,Integer>>();
+        menu = new ArrayList<Food>();
     }
 
-    public void AddFood(Pair<String,Integer> food)
+    public void AddFood(Food food)
     {
         menu.add(food);
     }

@@ -12,6 +12,12 @@ public class Food {
         this.id = id;
     }
 
+    public Food(String name, int quantity)
+    {
+        this.name = name;
+        this.quantity = quantity;
+    }
+
     public Food(int id, String name, double price, int quantity, double total) {
         this.id = id;
         this.name = name;

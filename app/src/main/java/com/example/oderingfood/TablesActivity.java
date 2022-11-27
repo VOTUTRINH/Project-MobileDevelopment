@@ -124,9 +124,10 @@ public class TablesActivity extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2");
         Table newTable = new Table(tableName);
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+        DatabaseReference mDatabaseBanAn = mDatabase.child("BanAn");
+        mDatabaseBanAn.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot postSnapShot: snapshot.getChildren())
@@ -137,9 +138,13 @@ public class TablesActivity extends Fragment {
                         return;
                     }
                 }
-                mDatabase.child(tableName).child("TrangThai").setValue(newTable.getState());
-                mDatabase.child(tableName).child("Order").setValue("");
+                mDatabaseBanAn.child(tableName).child("TrangThai").setValue(newTable.getState());
+                mDatabaseBanAn.child(tableName).child("Order").setValue("");
 
+
+                // Update count table
+                DatabaseReference mDatabaseSoBanAn = mDatabase.child("SoBanAn");
+                mDatabaseSoBanAn.setValue(snapshot.getChildrenCount() + 1);
             }
 
             @Override
@@ -147,5 +152,8 @@ public class TablesActivity extends Fragment {
 
             }
         });
+
+
+
     }
 }
