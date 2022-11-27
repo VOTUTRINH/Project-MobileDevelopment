@@ -3,6 +3,7 @@ package com.example.oderingfood;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,7 +34,11 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         View row = inflater.inflate(R.layout.table_layout_item, null);
         TextView name = (TextView) row.findViewById(R.id.table_item_text);
-        name.setText("Bàn " + position);
+        name.setText("Bàn " + listTables.get(position).getName());
+
+        TextView txtState = (TextView) row.findViewById(R.id.table_state);
+        String state = (listTables.get(position).getState().equals("IsUsing")?"Đang sử dụng":"Còn trống");
+        txtState.setText(state);
 
         TextView btnMoreAction = (TextView) row.findViewById(R.id.btn_moremenu);
 
@@ -50,6 +55,9 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                             case R.id.menu_thanhtoan:
 
                                 Intent intdn = new Intent((Activity)context,A2G7Activity.class); // Your nxt activity name instead of List_Activity
+                                Bundle bundle = new Bundle();
+//                                intdn.putParcelableArrayListExtra("order",listTables.get(position).getMenu());
+
                                 intdn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 ((Activity)context).startActivity(intdn);
                                 break;

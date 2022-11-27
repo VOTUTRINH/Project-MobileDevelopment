@@ -1,5 +1,7 @@
 package com.example.oderingfood.models;
 
+import java.security.PublicKey;
+
 public class Restaurant {
     private String TenQuan;
     private String DiaChi;
@@ -28,4 +30,5 @@ public class Restaurant {
     public String getUrlImage() {
         return urlImage;
     }
+
 }

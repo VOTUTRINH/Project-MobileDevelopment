@@ -31,6 +31,7 @@ public class FragmentTab1 extends Fragment {
     Context context;
 
     String user;
+
     ListRestaurant listRestaurant;
     ArrayList<Restaurant> Restaurants = new ArrayList<>();
     AdapterTab adapter ;
@@ -51,7 +52,6 @@ public class FragmentTab1 extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-
                     String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
                     String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
                     String urlImage;
@@ -94,8 +94,6 @@ public class FragmentTab1 extends Fragment {
 
         // Setting Adapter to RecyclerView
         recyclerView.setAdapter(adapter);
-
-
 
         return fragmentTab1;
     }

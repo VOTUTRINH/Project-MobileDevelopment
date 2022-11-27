@@ -8,6 +8,7 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,6 +17,7 @@ import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -95,18 +97,36 @@ public class TableListPage1 extends Fragment {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Toast.makeText(getActivity(), "Hehhehe", Toast.LENGTH_SHORT).show();
+                if(tableList.size() > 0)
+                {
+                    tableList.clear();
+                }
+
                 for(DataSnapshot postSnapShot: snapshot.getChildren())
                 {
-                    Table table = new Table();
-                    table.TongTien(( postSnapShot.child("TongTien").getValue(float.class)));
-                    table.State(postSnapShot.child("TrangThai").getValue(String.class));
+                    // Get data
+                    String tenBan = postSnapShot.getKey();
+                    String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
 
+                    // add table
+                    Table table = new Table(tenBan);
+                    table.setState(trangThai);
+
+                    // Get foods was ordered for table
+                    DataSnapshot menuSnapShot = postSnapShot.child("Order");
+                    for (DataSnapshot foodSnapShot: menuSnapShot.getChildren())
+                    {
+                        // Get data
+                        String foodName = foodSnapShot.getKey();
+                        Integer quantity = foodSnapShot.child("SoLuong").getValue(Integer.class);
+
+                        // Add food orderd to table
+                        Pair<String, Integer> foodOrdered = Pair.create(foodName,quantity);
+                        table.AddFood(foodOrdered);
+                    }
                     tableList.add(table);
-
                 }
                 tablesAdapter.notifyDataSetChanged();
-
             }
 
             @Override
@@ -127,12 +147,12 @@ public class TableListPage1 extends Fragment {
         LinearLayout layout_page1 =(LinearLayout)inflater.inflate(R.layout.fragment_table_list_page1,null);
 
         gv = (GridView) layout_page1.findViewById(R.id.grid_view);
-
         gv.setAdapter(tablesAdapter);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(context,MonAnActivity.class);
+
                 context.startActivity(intent);
             }
         });

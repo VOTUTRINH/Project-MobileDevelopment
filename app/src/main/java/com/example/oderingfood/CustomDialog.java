@@ -17,7 +17,7 @@ public class CustomDialog extends Dialog {
         public void emailEntered(String email);
         public void addressEntered(String address);
         public void salaryEntered(String salary);
-        public void debtEntered(String debt);
+//        public void debtEntered(String debt);
     }
 
     public Context context;
@@ -28,7 +28,7 @@ public class CustomDialog extends Dialog {
     private EditText editTextEmail;
     private EditText editTextAddress;
     private EditText editTextSalary;
-    private EditText editTextDebt;
+//    private EditText editTextDebt;
     private Button buttonOK;
     private Button buttonCancel;
 
@@ -52,7 +52,7 @@ public class CustomDialog extends Dialog {
         this.editTextEmail = (EditText) findViewById(R.id.df_email);
         this.editTextAddress = (EditText) findViewById(R.id.df_address);
         this.editTextSalary = (EditText) findViewById(R.id.df_salary);
-        this.editTextDebt = (EditText) findViewById(R.id.df_debt);
+//        this.editTextDebt = (EditText) findViewById(R.id.df_debt);
         this.buttonOK = (Button) findViewById(R.id.df_btnOk);
         this.buttonCancel  = (Button) findViewById(R.id.df_btnCancel);
 
@@ -111,12 +111,12 @@ public class CustomDialog extends Dialog {
             Toast.makeText(this.context, "Please enter salary", Toast.LENGTH_LONG).show();
             return;
         }
-        String debt = this.editTextDebt.getText().toString();
+//        String debt = this.editTextDebt.getText().toString();
 
-        if(debt== null || debt.isEmpty())  {
-            Toast.makeText(this.context, "Please enter debt", Toast.LENGTH_LONG).show();
-            return;
-        }
+//        if(debt== null || debt.isEmpty())  {
+//            Toast.makeText(this.context, "Please enter debt", Toast.LENGTH_LONG).show();
+//            return;
+//        }
         if(this.listener!= null)  {
             this.listener.fullNameEntered(fullName);
             this.listener.IDEntered(id);
@@ -124,7 +124,7 @@ public class CustomDialog extends Dialog {
             this.listener.emailEntered(email);
             this.listener.addressEntered(address);
             this.listener.salaryEntered(salary);
-            this.listener.debtEntered(debt);
+//            this.listener.debtEntered(debt);
         }
     }
 

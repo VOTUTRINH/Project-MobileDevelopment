@@ -64,6 +64,7 @@ public class FragmentTab2 extends Fragment {
                         String id= postSnapshot.getKey();
 
                         Restaurant restaurant = new Restaurant(name,diaChi,urlImage,id);
+
                         Restaurants.add(restaurant);
                     }
                 }
