@@ -1,4 +1,4 @@
-package com.example.oderingfood;
+package com.example.oderingfood.models;
 
 public class Food {
     int id;
@@ -10,6 +10,12 @@ public class Food {
 
     public Food(int id) {
         this.id = id;
+    }
+
+    public Food(String name, int quantity)
+    {
+        this.name = name;
+        this.quantity = quantity;
     }
 
     public Food(int id, String name, double price, int quantity, double total) {

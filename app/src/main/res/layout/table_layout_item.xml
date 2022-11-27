@@ -31,6 +31,7 @@
         android:textAlignment="center"/>
 
     <TextView
+        android:id="@+id/table_state"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:textAlignment="center"

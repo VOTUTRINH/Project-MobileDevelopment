@@ -4,14 +4,29 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import android.util.Log;
+import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.Table;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -32,7 +47,8 @@ public class TableListPage1 extends Fragment {
     TablesActivity tablesActivity;
     Context context;
     GridView gv;
-    String[] arrayName = {"1","2","3","4","5","6","7","8","9","10","11","12"};
+    ListTablesAdapter tablesAdapter;
+    List<Table> tableList = new ArrayList<Table>();
 
     public TableListPage1() {
         // Required empty public constructor
@@ -72,6 +88,57 @@ public class TableListPage1 extends Fragment {
         }catch (Exception e)
         {
         }
+
+        tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, tableList);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase;
+
+        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(tableList.size() > 0)
+                {
+                    tableList.clear();
+                }
+
+                for(DataSnapshot postSnapShot: snapshot.getChildren())
+                {
+                    // Get data
+                    String tenBan = postSnapShot.getKey();
+                    String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
+
+                    // add table
+                    Table table = new Table(tenBan);
+                    table.setState(trangThai);
+
+                    // Get foods was ordered for table
+                    DataSnapshot menuSnapShot = postSnapShot.child("Order");
+                    for (DataSnapshot foodSnapShot: menuSnapShot.getChildren())
+                    {
+                        // Get data
+                        String foodName = foodSnapShot.getKey();
+                        Integer quantity = foodSnapShot.child("SoLuong").getValue(Integer.class);
+                        Food food = new Food(foodName, quantity);
+                        // Add food orderd to table
+
+                        table.AddFood(food);
+                    }
+                    tableList.add(table);
+                }
+                tablesAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    private void ReadTables()
+    {
+
     }
 
     @Override
@@ -80,12 +147,12 @@ public class TableListPage1 extends Fragment {
         LinearLayout layout_page1 =(LinearLayout)inflater.inflate(R.layout.fragment_table_list_page1,null);
 
         gv = (GridView) layout_page1.findViewById(R.id.grid_view);
-        ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item,arrayName);
         gv.setAdapter(tablesAdapter);
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 Intent intent=new Intent(context,MonAnActivity.class);
+
                 context.startActivity(intent);
             }
         });

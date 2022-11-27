@@ -12,6 +12,7 @@ public class ListRestaurant extends AppCompatActivity {
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter ;
     TabLayout tabLayout;
+    String user = "xzxHmkiUMHVjqNu67Ewzsv2TQjr2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +34,9 @@ public class ListRestaurant extends AppCompatActivity {
             }
 
         }).attach();
+    }
 
-
-
+    public String getUser() {
+        return user;
     }
 }

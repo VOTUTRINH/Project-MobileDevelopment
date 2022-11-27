@@ -3,6 +3,7 @@ package com.example.oderingfood;
 import android.content.Context;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -10,6 +11,17 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
+
+import com.example.oderingfood.models.Table;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -31,8 +43,9 @@ public class TableListPage3 extends Fragment {
     TablesActivity tablesActivity;
     Context context;
     GridView gv;
-    String[] arrayName = {"5","6","7","8","9","10","11","12"};
+    List<Table> listTable = new ArrayList<Table>();
 
+    ListTablesAdapter tablesAdapter;
     public TableListPage3() {
         // Required empty public constructor
     }
@@ -71,6 +84,41 @@ public class TableListPage3 extends Fragment {
         }catch (Exception e)
         {
         }
+
+        tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, listTable);
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase;
+
+        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(listTable.size() > 0)
+                {
+                    listTable.clear();
+                }
+                for(DataSnapshot postSnapShot: snapshot.getChildren())
+                {
+                    String tenBan = postSnapShot.getKey();
+                    String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
+
+                    if(trangThai.equals("Empty"))
+                    {
+                        Table table = new Table(tenBan);
+                        table.setState(trangThai);
+
+                        listTable.add(table);
+                    }
+                }
+                tablesAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
@@ -79,7 +127,7 @@ public class TableListPage3 extends Fragment {
         LinearLayout layout_page3 =(LinearLayout)inflater.inflate(R.layout.fragment_table_list_page3,null);
 
         gv = (GridView) layout_page3.findViewById(R.id.grid_view);
-        ListTablesAdapter tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item,arrayName);
+
         gv.setAdapter(tablesAdapter);
 
         return layout_page3;

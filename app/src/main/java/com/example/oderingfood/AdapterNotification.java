@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oderingfood.models.NotificationItem;
+
 import java.sql.Time;
 import java.util.ArrayList;
 
@@ -45,9 +47,9 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
     @Override
     public void onBindViewHolder(@NonNull AdapterNotification.ViewHolder holder, int position) {
         // TypeCast Object to int type
-        holder.images.setImageResource(this.items.get(position).noticeImg);
-        holder.txt_label.setText(this.items.get(position).noticeLabel);
-        holder.txt_content.setText(this.items.get(position).noticeContent);
+        holder.images.setImageResource(this.items.get(position).getNoticeImg());
+        holder.txt_label.setText(this.items.get(position).getNoticeLabel());
+        holder.txt_content.setText(this.items.get(position).getNoticeContent());
         holder.txt_time.setText(this.items.get(position).getTimeString());
         if(this.items.get(position).isRead == true){
             Seen(holder.CView, holder.txt_label, holder.status);
@@ -92,35 +94,3 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
     }
 }
 
-class NotificationItem {
-    Integer noticeImg;
-    String noticeLabel;
-    String noticeContent;
-    Time timeNotice;
-    public boolean isRead;
-    public NotificationItem(int img, String label, String content){
-        noticeImg = img;
-        noticeLabel = label;
-        noticeContent = content;
-//        timeNotice = time;
-        isRead = false;
-    }
-
-    public Integer getNoticeImg() {
-        return noticeImg;
-    }
-
-    public String getNoticeLabel() {
-        return noticeLabel;
-    }
-
-    public String getNoticeContent() {
-        return noticeContent;
-    }
-
-
-    String getTimeString(){
-        //todo tinh thoi gian tu time den hien tai
-        return "10 phút trước.";
-    }
-}

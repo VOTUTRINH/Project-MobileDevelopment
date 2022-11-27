@@ -8,6 +8,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.oderingfood.models.NhanVien;
+
 import java.util.List;
 
 public class AdapterNhanVien extends BaseAdapter {

@@ -1,24 +1,13 @@
 package com.example.oderingfood;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.view.ContextMenu;
-import android.view.LayoutInflater;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
 
+import com.example.oderingfood.models.Food;
 
 import java.util.ArrayList;
 import java.util.List;

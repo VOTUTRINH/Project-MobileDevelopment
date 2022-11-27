@@ -45,6 +45,7 @@
            />
 
         <com.google.android.material.textfield.TextInputLayout
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -55,13 +56,15 @@
             app:helperTextEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_name"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="25" />
+            />
         </com.google.android.material.textfield.TextInputLayout>
 
 
         <com.google.android.material.textfield.TextInputLayout
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -72,6 +75,7 @@
             app:helperTextEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:maxLength="25" />
@@ -79,6 +83,7 @@
 
 
         <com.google.android.material.textfield.TextInputLayout
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -89,12 +94,15 @@
             app:helperTextEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_tables"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="number"
                 android:maxLength="25" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -105,6 +113,7 @@
             >
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_discription"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textMultiLine"
@@ -133,14 +142,15 @@
 
         </LinearLayout>
 
-<!--        <Button-->
-<!--            android:id="@+id/btn_add_img"-->
-<!--            android:layout_width="wrap_content"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:text="Thêm hình ảnh"-->
-<!--            android:backgroundTint="#EC808D"-->
-<!--            />-->
-
+        <Button
+            android:id="@+id/btn_submit"
+            android:padding="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Submit"
+            android:backgroundTint="@color/color_main"
+            android:layout_marginTop="10dp"
+            />
     </LinearLayout>
 
 

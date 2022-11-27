@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical">
 
     <LinearLayout
@@ -14,7 +14,7 @@
             android:id="@+id/tab_list_table"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="#CDEC808D"
+            android:background="#ff9298"
             app:tabTextColor="#ffffff"
             app:tabSelectedTextColor="@color/black"
             app:tabIndicatorColor="@color/black"
@@ -29,15 +29,15 @@
 
         </androidx.viewpager2.widget.ViewPager2>
 
-        <com.google.android.material.floatingactionbutton.FloatingActionButton
-            android:id="@+id/add_table_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="end|bottom"
-            android:src="@android:drawable/ic_input_add"
-            android:layout_margin="16dp"
-            android:backgroundTint="#f48fb1"/>
+
 
     </LinearLayout>
-
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_table_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_margin="16dp"
+        android:backgroundTint="#f48fb1"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

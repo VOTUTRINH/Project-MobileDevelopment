@@ -114,27 +114,26 @@
         android:fontFamily="@font/quicksand_bold"
         />
 
-    <TextView
-        android:id="@+id/afo_txtDebt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="70dp"
-        android:layout_marginTop="10dp"
-        android:textColor="#f50057"
-        android:textSize="25dp"
-        android:fontFamily="@font/quicksand_bold"
-        android:text="Tổng tiền lương còn nợ: "
-        />
+<!--    <TextView-->
+<!--        android:id="@+id/afo_txtDebt"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_marginLeft="70dp"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:fontFamily="@font/quicksand_bold"-->
+<!--        android:text="Tổng tiền lương: "-->
+<!--        android:textColor="#f50057"-->
+<!--        android:textSize="25dp" />-->
 
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:textColor="@color/black"
+<!--    <Button-->
+<!--        android:id="@+id/button2"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="center"-->
+<!--        android:layout_marginTop="10dp"-->
+<!--        android:textColor="@color/black"-->
 
-        android:backgroundTint="#f48fb1"
-        android:text="Thanh toán"
-        android:fontFamily="@font/quicksand_bold"/>
+<!--        android:backgroundTint="#f48fb1"-->
+<!--        android:text="Thanh toán"-->
+<!--        android:fontFamily="@font/quicksand_bold"/>-->
 </LinearLayout>
