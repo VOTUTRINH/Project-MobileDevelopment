@@ -54,12 +54,17 @@ public class FragmentTab2 extends Fragment {
                     if(owner.equals(idOwner)){
                         String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
                         String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
-                        String urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
+                        String urlImage;
+                        try {
+                            urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();
+                        }catch (Exception e){
+                            urlImage = "https://firebasestorage.googleapis.com/v0/b/orderingfood-ab91f.appspot.com/o/store_default.png?alt=media&token=de6a404a-dd66-4a21-b6ae-eda751d79983";
+                        }
 
                         String id= postSnapshot.getKey();
+
                         Restaurant restaurant = new Restaurant(name,diaChi,urlImage,id);
                         Restaurants.add(restaurant);
-
                     }
                 }
                 adapter.notifyDataSetChanged();
@@ -90,7 +95,6 @@ public class FragmentTab2 extends Fragment {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 Intent intent = new Intent(context, Register_Store.class);
                 intent.putExtra("idOwner",idOwner);
                 context.startActivity(intent);

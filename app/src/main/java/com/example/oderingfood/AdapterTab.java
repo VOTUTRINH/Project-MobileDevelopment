@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,7 +60,9 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurant",restaurant.getId());
                 bundle.putString("user",idUser);
+                intent.putExtras(bundle);
                 context.startActivity(intent);
+
             }
         });
     }
@@ -83,8 +86,6 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
             text = (TextView) view.findViewById(R.id.txt_mame);
             txt_address = (TextView) view.findViewById(R.id.txt_address);
             layoutItem =(LinearLayout) view.findViewById(R.id.layout_item);
-
-
         }
 
     }
