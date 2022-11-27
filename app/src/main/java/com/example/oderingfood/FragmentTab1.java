@@ -51,6 +51,7 @@ public class FragmentTab1 extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Restaurants.clear();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
                     String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();

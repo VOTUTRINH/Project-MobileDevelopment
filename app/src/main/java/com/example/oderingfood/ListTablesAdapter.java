@@ -5,7 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,13 +19,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.example.oderingfood.models.Table;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ListTablesAdapter extends ArrayAdapter<Table> {
@@ -67,9 +68,8 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                             case R.id.menu_thanhtoan:
 
                                 Intent intdn = new Intent((Activity)context,A2G7Activity.class); // Your nxt activity name instead of List_Activity
-                                Bundle bundle = new Bundle();
-//                                intdn.putParcelableArrayListExtra("order",listTables.get(position).getMenu());
 
+                                intdn.putExtra("Orders", (Serializable) listTables.get(position).getOrder());
                                 intdn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                 ((Activity)context).startActivity(intdn);
                                 break;
@@ -137,32 +137,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
 
                     }
                 });
-//                mDatabase.addValueEventListener(new ValueEventListener() {
-//                    @Override
-//                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                        Toast.makeText(context, (int) snapshot.getChildrenCount(),Toast.LENGTH_SHORT).show();
-//                        for(DataSnapshot snapshotChild : snapshot.getChildren())
-//                        {
-//                            Toast.makeText(context, snapshotChild.getKey(),Toast.LENGTH_SHORT).show();
-//
-////                            if(snapshotChild.getKey().equals(name))
-////                            {
-////                                String state = snapshot.child("TrangThai").getValue(String.class);
-////                                if(state.equals("IsUsing"))
-////                                {
-////                                    Toast.makeText(context, "Bàn ăn đang được sử dụng, không thể xóa", Toast.LENGTH_SHORT).show();
-////                                    return;
-////                                }
-////                                snapshotChild.getRef().removeValue();
-////                            }
-//                        }
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError error) {
-//
-//                    }
-//                });
+
                 dialog.dismiss();
             }
         });

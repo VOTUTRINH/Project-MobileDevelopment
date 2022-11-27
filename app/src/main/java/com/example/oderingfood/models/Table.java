@@ -1,19 +1,21 @@
 package com.example.oderingfood.models;
 
-import android.util.Pair;
+import android.os.Parcel;
+import android.os.Parcelable;
 
-import com.example.oderingfood.models.Food;
-
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Table {
+public class Table implements Serializable {
     private String name;
     private String state;
-    private List<Food> menu; // Su dung Pair: String la ten mon an, Interger la so luong ordered
+    private List<Food> order; // Su dung Pair: String la ten mon an, Interger la so luong ordered
 
 
+
+    // SETTER - GETTER
     public String getName() {
         return name;
     }
@@ -29,22 +31,26 @@ public class Table {
         this.state = state;
     }
 
-    public List<Food> getMenu() {
-        return menu;
+    public List<Food> getOrder() {
+        return order;
     }
 
-    public void setMenu(List<Food> menu) {
-        this.menu = menu;
+    public void setOrder(List<Food> order) {
+        this.order = order;
     }
+
+    // END SETTER - GETTER
+
     public Table(String name)
     {
         this.name = name;
         state = "Empty";
-        menu = new ArrayList<Food>();
+        order = new ArrayList<Food>();
     }
 
     public void AddFood(Food food)
     {
-        menu.add(food);
+        order.add(food);
     }
+
 }

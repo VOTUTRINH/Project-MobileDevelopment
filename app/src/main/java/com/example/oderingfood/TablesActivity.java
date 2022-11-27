@@ -117,8 +117,6 @@ public class TablesActivity extends Fragment {
         });
     }
 
-
-
     private void AddTableToFireBase(String tableName)
     {
         FirebaseDatabase database = FirebaseDatabase.getInstance();

@@ -142,10 +142,24 @@ public class Register_Store extends Activity {
             }
             db.setValue(mapImage);
 
+
+            // Create table when create restaurant
+            DatabaseReference dbTables = database.child(id).child("BanAn");
+
+            Map<String, Map<String,String>> mapTables = new HashMap<String,Map<String,String>>();
+            for (int i=1; i<= soban; i++)
+            {
+                Map<String, String> mapTableValue = new HashMap<String, String>();
+                mapTableValue.put("Order","");
+                mapTableValue.put("TrangThai", "Empty");
+
+                mapTables.put(String.valueOf(i), mapTableValue);
+            }
+
+            dbTables.setValue(mapTables);
+
             Intent intent = new Intent(this,ListRestaurant.class);
             startActivity(intent);
-
-
         }
     }
 

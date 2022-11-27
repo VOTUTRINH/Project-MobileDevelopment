@@ -49,6 +49,7 @@ public class FragmentTab2 extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Restaurants.clear();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
                     String owner = postSnapshot.child("ChuQuan").getValue(String.class).toString();
                     if(owner.equals(idOwner)){
