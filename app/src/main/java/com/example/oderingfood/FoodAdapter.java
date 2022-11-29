@@ -8,6 +8,7 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.oderingfood.models.Food;
 
 import java.util.List;
@@ -50,7 +51,7 @@ public class FoodAdapter extends BaseAdapter {
         TextView total = view.findViewById(R.id.ifo_totalprice);
 
         Food food = dataList.get(position);
-        thumbnail.setImageResource(food.getId());
+        Glide.with(activity.getBaseContext()).load(food.getUrlImage()).into(thumbnail);
         name.setText("Tên: " + food.getName());
         price.setText("Giá: " + String.valueOf(food.getPrice()) + " $");
         quantity.setText("Số lượng: " + String.valueOf(food.getQuantity()));

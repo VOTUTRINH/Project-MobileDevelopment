@@ -118,8 +118,7 @@ public class TableListPage2 extends Fragment {
                             {
                                 // Get data
                                 String foodName = foodSnapShot.getKey();
-                                Integer quantity = foodSnapShot.child("SoLuong").getValue(Integer.class);
-                                Food food = new Food(foodName, quantity);
+                                Food food = foodSnapShot.getValue(Food.class);
                                 // Add food orderd to table
 
                                 table.AddFood(food);

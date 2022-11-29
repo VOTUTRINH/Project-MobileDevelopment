@@ -111,21 +111,22 @@ public class TableListPage1 extends Fragment {
                     // add table
                     Table table = new Table(tenBan);
                     table.setState(trangThai);
-
                     // Get foods was ordered for table
                     DataSnapshot menuSnapShot = postSnapShot.child("Order");
                     for (DataSnapshot foodSnapShot: menuSnapShot.getChildren())
                     {
                         // Get data
                         String foodName = foodSnapShot.getKey();
-                        Integer quantity = foodSnapShot.child("SoLuong").getValue(Integer.class);
-                        Food food = new Food(foodName, quantity);
-                        // Add food orderd to table
+                        Food food = foodSnapShot.getValue(Food.class);
+
+                        // Add food ordered to table
 
                         table.AddFood(food);
                     }
+
                     tableList.add(table);
                 }
+
                 tablesAdapter.notifyDataSetChanged();
             }
 

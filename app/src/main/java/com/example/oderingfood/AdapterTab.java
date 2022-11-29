@@ -19,6 +19,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Restaurant;
 
 import java.util.ArrayList;
@@ -60,7 +61,10 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
         holder.layoutItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                // get id to acess database
                 pathRestaurentID = restaurant.getId();
+                GlobalVariables.menu = new ArrayList<>();
+
                 Intent intent=new Intent(context,Bottomnavigation.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurant",restaurant.getId());

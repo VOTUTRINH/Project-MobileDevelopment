@@ -5,10 +5,12 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 import com.example.oderingfood.models.Food;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -24,6 +26,13 @@ public class A2G7Activity extends Activity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Bundle b = getIntent().getExtras();
+        if(b != null) {
+            Serializable listTemp;
+            listTemp = b.getSerializable("Orders");
+            dataList = (List<Food>) listTemp;
+            Toast.makeText(this, dataList.get(0).toString(), Toast.LENGTH_SHORT).show();
+        }
         super.onCreate(savedInstanceState);
         setContentView(R.layout.a2g7_activity_main);
 
@@ -33,12 +42,6 @@ public class A2G7Activity extends Activity {
         TextView allTotal = findViewById(R.id.afo_txtTotal);
 //        TotalPrice = Double.parseDouble(txtPrice.getText().toString()) * Double.parseDouble(txtQuantity.getText().toString());
         TotalPrice = 2;
-        dataList.add(new Food(R.drawable.food, "Pizza", 2, 5, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hamburger", 3, 4, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hotdog", 4, 5, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Pizza", 2, 5, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hamburger", 3, 4, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hotdog", 4, 5, TotalPrice));
 
 
         foodAdapter = new FoodAdapter(this, dataList);
