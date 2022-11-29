@@ -40,7 +40,7 @@ public class a2g18Activity extends Activity {
         TextView email1 = this.findViewById(R.id.afo_txtEmail);
         TextView address1 = this.findViewById(R.id.afo_txtAddress);
         TextView salary1 = this.findViewById(R.id.afo_txtSalary);
-        TextView debt1 = this.findViewById(R.id.afo_txtDebt);
+//        TextView debt1 = this.findViewById(R.id.afo_txtDebt);
         CustomDialog.EmployeeListener listener = new CustomDialog.EmployeeListener() {
             @Override
             public void fullNameEntered(String fullName) {
@@ -67,9 +67,9 @@ public class a2g18Activity extends Activity {
                 salary1.setText("Lương theo giờ: " + salary);
             }
 
-            public void debtEntered(String debt) {
-                debt1.setText("Tổng tiền lương còn nợ: " + debt);
-            }
+//            public void debtEntered(String debt) {
+//                debt1.setText("Tổng tiền lương còn nợ: " + debt);
+//            }
         };
         final CustomDialog dialog = new CustomDialog(this, listener);
 

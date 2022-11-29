@@ -19,14 +19,19 @@ import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Register_Store extends Activity {
 
@@ -56,8 +61,6 @@ public class Register_Store extends Activity {
 
         database = FirebaseDatabase.getInstance().getReference("restaurant");
         reference = FirebaseStorage.getInstance().getReference();
-
-
 
         edt_name= (EditText) findViewById(R.id.edt_name);
         edt_address=(EditText) findViewById(R.id.edt_address);
@@ -107,7 +110,7 @@ public class Register_Store extends Activity {
     }
 
     private void load_data() {
-        id =database.push().getKey();
+
         name = edt_name.getText().toString();
         address = edt_address.getText().toString();
         discription = edt_discription.getText().toString();
@@ -119,19 +122,44 @@ public class Register_Store extends Activity {
         }else if (address.isEmpty()){
             Toast.makeText(this, "Địa chỉ không dược để trống", Toast.LENGTH_SHORT).show();
         }else {
-            database.child(id).child("TenQuan").setValue(name);
-            database.child(id).child("DiaChi").setValue(address);
-            database.child(id).child("SoBan").setValue(soban);
-            database.child(id).child("MoTa").setValue(discription);
-            database.child(id).child("ChuQuan").setValue(idOwner);
-            database.child(id).child("id").setValue(id);
-            if(Urlimages.size()==0){
-                Urlimages.add("https://firebasestorage.googleapis.com/v0/b/orderingfood-ab91f.appspot.com/o/store_default.png?alt=media&token=de6a404a-dd66-4a21-b6ae-eda751d79983");
-            }
+
+            id = database.push().getKey();
+            Map<String,String> myMap = new HashMap<String,String>();
+            myMap.put("TenQuan",name);
+            myMap.put("DiaChi",address);
+            myMap.put("MoTa",discription);
+            myMap.put("ChuQuan",idOwner);
+            myMap.put("id",id);
+
+            database.child(id).setValue(myMap);
+            database.child(id).child("SoBanAn").setValue(soban);
+
+            DatabaseReference db = database.child(id).child("HinhAnh");
+            Map<String,String> mapImage = new HashMap<String,String>();
+
             for(int i =0;i<Urlimages.size();i++){
-                DatabaseReference db = database.child(id).child("HinhAnh").child(String.valueOf(i+1));
-                db.setValue(Urlimages.get(i));
+                mapImage.put(String.valueOf(i+1),Urlimages.get(i).toString());
             }
+            db.setValue(mapImage);
+
+
+            // Create table when create restaurant
+            DatabaseReference dbTables = database.child(id).child("BanAn");
+
+            Map<String, Map<String,String>> mapTables = new HashMap<String,Map<String,String>>();
+            for (int i=1; i<= soban; i++)
+            {
+                Map<String, String> mapTableValue = new HashMap<String, String>();
+                mapTableValue.put("Order","");
+                mapTableValue.put("TrangThai", "Empty");
+
+                mapTables.put(String.valueOf(i), mapTableValue);
+            }
+
+            dbTables.setValue(mapTables);
+
+            Intent intent = new Intent(this,ListRestaurant.class);
+            startActivity(intent);
         }
     }
 
@@ -143,18 +171,18 @@ public class Register_Store extends Activity {
         if(requestCode==1){
             Uri uri=data.getData();
             if(uri != null ){
-                add_image1.setImageURI(uri);
                 load_image(uri);
+                add_image1.setImageURI(uri);
             }else{
-                Toast.makeText(this, "Thêm hình ảnh đại diện.", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
             }
 
         }
         else if(requestCode==2){
             Uri uri=data.getData();
             if(uri != null ){
-                add_image2.setImageURI(uri);
                 load_image(uri);
+                add_image2.setImageURI(uri);
             }else{
                 Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
             }
@@ -162,8 +190,8 @@ public class Register_Store extends Activity {
         else if(requestCode==3){
             Uri uri=data.getData();
             if(uri != null ) {
-                add_image3.setImageURI(uri);
                 load_image(uri);
+                add_image3.setImageURI(uri);
             }else{
                 Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
             }
@@ -180,6 +208,7 @@ public class Register_Store extends Activity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
+
                         Urlimages.add(uri.toString());
                     }
                 });

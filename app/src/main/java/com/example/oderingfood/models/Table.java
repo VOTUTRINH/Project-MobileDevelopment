@@ -1,66 +1,56 @@
 package com.example.oderingfood.models;
 
-import com.example.oderingfood.models.Food;
+import android.os.Parcel;
+import android.os.Parcelable;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 
-public class Table {
-    //    private String name;
-    private float tongTien;
+public class Table implements Serializable {
+    private String name;
     private String state;
-    private List<Food> orderFood;
+    private List<Food> order; // Su dung Pair: String la ten mon an, Interger la so luong ordered
 
-    public void TongTien(float tongTien)
-    {
-        this.tongTien = tongTien;
+
+
+    // SETTER - GETTER
+    public String getName() {
+        return name;
     }
 
-    public void State(String state)
-    {
-        this.state = state;
+    public void setName(String name) {
+        this.name = name;
     }
-    //    public String Name(){return name;}
-    public float TongTien()
-    {
-        return tongTien;
-    }
-    public String State()
-    {
+    public String getState() {
         return state;
     }
-    public List<Food> OrderFood()
-    {
-        return orderFood;
+
+    public void setState(String state) {
+        this.state = state;
     }
 
-    public Table()
+    public List<Food> getOrder() {
+        return order;
+    }
+
+    public void setOrder(List<Food> order) {
+        this.order = order;
+    }
+
+    // END SETTER - GETTER
+
+    public Table(String name)
     {
-//        this.name = name;
-        tongTien = 0;
-        state = "";
-        orderFood = new ArrayList<Food>();
+        this.name = name;
+        state = "Empty";
+        order = new ArrayList<Food>();
     }
 
     public void AddFood(Food food)
     {
-        orderFood.add(food);
+        order.add(food);
     }
-
-    public void ChangeState(String state)
-    {
-        this.state = state;
-    }
-
-    public float CalculateTotalMoney()
-    {
-        float totalMoney = 0;
-        for (int i = 0; i < orderFood.size(); i++) {
-            totalMoney += orderFood.get(i).getPrice();
-        }
-        return totalMoney;
-    }
-
 
 }

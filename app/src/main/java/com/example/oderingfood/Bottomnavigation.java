@@ -14,6 +14,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.PopupMenu;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -31,11 +33,20 @@ public class Bottomnavigation extends AppCompatActivity {
     TuyChon_Fragment tuyChon_fragment = new TuyChon_Fragment();
     EmployeeManageActivity employeeManagerFragment = new EmployeeManageActivity();
 
+    String user,idRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottomnavigation);
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        if(bundle !=null){
+            user = bundle.getString("user");
+            idRes = bundle.getString("restaurant");
+        }
+
         bottomNavigationView=findViewById(R.id.buttom_navigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
@@ -65,6 +76,8 @@ public class Bottomnavigation extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(null);
 
+
+
 }
 
     @Override
@@ -88,5 +101,13 @@ public class Bottomnavigation extends AppCompatActivity {
             }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getUser(){
+        return user;
+    }
+
+    public String getIdRes(){
+        return idRes;
     }
 }
