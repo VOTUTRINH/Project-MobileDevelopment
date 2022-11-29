@@ -36,12 +36,19 @@ public class MonAnActivity extends AppCompatActivity {
 
     AdapterMonAn adapter;
     Button btnOrder;
+    String tablePath;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_mon_an);
         dataList = findViewById(R.id.dishesList);
         btnOrder = findViewById(R.id.ac_btn_send);
+
+        Bundle b = getIntent().getExtras();
+
+        if(b != null) {
+            tablePath = b.getString("key");
+        }
 
         adapter = new AdapterMonAn(this, GlobalVariables.menu);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
@@ -85,6 +92,7 @@ public class MonAnActivity extends AppCompatActivity {
 
             }
         });
+        // nhan nut order
         btnOrder.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -93,7 +101,7 @@ public class MonAnActivity extends AppCompatActivity {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mDatabase;
 
-                mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn/1/Order");
+                mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn/"+ tablePath);
                 for(int i=0; i< temp.size(); i++){
                     if (temp.get(i).getQuantity() != 0){
                         data.put(temp.get(i).getId(), temp.get(i));
@@ -101,17 +109,19 @@ public class MonAnActivity extends AppCompatActivity {
                 }
                 if (data.size() == 0){
                     // khong co mon duoc dat
-
+                    Toast.makeText(MonAnActivity.this,getString(R.string.chuachonmon), Toast.LENGTH_LONG).show();
 
                 }
                 else
                 {
-                  mDatabase.setValue(data, new DatabaseReference.CompletionListener() {
+                    mDatabase.child("TrangThai").setValue(getString(R.string.using_state));
+                    mDatabase.child("Order").setValue(data, new DatabaseReference.CompletionListener() {
                       @Override
                       public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                          Toast.makeText(MonAnActivity.this,"Đặt món thành công.", Toast.LENGTH_SHORT).show();
+                          Toast.makeText(MonAnActivity.this,getString(R.string.datmonthanhcong), Toast.LENGTH_SHORT).show();
                       }
                   });
+                    finish();
                 }
 
             }

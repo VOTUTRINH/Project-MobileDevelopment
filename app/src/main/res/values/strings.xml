@@ -1,5 +1,8 @@
 <resources>
     <string name="app_name">Odering Food</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="empty_state">Empty</string>
+    <string name="using_state">IsUsing</string>
+    <string name="chuachonmon">Chưa có món ăn nào được chọn.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="datmonthanhcong">Đặt món thành công.</string>
 </resources>

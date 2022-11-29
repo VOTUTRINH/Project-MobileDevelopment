@@ -1,5 +1,6 @@
 package com.example.oderingfood;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -25,6 +26,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,9 +154,22 @@ public class TableListPage1 extends Fragment {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(context,MonAnActivity.class);
+                if(tableList.get(i).getState().equals("Empty")){
+                    Intent intent=new Intent(context,MonAnActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("key", tableList.get(i).getName()); //Your id
+                    intent.putExtras(b); //Put your id to your next Intent
+                    context.startActivity(intent);
+                }else
+                {
+                    Intent intdn = new Intent(context, A2G7Activity.class); // Your nxt activity name instead of List_Activity
 
-                context.startActivity(intent);
+                    Bundle b = new Bundle();
+                    b.putString("key", tableList.get(i).getName()); //Your id
+                    intdn.putExtras(b); //Put your id to your next Intent
+                    context.startActivity(intdn);
+                }
+
             }
         });
 
