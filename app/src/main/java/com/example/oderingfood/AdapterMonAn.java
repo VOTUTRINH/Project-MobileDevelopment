@@ -1,6 +1,10 @@
 package com.example.oderingfood;
 
+import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -13,20 +17,20 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.Food;
+
 import java.util.List;
 
 public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> {
-    List<String> foodNames;
-    List<Integer> foodImages;
-    List<String> foodPrices;
     LayoutInflater inflater;
+    Context context;
+    List<Food> menu;
 
-
-    public AdapterMonAn(Context ctx, List<String> names, List<Integer> images, List<String> prices){
-        this.foodNames = names;
-        this.foodImages = images;
-        this.foodPrices = prices;
+    public AdapterMonAn(Context ctx, List<Food> menu){
+        context = ctx;
         this.inflater = LayoutInflater.from(ctx);
+        this.menu = menu;
     }
     @NonNull
     @Override
@@ -36,11 +40,13 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
         return new ViewHolder(view);
     }
 
+    @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        holder.foodImageView.setImageResource(foodImages.get(position));
-        holder.foodNameView.setText(foodNames.get(position));
-        holder.foodPriceView.setText(foodPrices.get(position));
+        Glide.with(context).load(menu.get(position).getUrlImage()).into(holder.foodImageView);
+        holder.foodNameView.setText(menu.get(position).getName());
+        holder.foodPriceView.setText(Double.toString(menu.get(position).getPrice()));
+        holder.numOfFoods.setText(Integer.toString(menu.get(position).getQuantity()));
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +62,6 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
                         final TextView disableScreen = holder.disableScreen;
                         final Button plus = holder.plus;
                         final Button minus = holder.minus;
-                        final Button order = holder.order;
 
                         switch (item.getItemId()) {
                             case R.id.item1_chinhsua:
@@ -66,13 +71,11 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
                                 //handle menu2 click
                                 plus.setEnabled(true);
                                 minus.setEnabled(true);
-                                order.setEnabled(true);
                                 disableScreen.setVisibility(View.GONE);
                                 return true;
                             case R.id.item3_tamngung:
                                 plus.setEnabled(false);
                                 minus.setEnabled(false);
-                                order.setEnabled(false);
                                 disableScreen.setVisibility(View.VISIBLE);
 
                                 //handle menu3 click
@@ -87,11 +90,30 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
 
             }
         });
+
+        holder.plus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.get(position).plusQuantity();
+                holder.numOfFoods.setText(Integer.toString(menu.get(position).getQuantity()));
+            }
+        });
+
+        holder.minus.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                menu.get(position).minusQuantity();
+                holder.numOfFoods.setText(Integer.toString(menu.get(position).getQuantity()));
+
+            }
+        });
+
+
     }
 
     @Override
     public int getItemCount() {
-        return foodNames.size();
+        return menu.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
@@ -100,6 +122,7 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
         TextView foodPriceView;
         TextView buttonViewOption;
         TextView disableScreen;
+        TextView numOfFoods;
         Button plus;
         Button minus;
         Button order;
@@ -112,8 +135,12 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
             disableScreen = itemView.findViewById(R.id.txt_disablescreen);
             plus = itemView.findViewById(R.id.btn_plus);
             minus = itemView.findViewById(R.id.btn_minus);
-            order = itemView.findViewById(R.id.btn_order);
+            numOfFoods = itemView.findViewById(R.id.menu_txt_count);
 
         }
+    }
+
+    public List<Food> getMenu() {
+        return menu;
     }
 }

@@ -66,12 +66,17 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                     public boolean onMenuItemClick(MenuItem menuItem) {
                         switch (menuItem.getItemId()) {
                             case R.id.menu_thanhtoan:
+                                if(listTables.get(position).getState().equals("Empty")){
+                                    Toast.makeText(context,"Bàn ăn trống", Toast.LENGTH_SHORT).show();
+                                }
+                                else {
+                                    Intent intdn = new Intent(context, A2G7Activity.class); // Your nxt activity name instead of List_Activity
 
-                                Intent intdn = new Intent((Activity)context,A2G7Activity.class); // Your nxt activity name instead of List_Activity
-
-                                intdn.putExtra("Orders", (Serializable) listTables.get(position).getOrder());
-                                intdn.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                ((Activity)context).startActivity(intdn);
+                                    Bundle b = new Bundle();
+                                    b.putString("key", listTables.get(position).getName()); //Your id
+                                    intdn.putExtras(b); //Put your id to your next Intent
+                                    context.startActivity(intdn);
+                                }
                                 break;
                             case R.id.menu_xoabanan:
                                 ShowDialogAddTable(listTables.get(position).getName());

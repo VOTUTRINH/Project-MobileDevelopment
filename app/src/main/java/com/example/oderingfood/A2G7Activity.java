@@ -2,13 +2,25 @@ package com.example.oderingfood;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+
+import androidx.annotation.NonNull;
 
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.Table;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +29,9 @@ public class A2G7Activity extends Activity {
     Button btnFinish;
     List<Food> dataList = new ArrayList<>();
     FoodAdapter foodAdapter;
+    Button thanhtoan;
+    String tablePath;
+    double total1 = 0;
     int currentIndex = -1;
 
 
@@ -25,20 +40,31 @@ public class A2G7Activity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+//        Bundle b = getIntent().getExtras();
+//        if(b != null) {
+//            Serializable listTemp;
+//            listTemp = b.getSerializable("Orders");
+//            dataList = (List<Food>) listTemp;
+//        }
+        Bundle b = getIntent().getExtras();
+
+        if(b != null) {
+            tablePath = b.getString("key");
+        }
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase;
+
+        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn/"+ tablePath);
         setContentView(R.layout.a2g7_activity_main);
 
         listView = findViewById(R.id.afo_listview);
+        thanhtoan = findViewById(R.id.thanhtoan_btn_thanhtoan);
         double TotalPrice;
-        double total1 = 0;
+
         TextView allTotal = findViewById(R.id.afo_txtTotal);
 //        TotalPrice = Double.parseDouble(txtPrice.getText().toString()) * Double.parseDouble(txtQuantity.getText().toString());
         TotalPrice = 2;
-        dataList.add(new Food(R.drawable.food, "Pizza", 2, 5, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hamburger", 3, 4, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hotdog", 4, 5, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Pizza", 2, 5, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hamburger", 3, 4, TotalPrice));
-        dataList.add(new Food(R.drawable.food, "Hotdog", 4, 5, TotalPrice));
 
 
         foodAdapter = new FoodAdapter(this, dataList);
@@ -46,11 +72,48 @@ public class A2G7Activity extends Activity {
         listView.setAdapter(foodAdapter);
 
         registerForContextMenu(listView);
-        for(int i=0;i<dataList.size();i++){
-            total1 = total1 + dataList.get(i).getPrice() * dataList.get(i).getQuantity();
-        }
+
 //
-        allTotal.setText("Tổng tiền tất cả: " + String.valueOf(total1) + " $");
+
+
+        thanhtoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
+
+
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if (dataList.size() > 0) {
+                    dataList.clear();
+                }
+                DataSnapshot menuSnapShot = snapshot.child("Order");
+                for (DataSnapshot foodSnapShot : menuSnapShot.getChildren()) {
+                    // Get data
+                    String foodName = foodSnapShot.getKey();
+                    Food food = foodSnapShot.getValue(Food.class);
+
+                    // Add food ordered to table
+
+                    dataList.add(food);
+                }
+                for(int i=0;i<dataList.size();i++){
+                    total1 = total1 + dataList.get(i).getPrice() * dataList.get(i).getQuantity();
+                }
+                allTotal.setText("Tổng tiền tất cả: " + String.valueOf(total1) + " $");
+                foodAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+
+        });
+
     }
 //
 //    @Override

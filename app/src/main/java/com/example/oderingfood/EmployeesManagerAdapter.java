@@ -1,14 +1,11 @@
 package com.example.oderingfood;
 
-import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -16,11 +13,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 
+import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.Employee;
+
 import java.util.List;
 
 public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManagerAdapter.MyViewHolder> {
     List<Employee> employees;
     LayoutInflater inflater;
+    Context context;
+
     class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout item;
         ImageView avatar;
@@ -36,6 +38,7 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
 
     public EmployeesManagerAdapter(Context context, List<Employee>employees)
     {
+        this.context = context;
         this.inflater =LayoutInflater.from(context);
         this.employees = employees;
     }
@@ -50,8 +53,9 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
     @Override
     public void onBindViewHolder(@NonNull EmployeesManagerAdapter.MyViewHolder holder, int position) {
         Employee employee = employees.get(position);
-        holder.avatar.setImageResource(employee.avatar);
-        holder.name.setText(employee.name);
+        Glide.with(context).load(employees.get(position).getAvatar()).into(holder.avatar);
+        holder.name.setText(employee.getName());
+
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
