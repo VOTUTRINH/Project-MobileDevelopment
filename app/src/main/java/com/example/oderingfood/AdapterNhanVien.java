@@ -8,16 +8,17 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.example.oderingfood.models.NhanVien;
+import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.Employee;
 
 import java.util.List;
 
 public class AdapterNhanVien extends BaseAdapter {
     Context context;
     int layout;
-    List<NhanVien> arrayList;
+    List<Employee> arrayList;
 
-    public AdapterNhanVien(Context context, int layout, List<NhanVien> arrayList) {
+    public AdapterNhanVien(Context context, int layout, List<Employee> arrayList) {
         this.context = context;
         this.layout = layout;
         this.arrayList = arrayList;
@@ -54,8 +55,10 @@ public class AdapterNhanVien extends BaseAdapter {
         }else {
             viewHolder=(ViewHolder) view.getTag();
         }
-        viewHolder.tvTen.setText(arrayList.get(i).tenNhanVien);
-        viewHolder.imgAvt.setImageResource(arrayList.get(i).avt);
+        viewHolder.tvTen.setText(arrayList.get(i).getName());
+//        viewHolder.imgAvt.setImageResource(arrayList.get(i).urlImageAvatar);
+        Glide.with(context).load(arrayList.get(i).getAvatar()).into(viewHolder.imgAvt);
         return view;
+
     }
 }

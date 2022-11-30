@@ -34,6 +34,7 @@
                 android:background="#CDEC808D"
                 >
                 <TextView
+                    android:id="@+id/txt_total_employees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
@@ -63,6 +64,7 @@
                 android:background="#CDEC808D"
                 >
                 <TextView
+                    android:id="@+id/txt_total_employees_working"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"

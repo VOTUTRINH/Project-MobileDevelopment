@@ -139,10 +139,7 @@ public class TableListPage1 extends Fragment {
         });
     }
 
-    private void ReadTables()
-    {
 
-    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
