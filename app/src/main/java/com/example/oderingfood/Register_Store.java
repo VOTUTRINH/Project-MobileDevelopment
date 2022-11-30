@@ -15,12 +15,16 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
@@ -36,8 +40,9 @@ public class Register_Store extends Activity {
     ImageView add_image2;
     ImageView add_image3;
     EditText edt_name,edt_address, edt_discription,edt_tables;
-
     Button btn_submit;
+    ProgressBar progressBar;
+
     String name ="", address ="",discription="",id ="";
     int soban = 0;
     String idOwner;
@@ -63,8 +68,10 @@ public class Register_Store extends Activity {
         edt_address=(EditText) findViewById(R.id.edt_address);
         edt_discription=(EditText) findViewById(R.id.edt_discription);
         edt_tables=(EditText) findViewById(R.id.edt_tables);
-
         add_image1=(ImageView) findViewById(R.id.add_image);
+        progressBar= (ProgressBar) findViewById(R.id.progress_bar);
+        progressBar.setVisibility(View.INVISIBLE);
+
         add_image1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -139,7 +146,24 @@ public class Register_Store extends Activity {
             }
             db.setValue(mapImage);
 
+
+            // Create table when create restaurant
+            DatabaseReference dbTables = database.child(id).child("BanAn");
+
+            Map<String, Map<String,String>> mapTables = new HashMap<String,Map<String,String>>();
+            for (int i=1; i<= soban; i++)
+            {
+                Map<String, String> mapTableValue = new HashMap<String, String>();
+                mapTableValue.put("Order","");
+                mapTableValue.put("TrangThai", "Empty");
+
+                mapTables.put(String.valueOf(i), mapTableValue);
+            }
+
+            dbTables.setValue(mapTables);
+
             Intent intent = new Intent(this,ListRestaurant.class);
+
 
             startActivity(intent);
             finish();
@@ -192,14 +216,20 @@ public class Register_Store extends Activity {
                 fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
                     @Override
                     public void onSuccess(Uri uri) {
-
                         Urlimages.add(uri.toString());
+                        progressBar.setVisibility(View.INVISIBLE);
                     }
                 });
             }
-        }).addOnFailureListener(new OnFailureListener() {
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                        progressBar.setVisibility(View.VISIBLE);
+                    }
+                }).addOnFailureListener(new OnFailureListener() {
             @Override
             public void onFailure(@NonNull Exception e) {
+                progressBar.setVisibility(View.INVISIBLE);
                 Toast.makeText(Register_Store.this, "Upload image fail !!", Toast.LENGTH_SHORT).show();
             }
         });

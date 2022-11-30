@@ -1,9 +1,11 @@
 package com.example.oderingfood;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -26,7 +28,6 @@ public class HomeFragment extends Fragment {
     RecyclerView recyclerView1,recyclerView2;
     TextView txt_home_tongban,txt_home_bantrong,txt_home_diachi,txt_home_tenquan;
 
-
     Bottomnavigation bottomnavigation ;
     String user;
     String idRes;
@@ -34,13 +35,12 @@ public class HomeFragment extends Fragment {
     FirebaseDatabase database ;
     DatabaseReference myRef ;
 
-    ArrayList Img =new ArrayList<>(Arrays.asList(R.drawable.img_1,R.drawable.img_2,R.drawable.img_3,R.drawable.img_4));
-    ArrayList Img2 =new ArrayList<>(Arrays.asList(R.drawable.res_1,R.drawable.res_2,R.drawable.res_3,R.drawable.res_4));
-
-
+    ArrayList Img =new ArrayList<>();
+    ArrayList Img2 =new ArrayList<>();
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         bottomnavigation = (Bottomnavigation) getActivity();
         user= bottomnavigation.getUser();
         idRes = bottomnavigation.getIdRes();
@@ -71,21 +71,21 @@ public class HomeFragment extends Fragment {
         recyclerView1.setAdapter(adapter1);
         recyclerView2.setAdapter(adapter2);
 
-
         txt_home_diachi= (TextView) homeFragment.findViewById(R.id.txt_home_diachi);
         txt_home_tenquan=(TextView) homeFragment.findViewById(R.id.txt_home_tenquan);
-
         txt_home_tongban = (TextView) homeFragment.findViewById(R.id.txt_home_tongban);
         txt_home_bantrong =(TextView) homeFragment.findViewById(R.id.txt_home_bantrong);
 
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+
                 txt_home_tenquan.setText(snapshot.child("TenQuan").getValue().toString());
                 txt_home_diachi.setText(snapshot.child("DiaChi").getValue().toString());
 
                 Integer count =0,count2=0;
                 try{
+
                     for (DataSnapshot postSnapshot: snapshot.child("BanAn").getChildren()) {
                         count2++;
                         String status = postSnapshot.child("TrangThai").getValue().toString();
@@ -101,21 +101,56 @@ public class HomeFragment extends Fragment {
                     txt_home_bantrong.setText("0");
                     txt_home_tongban.setText("0");
                 }
-
+                //load images restaurant
                 try{
-
-
-
+                    for(DataSnapshot postSnapshot: snapshot.child("HinhAnh").getChildren()){
+                        String urlImage = postSnapshot.getValue().toString();
+                        Img2.add(urlImage);
+                    }
+                    adapter1.notifyDataSetChanged();
+                }catch(Exception e){
+                    //not have images
+                }
+                //load menu image
+                try{
+                    for(DataSnapshot postSnapshot: snapshot.child("Menu").getChildren()){
+                        String link =  postSnapshot.child("HinhAnh").getValue().toString();
+                        Img.add(link);
+                    }
+                    adapter2.notifyDataSetChanged();
                 }catch (Exception e){
-
+                    //not have images
                 }
 
+                if(Img2.isEmpty()){
+                    TextView txt_images_restaurant = (TextView) homeFragment.findViewById(R.id.txt_images_restaurant);
+                    txt_images_restaurant.setVisibility(View.INVISIBLE);
+                }
+
+                if(Img.isEmpty()){
+                    LinearLayout layout_txt_menu = (LinearLayout) homeFragment.findViewById(R.id.layout_txt_menu);
+                    layout_txt_menu.setVisibility(View.INVISIBLE);
+                }
+                //set voucher
+                try{
+                    TextView txt_voucher = (TextView) homeFragment.findViewById(R.id.txt_voucher);
+                    txt_voucher.setText(snapshot.child("Voucher").getValue().toString());
+                }catch(Exception e){
+                    LinearLayout layout_voucher= (LinearLayout) homeFragment.findViewById(R.id.layout_voucher);
+                    layout_voucher.setVisibility(View.INVISIBLE);
+                }
             }
+
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
             }
         });
+
+
+
+
+
 
         return homeFragment;
     }

@@ -119,10 +119,10 @@ public class TableListPage1 extends Fragment {
                         // Get data
                         String foodName = foodSnapShot.getKey();
                         Integer quantity = foodSnapShot.child("SoLuong").getValue(Integer.class);
-
+                        Food food = new Food(foodName, quantity);
                         // Add food orderd to table
-                        Pair<String, Integer> foodOrdered = Pair.create(foodName,quantity);
-                        table.AddFood(foodOrdered);
+
+                        table.AddFood(food);
                     }
                     tableList.add(table);
                 }
