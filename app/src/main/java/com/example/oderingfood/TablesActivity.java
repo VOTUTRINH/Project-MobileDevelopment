@@ -32,7 +32,17 @@ public class TablesActivity extends Fragment {
     ViewPager2 viewPager2;
     FloatingActionButton btnAddTable;
 
+    Bottomnavigation bottomnavigation ;
+    String user;
+    String idRes;
 
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        bottomnavigation = (Bottomnavigation) getActivity();
+        user= bottomnavigation.getUser();
+        idRes = bottomnavigation.getIdRes();
+    }
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -122,7 +132,7 @@ public class TablesActivity extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2");
+        mDatabase = database.getReference("/restaurant/" + idRes);
         Table newTable = new Table(tableName);
         DatabaseReference mDatabaseBanAn = mDatabase.child("BanAn");
         mDatabaseBanAn.addListenerForSingleValueEvent(new ValueEventListener() {
