@@ -16,7 +16,7 @@
         >
 
         <TextView
-            android:id="@+id/textView"
+            android:id="@+id/menu_txt_count"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:textSize="30dp"
@@ -67,7 +67,7 @@
             android:text="Chú ý: Xem thông tin món ăn và tổng tiền trước khi nhấn Hoàn Thành" />
 
         <android.widget.Button
-            android:id="@+id/afo_btnFinish"
+            android:id="@+id/thanhtoan_btn_thanhtoan"
             android:layout_width="match_parent"
             android:layout_height="43dp"
             android:layout_gravity="center"

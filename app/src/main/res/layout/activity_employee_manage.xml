@@ -1,14 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView android:orientation="vertical"
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
     tools:context=".EmployeeManageActivity"
-    xmlns:app="http://schemas.android.com/apk/res-auto"    >
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent"
+    android:layout_width="match_parent">
 
-    <!--    xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+<!--        xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
 
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -34,10 +38,11 @@
                 android:background="#CDEC808D"
                 >
                 <TextView
+                    android:id="@+id/txt_total_employees"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:text="Số lượng nhân viên: 20"
+                    android:text="Số lượng nhân viên"
                     android:gravity="center"
                     android:fontFamily="@font/quicksand_bold"
                     android:textSize="18sp"/>
@@ -63,10 +68,11 @@
                 android:background="#CDEC808D"
                 >
                 <TextView
+                    android:id="@+id/txt_total_employees_working"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:textColor="@color/white"
-                    android:text="Số nhân viên đang làm việc: 10"
+                    android:text="Số nhân viên đang làm việc"
                     android:textSize="18sp"
                     android:gravity="center"
                     android:fontFamily="@font/quicksand_bold"/>
@@ -93,6 +99,13 @@
                 >
 
             </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:id="@+id/txt_no_employee"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:visibility="gone"
+                android:text="Không có nhân viên"/>
         </LinearLayout>
 
         <LinearLayout
@@ -143,7 +156,25 @@
                 android:layout_height="wrap_content">
 
             </androidx.recyclerview.widget.RecyclerView>
+            <TextView
+                android:id="@+id/txt_no_employee_working"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:visibility="gone"
+                android:text="Không có nhân viên nào đang làm việc"/>
         </LinearLayout>
-    </LinearLayout>
 
-</ScrollView>
+    </LinearLayout>
+    </ScrollView>
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/add_employee_floating_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="end|bottom"
+        android:src="@android:drawable/ic_input_add"
+        android:layout_margin="16dp"
+        android:backgroundTint="#ff9298"
+        app:borderWidth="0dp"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

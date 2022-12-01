@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+
 import java.util.ArrayList;
 
 public class AdapterImage extends RecyclerView.Adapter<AdapterImage.ViewHolder> {
@@ -37,8 +39,8 @@ public class AdapterImage extends RecyclerView.Adapter<AdapterImage.ViewHolder> 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TypeCast Object to int type
-        int res = (int) Img.get(position);
-        holder.images.setImageResource(res);
+        String res = Img.get(position).toString();
+        Glide.with(context).load(res).into(holder.images);
     }
 
     @Override
