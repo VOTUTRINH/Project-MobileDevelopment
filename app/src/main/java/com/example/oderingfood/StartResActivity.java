@@ -54,6 +54,7 @@ public class StartResActivity extends AppCompatActivity {
 
         Toast.makeText(this,role, Toast.LENGTH_SHORT).show();
     }
+
     public void setRole(){
         myRef.addValueEventListener(new ValueEventListener() {
             @Override

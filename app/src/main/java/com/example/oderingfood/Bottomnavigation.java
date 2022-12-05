@@ -27,17 +27,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-<<<<<<< HEAD
 
-import org.checkerframework.checker.units.qual.A;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-=======
->>>>>>> 1a74e0a2b2ed4eaf59c7c4a94180d32cab3f4bb5
 
 public class Bottomnavigation extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -47,16 +37,11 @@ public class Bottomnavigation extends AppCompatActivity {
     Toolbar toolbar;
 
     String user,idRes;
-<<<<<<< HEAD
-    static String[] Lrole =  new String[1];
+
     FirebaseDatabase database;
     DatabaseReference myRef;
-    String role;
-=======
-
     static String[] role = new String[1];
 
->>>>>>> 1a74e0a2b2ed4eaf59c7c4a94180d32cab3f4bb5
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -112,15 +97,13 @@ public class Bottomnavigation extends AppCompatActivity {
 
     }
 
-<<<<<<< HEAD
-}
-=======
+
 
     public void setRole(){
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
         mDatabase = database.getReference("/restaurant/"+idRes);
->>>>>>> 1a74e0a2b2ed4eaf59c7c4a94180d32cab3f4bb5
+
 
         mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -151,68 +134,6 @@ public class Bottomnavigation extends AppCompatActivity {
     public String getRole(){
         return role[0];
     }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-
-        switch (item.getItemId()){
-            case R.id.notification: {
-                FragmentNotification noticeFragment = new FragmentNotification();
-                getSupportFragmentManager().beginTransaction().replace(R.id.container, noticeFragment).commit();
-                break;
-            }
-            case R.id.message:{
-                Intent intent = new Intent(bottomNavigationView.getContext(), ChatActivity.class);
-                startActivity(intent);
-                break;
-            }
-            case R.id.camera:{
-
-                Intent intent = new Intent(bottomNavigationView.getContext(), ScanQRCode.class);
-                Bundle bundle = new Bundle();
-                bundle.putString("idRes",idRes);
-                bundle.putString("idUser",user);
-                intent.putExtras(bundle);
-                startActivity(intent);
-                break;
-            }
-        }
-        return super.onOptionsItemSelected(item);
-    }
-
-    public void setRole(){
-        myRef.addValueEventListener(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String owner = snapshot.child("ChuQuan").getValue(String.class).toString();
-
-                if(owner.equals(user)){
-                    Lrole[0]="ChuQuan";
-
-                }else{
-                    for(DataSnapshot postsnapshot: snapshot.child("NhanVien").getChildren()){
-                        if(postsnapshot.getKey().equals(user)){
-                            Lrole[0]="NhanVien";
-                            return;
-                        }
-                    }
-                    Lrole[0]="KhachHang";
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
 
     public String getUser(){
         return user;
@@ -222,8 +143,6 @@ public class Bottomnavigation extends AppCompatActivity {
         return idRes;
     }
 
-    public String getRole(){
-        return Lrole[0];
-    }
+
 
 }
