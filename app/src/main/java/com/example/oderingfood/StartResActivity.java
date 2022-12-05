@@ -5,6 +5,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -24,13 +26,11 @@ import java.util.ArrayList;
 public class StartResActivity extends AppCompatActivity {
 
     String user,idRes;
-    static String[] Lrole =  new String[1];
     FirebaseDatabase database;
     DatabaseReference myRef;
-    String role="abc";
     ArrayList list = new ArrayList<>();
 
-    TextView text;
+    String role = "null";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -43,16 +43,23 @@ public class StartResActivity extends AppCompatActivity {
             user = bundle.getString("user");
             idRes = bundle.getString("restaurant");
         }
-        text = (TextView) findViewById(R.id.text);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("restaurant/" + idRes);
 
         setRole();
 
-        role = text.getText().toString();
+        new Thread(new Runnable() {
+            public void run() {
+                while (role.equals("null")) {
+                }
+                startActivityFromMainThread();
+            }
 
-        Toast.makeText(this,role, Toast.LENGTH_SHORT).show();
+        }).start();
+    }
+    private void changeRole(String role){
+        this.role = role;
     }
     public void setRole(){
         myRef.addValueEventListener(new ValueEventListener() {
@@ -61,16 +68,15 @@ public class StartResActivity extends AppCompatActivity {
                 String owner = snapshot.child("ChuQuan").getValue(String.class).toString();
 
                 if(owner.equals(user)){
-                    text.setText("ChuQuan");
-
+                    changeRole("ChuQuan");
                 }else{
                     for(DataSnapshot postsnapshot: snapshot.child("NhanVien").getChildren()){
                         if(postsnapshot.getKey().equals(user)){
-                            text.setText("NhanVien");
+                            changeRole("NhanVien");
                             return;
                         }
                     }
-                    text.setText("KhachHang");
+                    changeRole("KhachHang");
                 }
             }
 
@@ -82,6 +88,31 @@ public class StartResActivity extends AppCompatActivity {
 
     }
 
+//    private class MyThread extends Thread{
+//        @Override
+//        public void run() {
+//            while (!role.equals("null")){
+//            }
+//
+//            Intent intent = new Intent(StartResActivity.this, Bottomnavigation.class);
+//            intent.putExtra("role",role);
+//            startActivity(intent);
+//        }
+//    }
+    public void startActivityFromMainThread(){
+
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent (StartResActivity.this, Bottomnavigation.class);
+                intent.putExtra("role",role);
+                intent.putExtra("user",user);
+                intent.putExtra("restaurant", idRes);
+                startActivity(intent);
+            }
+        });
+    }
 
 }
 

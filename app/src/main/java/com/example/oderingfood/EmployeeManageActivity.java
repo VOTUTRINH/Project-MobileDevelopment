@@ -118,7 +118,6 @@ public class EmployeeManageActivity extends Fragment {
         adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees);
         adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking);
 
-        Toast.makeText(bottomnavigation, bottomnavigation.getRole(),Toast.LENGTH_SHORT).show();
 
         // Get data list employee from firebase
         // Do Something
