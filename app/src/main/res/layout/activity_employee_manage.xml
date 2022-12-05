@@ -84,6 +84,7 @@ android:orientation="vertical"
             android:orientation="vertical"
             android:layout_marginTop="30dp">
             <Button
+                android:id="@+id/btn_view_list_employees"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Danh sách nhân viên"

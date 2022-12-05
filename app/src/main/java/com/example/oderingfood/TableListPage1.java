@@ -52,6 +52,10 @@ public class TableListPage1 extends Fragment {
     ListTablesAdapter tablesAdapter;
     List<Table> tableList = new ArrayList<Table>();
 
+    Bottomnavigation bottomnavigation ;
+    String user;
+    String idRes;
+
     public TableListPage1() {
         // Required empty public constructor
     }
@@ -91,11 +95,15 @@ public class TableListPage1 extends Fragment {
         {
         }
 
+        bottomnavigation = (Bottomnavigation) getActivity();
+        user= bottomnavigation.getUser();
+        idRes = bottomnavigation.getIdRes();
+
         tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, tableList);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        mDatabase = database.getReference("/restaurant/"+idRes+"/BanAn");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -151,12 +159,14 @@ public class TableListPage1 extends Fragment {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+
                 if(tableList.get(i).getState().equals("Empty")){
                     Intent intent=new Intent(context,MonAnActivity.class);
                     Bundle b = new Bundle();
                     b.putString("key", tableList.get(i).getName()); //Your id
                     intent.putExtras(b); //Put your id to your next Intent
-                    context.startActivity(intent);
+//                    context.startActivity(intent);
                 }else
                 {
                     Intent intdn = new Intent(context, A2G7Activity.class); // Your nxt activity name instead of List_Activity
@@ -164,7 +174,7 @@ public class TableListPage1 extends Fragment {
                     Bundle b = new Bundle();
                     b.putString("key", tableList.get(i).getName()); //Your id
                     intdn.putExtras(b); //Put your id to your next Intent
-                    context.startActivity(intdn);
+//                    context.startActivity(intdn);
                 }
 
             }
