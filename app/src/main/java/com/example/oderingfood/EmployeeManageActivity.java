@@ -58,6 +58,7 @@ public class EmployeeManageActivity extends Fragment {
     FloatingActionButton btnAddEmployee;
     TextView txtNoEmployee;
     TextView txtNoEmployeeWorking;
+    Button btnViewListEmployees;
 
     List<Employee> employees = new ArrayList<Employee>();
     List<Employee> employeesWorking = new ArrayList<Employee>();
@@ -117,6 +118,7 @@ public class EmployeeManageActivity extends Fragment {
         adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees);
         adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking);
 
+        Toast.makeText(bottomnavigation, bottomnavigation.getRole(),Toast.LENGTH_SHORT).show();
 
         // Get data list employee from firebase
         // Do Something
@@ -219,6 +221,13 @@ public class EmployeeManageActivity extends Fragment {
         btnAddEmployee = (FloatingActionButton) employeeManagerFragment.findViewById(R.id.add_employee_floating_button);
         txtNoEmployee = (TextView) employeeManagerFragment.findViewById(R.id.txt_no_employee);
         txtNoEmployeeWorking = (TextView) employeeManagerFragment.findViewById(R.id.txt_no_employee_working);
+        btnViewListEmployees = (Button) employeeManagerFragment.findViewById(R.id.btn_view_list_employees);
+
+        btnViewListEmployees.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
 
         btnAddEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -338,24 +347,26 @@ public class EmployeeManageActivity extends Fragment {
                     boolean canAdd = false;
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String idUser = "";
                         for(DataSnapshot postSnapshotUser: snapshot.getChildren())
                         {
                             if(String.valueOf(postSnapshotUser.child("Sdt").getValue(Long.class)).equals(String.valueOf(employeeSdt)))
                             {
+                                idUser = postSnapshotUser.child("id").getValue(String.class);
                                 canAdd = true;
                             }
                         }
                         if(canAdd == true)
                         {
 
-                            String id = mDatabaseNhanVien.push().getKey();
+//                            String id = mDatabaseNhanVien.push().getKey();
                             Map<String, Object> map = new HashMap<String, Object>();
                             map.put("Sdt", employeeSdt);
                             map.put("Luong", luong);
                             map.put("ThoiGianLamViec", 0);
                             map.put("TrangThai", "KhongLamViec");
 
-                            mDatabaseNhanVien.child(id).setValue(map);
+                            mDatabaseNhanVien.child(idUser).setValue(map);
                         }
                         else
                         {
