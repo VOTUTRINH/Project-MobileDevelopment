@@ -1,6 +1,5 @@
 package com.example.oderingfood;
 
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
 
 import android.annotation.SuppressLint;
 import android.content.Context;

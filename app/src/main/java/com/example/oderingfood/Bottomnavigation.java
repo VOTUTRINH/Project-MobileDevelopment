@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -20,6 +21,19 @@ import androidx.appcompat.widget.Toolbar;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import org.checkerframework.checker.units.qual.A;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
+import java.util.ListIterator;
 
 public class Bottomnavigation extends AppCompatActivity {
     BottomNavigationView bottomNavigationView;
@@ -34,18 +48,24 @@ public class Bottomnavigation extends AppCompatActivity {
     EmployeeManageActivity employeeManagerFragment = new EmployeeManageActivity();
 
     String user,idRes;
-
+    static String[] Lrole =  new String[1];
+    FirebaseDatabase database;
+    DatabaseReference myRef;
+    String role;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottomnavigation);
+         database = FirebaseDatabase.getInstance();
+         myRef = database.getReference("restaurant/"+  idRes);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle !=null){
+        if(bundle !=null) {
             user = bundle.getString("user");
             idRes = bundle.getString("restaurant");
         }
+
 
         bottomNavigationView=findViewById(R.id.buttom_navigation);
         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
@@ -77,7 +97,6 @@ public class Bottomnavigation extends AppCompatActivity {
         getSupportActionBar().setTitle(null);
 
 
-
 }
 
     @Override
@@ -99,8 +118,46 @@ public class Bottomnavigation extends AppCompatActivity {
                 startActivity(intent);
                 break;
             }
+            case R.id.camera:{
+
+                Intent intent = new Intent(bottomNavigationView.getContext(), ScanQRCode.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("idRes",idRes);
+                bundle.putString("idUser",user);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            }
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public void setRole(){
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String owner = snapshot.child("ChuQuan").getValue(String.class).toString();
+
+                if(owner.equals(user)){
+                    Lrole[0]="ChuQuan";
+
+                }else{
+                    for(DataSnapshot postsnapshot: snapshot.child("NhanVien").getChildren()){
+                        if(postsnapshot.getKey().equals(user)){
+                            Lrole[0]="NhanVien";
+                            return;
+                        }
+                    }
+                    Lrole[0]="KhachHang";
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
     }
 
     public String getUser(){
@@ -110,4 +167,9 @@ public class Bottomnavigation extends AppCompatActivity {
     public String getIdRes(){
         return idRes;
     }
+
+    public String getRole(){
+        return Lrole[0];
+    }
+
 }

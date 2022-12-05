@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ScanQRCode"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/abc"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:text="Điểm danh"
+        android:textSize="25dp"
+        android:fontFamily="@font/quicksand_bold"
+        android:textColor="@color/color_main"
+        />
+    <ImageView
+        android:id="@+id/img_qrcode"
+        android:layout_width="match_parent"
+        android:layout_height="350dp"
+        android:layout_marginTop="20dp"
+        android:padding="5dp"
+        android:gravity="center"
+        android:src="@drawable/img_1"/>
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_scanQr"
+        android:layout_width="130dp"
+        android:layout_height="130dp"
+        android:backgroundTint="@color/color_main"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="50dp"
+        android:text="Scan"
+        android:layout_gravity="center_horizontal"
+        android:textSize="20sp"
+        app:cornerRadius="70dp"
+        app:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        app:iconGravity="textStart"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_generateQrcode"
+        android:layout_width="match_parent"
+        android:layout_height="70dp"
+        android:backgroundTint="@color/color_main"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="30dp"
+        android:layout_marginTop="20dp"
+        android:text="Tạo mã QRCODE"
+        android:textSize="18sp"
+        app:cornerRadius="10dp"
+        app:icon="@drawable/ic_baseline_qr_code_scanner_24"
+        app:iconGravity="textStart"
+        />
+</LinearLayout>

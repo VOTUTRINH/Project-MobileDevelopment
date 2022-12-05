@@ -31,12 +31,14 @@ public class HomeFragment extends Fragment {
     Bottomnavigation bottomnavigation ;
     String user;
     String idRes;
+    String role;
 
     FirebaseDatabase database ;
     DatabaseReference myRef ;
 
     ArrayList Img =new ArrayList<>();
     ArrayList Img2 =new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +46,12 @@ public class HomeFragment extends Fragment {
         bottomnavigation = (Bottomnavigation) getActivity();
         user= bottomnavigation.getUser();
         idRes = bottomnavigation.getIdRes();
+        role=bottomnavigation.getRole();
+        Toast.makeText(bottomnavigation, role, Toast.LENGTH_SHORT).show();
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("restaurant/"+idRes);
 
-      //  Toast.makeText(bottomnavigation, idRes, Toast.LENGTH_SHORT).show();
     }
 
     @Override
