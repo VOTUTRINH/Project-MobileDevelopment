@@ -38,6 +38,14 @@ public class Food implements Serializable {
         this.urlImage = urlImage;
         quantity = 0;
     }
+    public Food(String id, String name, double price, String urlImage){
+        this.id=id;
+        this.name = name;
+        this.price = price;
+        this.totalOrder =0;
+        this.quantity = 0;
+        this.urlImage=urlImage;
+    }
 
     public String getId() {
         return id;

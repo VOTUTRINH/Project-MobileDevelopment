@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.Table;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -36,6 +38,7 @@ public class MonAnActivity extends AppCompatActivity {
 
     AdapterMonAn adapter;
     Button btnOrder;
+    FloatingActionButton addFood;
     String tablePath;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,7 +46,7 @@ public class MonAnActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mon_an);
         dataList = findViewById(R.id.dishesList);
         btnOrder = findViewById(R.id.ac_btn_send);
-
+        addFood = (FloatingActionButton)findViewById(R.id.am_button_add_food);
         Bundle b = getIntent().getExtras();
 
         if(b != null) {
@@ -124,6 +127,14 @@ public class MonAnActivity extends AppCompatActivity {
                     finish();
                 }
 
+            }
+        });
+        //nhan nut add
+        addFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MonAnActivity.this,AddFoodToMenu.class);
+                startActivity(intent);
             }
         });
     }
