@@ -33,11 +33,18 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
     private  Context context;
     private List<Table> listTables;
 
+    Bottomnavigation bottomnavigation ;
+    String user;
+    String idRes;
 
     public ListTablesAdapter(Context context, int resource, List<Table> listTables) {
         super(context,R.layout.table_layout_item,listTables);
         this.context = context;
         this.listTables = listTables;
+
+        bottomnavigation = (Bottomnavigation) context;
+        user= bottomnavigation.getUser();
+        idRes = bottomnavigation.getIdRes();
     }
 
 
@@ -118,7 +125,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mDatabase;
 
-                mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+                mDatabase = database.getReference("/restaurant/"+idRes+"/BanAn");
 
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

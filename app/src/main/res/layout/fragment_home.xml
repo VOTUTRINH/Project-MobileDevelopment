@@ -107,6 +107,7 @@
         </LinearLayout>
 
         <TextView
+            android:id="@+id/txt_images_restaurant"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Không gian quán"
@@ -123,8 +124,10 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:id="@+id/layout_txt_menu">
             <TextView
+                android:id="@+id/txt_images_menu"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Món ăn hấp dẫn"
@@ -133,57 +136,60 @@
                 android:textColor="@color/color_main"/>
 
 
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="right"
-                android:clickable="true"
-                android:text="Xem tất cả ->"
-                android:textColor="@color/purple_700"/>
-        </LinearLayout>
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_list_image_2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal"/>
+            <!--   <TextView
+                   android:id="@+id/see_all"
+                   android:layout_width="match_parent"
+                   android:layout_height="wrap_content"
+                   android:gravity="right"
+                   android:clickable="true"
+                   android:text="Xem tất cả ->"
+                   android:textColor="@color/purple_700"/>-->
 
-
-       <LinearLayout
-
-           android:layout_width="match_parent"
-           android:layout_height="150dp"
-           android:layout_margin="10dp"
-           android:background="@drawable/custom_item"
-           android:orientation="vertical"
-           >
-
-           <TextView
+           </LinearLayout>
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recycler_list_image_2"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
-               android:text="Khuyến mãi đặc biệt"
-               android:gravity="center"
-               android:fontFamily="@font/quicksand_bold"
-               android:textSize="20sp"
-               android:textColor="@color/color_main"
-               />
-           <TextView
-               android:layout_width="match_parent"
-               android:layout_height="wrap_content"
-               android:text="Giảm giá 5% cho hóa đơn trên 1 triệu đồng."
-               android:gravity="center"
-               android:fontFamily="@font/quicksand_bold"
-               android:textSize="30dp"
-               android:layout_margin="20dp"
-               />
+               android:orientation="horizontal"/>
+
+
+          <LinearLayout
+
+              android:layout_width="match_parent"
+              android:layout_height="150dp"
+              android:layout_margin="10dp"
+              android:background="@drawable/custom_item"
+              android:orientation="vertical"
+              android:id="@+id/layout_voucher"
+              >
+
+              <TextView
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:text="Khuyến mãi đặc biệt"
+                  android:gravity="center"
+                  android:fontFamily="@font/quicksand_bold"
+                  android:textSize="20sp"
+                  android:textColor="@color/color_main"
+                  />
+              <TextView
+                  android:id="@+id/txt_voucher"
+                  android:layout_width="match_parent"
+                  android:layout_height="wrap_content"
+                  android:gravity="center"
+                  android:fontFamily="@font/quicksand_bold"
+                  android:textSize="30dp"
+                  android:layout_margin="20dp"
+                  />
+          </LinearLayout>
+
+
+
+
        </LinearLayout>
 
 
+       //---
 
 
-    </LinearLayout>
-
-
-    //---
-
-
-</ScrollView>
+   </ScrollView>

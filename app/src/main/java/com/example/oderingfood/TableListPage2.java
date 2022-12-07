@@ -49,6 +49,10 @@ public class TableListPage2 extends Fragment {
     GridView gv;
     List<Table> listTable = new ArrayList<Table>();
 
+    Bottomnavigation bottomnavigation ;
+    String user;
+    String idRes;
+
     ListTablesAdapter tablesAdapter;
     public TableListPage2() {
         // Required empty public constructor
@@ -87,12 +91,18 @@ public class TableListPage2 extends Fragment {
         }catch (Exception e)
         {
         }
+        bottomnavigation = (Bottomnavigation) getActivity();
+        user= bottomnavigation.getUser();
+        idRes = bottomnavigation.getIdRes();
+
+
+
         tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, listTable);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        mDatabase = database.getReference("/restaurant/" + idRes + "/BanAn");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
