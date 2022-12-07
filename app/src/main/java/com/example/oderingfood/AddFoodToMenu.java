@@ -16,10 +16,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
@@ -51,9 +55,9 @@ public class AddFoodToMenu extends Activity {
 //        Intent intent = getIntent();
 //        idOwner = intent.getStringExtra("idOwner");
 
-        database = FirebaseDatabase.getInstance().getReference("/restaurant/-NI2fBrgu6oPdADxD0rN");
+        database = FirebaseDatabase.getInstance().getReference("/restaurant/" + GlobalVariables.pathRestaurentID);
         database = database.child("Menu");
-        reference = FirebaseStorage.getInstance().getReference();
+                reference = FirebaseStorage.getInstance().getReference();
 
         edt_name= (EditText) findViewById(R.id.af_input_namefood);
         edt_id=(EditText) findViewById(R.id.af_input_idmon);
@@ -96,16 +100,37 @@ public class AddFoodToMenu extends Activity {
         }else if (price<=0){
             Toast.makeText(this, "Giá không hợp lệ.", Toast.LENGTH_SHORT).show();
         }else {
+        database.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot postSnapShot: snapshot.getChildren())
+                {
+                    if(postSnapShot.getKey().equals(id))
+                    {
+                        Toast.makeText(AddFoodToMenu.this,"ID món ăn đã tồn tại",Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                }
 
+                Food food = new Food(id, name, price, url );
+                database.child(id).setValue(food, new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(AddFoodToMenu.this,getString(R.string.themmonthanhcong), Toast.LENGTH_SHORT).show();
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
 //            id = database.push().getKey();
-            Food food = new Food(id, name, price, url);
-            database.child(id).setValue(food, Food.class);
 
 
 
-
-            Intent intent = new Intent(this,ListRestaurant.class);
-            startActivity(intent);
+            finish();
         }
     }
 

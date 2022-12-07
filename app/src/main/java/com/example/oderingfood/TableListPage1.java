@@ -166,7 +166,7 @@ public class TableListPage1 extends Fragment {
                     Bundle b = new Bundle();
                     b.putString("key", tableList.get(i).getName()); //Your id
                     intent.putExtras(b); //Put your id to your next Intent
-//                    context.startActivity(intent);
+                    context.startActivity(intent);
                 }else
                 {
                     Intent intdn = new Intent(context, A2G7Activity.class); // Your nxt activity name instead of List_Activity
@@ -174,7 +174,7 @@ public class TableListPage1 extends Fragment {
                     Bundle b = new Bundle();
                     b.putString("key", tableList.get(i).getName()); //Your id
                     intdn.putExtras(b); //Put your id to your next Intent
-//                    context.startActivity(intdn);
+                    context.startActivity(intdn);
                 }
 
             }

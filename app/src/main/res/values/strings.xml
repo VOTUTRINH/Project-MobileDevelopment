@@ -5,4 +5,5 @@
     <string name="chuachonmon">Chưa có món ăn nào được chọn.</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="datmonthanhcong">Đặt món thành công.</string>
+    <string name="themmonthanhcong">Thêm món mới thành công.</string>
 </resources>

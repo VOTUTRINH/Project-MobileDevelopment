@@ -11,8 +11,10 @@ import android.widget.Toast;
 
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -54,8 +56,8 @@ public class A2G7Activity extends Activity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
-
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn/"+ tablePath);
+        String pathR = "/restaurant/" + GlobalVariables.pathRestaurentID;
+        mDatabase = database.getReference(pathR+"/BanAn/"+ tablePath);
         setContentView(R.layout.a2g7_activity_main);
 
         listView = findViewById(R.id.afo_listview);
@@ -112,6 +114,40 @@ public class A2G7Activity extends Activity {
 
             }
 
+        });
+        thanhtoan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DatabaseReference menuDatabase = database.getReference(pathR + "/Menu");
+                menuDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        for (DataSnapshot foodSnapShot : snapshot.getChildren()) {
+                            for (int i = 0; i<dataList.size(); i++){
+                                Food food = foodSnapShot.getValue(Food.class);
+                                if (food.getId() == dataList.get(i).getId()) {
+                                    int total = food.getTotal();
+                                    foodSnapShot.child("total").getRef().setValue(total + dataList.get(i).getQuantity());
+                                }
+                            }
+                        }
+
+                        }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
+                mDatabase.child("Order").setValue(null);
+                mDatabase.child("TrangThai").setValue("Empty", new DatabaseReference.CompletionListener() {
+                    @Override
+                    public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                        Toast.makeText(A2G7Activity.this, "Thanh toán thành công", Toast.LENGTH_SHORT).show();
+                        finish();
+                    }
+                });
+            }
         });
 
     }

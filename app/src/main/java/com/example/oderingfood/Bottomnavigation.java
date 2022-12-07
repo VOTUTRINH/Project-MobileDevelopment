@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
@@ -63,6 +64,7 @@ public class Bottomnavigation extends AppCompatActivity {
             user = bundle.getString("user");
             idRes = bundle.getString("restaurant");
             role = bundle.getString("role");
+            GlobalVariables.pathRestaurentID = idRes;
         }
 
 
