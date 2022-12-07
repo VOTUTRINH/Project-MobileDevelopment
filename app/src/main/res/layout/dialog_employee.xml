@@ -19,20 +19,20 @@
         android:inputType="textPersonName"
         android:text="" />
 
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:fontFamily="@font/quicksand_bold"
-        android:text="ID:" />
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView2"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:fontFamily="@font/quicksand_bold"-->
+    <!--        android:text="ID:" />-->
 
-    <EditText
-        android:id="@+id/df_id"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="number"
-        android:text="" />
+    <!--    <EditText-->
+    <!--        android:id="@+id/df_id"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:ems="10"-->
+    <!--        android:inputType="number"-->
+    <!--        android:text="" />-->
 
     <TextView
         android:id="@+id/textView3"
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_bold"
-        android:text="Email:" />
+        android:text="Giới tính:" />
 
     <EditText
         android:id="@+id/df_email"
@@ -84,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:fontFamily="@font/quicksand_bold"
-        android:text="Lương theo giờ" />
+        android:text="Ngày sinh" />
 
     <EditText
         android:id="@+id/df_salary"
@@ -94,20 +94,20 @@
         android:inputType="text"
         android:text=""/>
 
-    <TextView
-        android:id="@+id/textView7"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Tổng tiền lương còn nợ"
-        android:fontFamily="@font/quicksand_bold"/>
+    <!--    <TextView-->
+    <!--        android:id="@+id/textView7"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:text="Tổng tiền lương còn nợ"-->
+    <!--        android:fontFamily="@font/quicksand_bold"/>-->
 
-    <EditText
-        android:id="@+id/df_debt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="text"
-        android:text=""/>
+    <!--    <EditText-->
+    <!--        android:id="@+id/df_debt"-->
+    <!--        android:layout_width="match_parent"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:ems="10"-->
+    <!--        android:inputType="text"-->
+    <!--        android:text=""/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
