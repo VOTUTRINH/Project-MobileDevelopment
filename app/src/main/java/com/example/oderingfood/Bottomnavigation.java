@@ -36,55 +36,54 @@ public class Bottomnavigation extends AppCompatActivity {
     ChatActivity chatActivity = new ChatActivity();
     Toolbar toolbar;
 
-    String user,idRes;
+    String user, idRes;
 
     FirebaseDatabase database;
     DatabaseReference myRef;
-    static String[] role = new String[1];
+    String role;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottomnavigation);
-         database = FirebaseDatabase.getInstance();
-         myRef = database.getReference("restaurant/"+  idRes);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("restaurant/" + idRes);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle !=null) {
+        if (bundle != null) {
             user = bundle.getString("user");
             idRes = bundle.getString("restaurant");
+            role = bundle.getString("role");
         }
-        role[0] = "NULL";
-        setRole();
-
-
-        bottomNavigationView=findViewById(R.id.buttom_navigation);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
+        Toast.makeText(this, idRes, Toast.LENGTH_SHORT).show();
+        bottomNavigationView = findViewById(R.id.buttom_navigation);
+        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
-                            return true;
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+                        return true;
                     case R.id.booking:
                         BookingFragment bookingFragment = new BookingFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,bookingFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, bookingFragment).commit();
                         return true;
                     case R.id.order:
                         TablesActivity orderFragment = new TablesActivity();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,orderFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, orderFragment).commit();
                         return true;
                     case R.id.employee:
                         EmployeeManageActivity employeeManagerFragment = new EmployeeManageActivity();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,employeeManagerFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, employeeManagerFragment).commit();
                         return true;
 
                     case R.id.menu:
                         TuyChon_Fragment tuyChon_fragment = new TuyChon_Fragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,tuyChon_fragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, tuyChon_fragment).commit();
                         return true;
                 }
 
@@ -98,51 +97,52 @@ public class Bottomnavigation extends AppCompatActivity {
     }
 
 
-
-    public void setRole(){
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabase;
-        mDatabase = database.getReference("/restaurant/"+idRes);
-
-
-        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(@NonNull DataSnapshot snapshot) {
-                String owner = snapshot.child("ChuQuan").getValue(String.class);
-
-                if(owner.equals(user)){
-                    role[0]="ChuQuan";
-
-                }else{
-                    for(DataSnapshot postsnapshot: snapshot.child("NhanVien").getChildren()){
-                        if(postsnapshot.getKey().equals(user)){
-                            role[0]="NhanVien";
-                            return;
-                        }
-                    }
-                    role[0]="KhachHang";
-                }
-            }
-
-            @Override
-            public void onCancelled(@NonNull DatabaseError error) {
-
-            }
-        });
-
-    }
-    public String getRole(){
-        return role[0];
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.toolbar_menu, menu);
+        return true;
     }
 
-    public String getUser(){
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        switch (item.getItemId()) {
+            case R.id.notification: {
+                FragmentNotification noticeFragment = new FragmentNotification();
+                getSupportFragmentManager().beginTransaction().replace(R.id.container, noticeFragment).commit();
+                break;
+            }
+            case R.id.message: {
+                Intent intent = new Intent(bottomNavigationView.getContext(), ChatActivity.class);
+                startActivity(intent);
+                break;
+            }
+            case R.id.camera: {
+
+                Intent intent = new Intent(bottomNavigationView.getContext(), ScanQRCode.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("idRes", idRes);
+                bundle.putString("idUser", user);
+                bundle.putString("role",role);
+                intent.putExtras(bundle);
+                startActivity(intent);
+                break;
+            }
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
+
+    public String getUser() {
         return user;
     }
 
-    public String getIdRes(){
+    public String getIdRes() {
         return idRes;
     }
 
-
-
+    public String getRole() {
+        return role;
+    }
 }

@@ -46,12 +46,11 @@ public class HomeFragment extends Fragment {
         bottomnavigation = (Bottomnavigation) getActivity();
         user= bottomnavigation.getUser();
         idRes = bottomnavigation.getIdRes();
-        role=bottomnavigation.getRole();
-        Toast.makeText(bottomnavigation, role, Toast.LENGTH_SHORT).show();
+        role = bottomnavigation.getRole();
+        //Toast.makeText(bottomnavigation, role, Toast.LENGTH_SHORT).show();
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("restaurant/"+idRes);
-        Toast.makeText(bottomnavigation, bottomnavigation.getRole(), Toast.LENGTH_SHORT).show();
 
     }
 
@@ -123,7 +122,7 @@ public class HomeFragment extends Fragment {
                 //load menu image
                 try{
                     for(DataSnapshot postSnapshot: snapshot.child("Menu").getChildren()){
-                        String link =  postSnapshot.child("HinhAnh").getValue().toString();
+                        String link =  postSnapshot.child("urlImage").getValue().toString();
                         Img.add(link);
                     }
                     adapter2.notifyDataSetChanged();
