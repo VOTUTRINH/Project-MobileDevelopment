@@ -1,65 +1,65 @@
 package com.example.oderingfood;
 
 public class User {
-    String id,name,dofBirth,gender, phone, address;
+    String Email,HoTen,NgaySinh,GioiTinh, DienThoai, DiaChi;
 
     public User() {
     }
 
-    public User(String id,String name, String dofBirth, String gender, String phone, String address) {
-        this.id=id;
-        this.name = name;
-        this.dofBirth = dofBirth;
-        this.gender = gender;
-        this.phone = phone;
-        this.address = address;
+    public User(String email, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi) {
+        this.Email = email;
+        this.HoTen = hoTen;
+        this.NgaySinh = ngaySinh;
+        this.GioiTinh = gioiTinh;
+        this.DienThoai = dienThoai;
+        this.DiaChi = diaChi;
     }
 
-    public String getId() {
-        return id;
+    public String getEmail() {
+        return Email;
     }
 
-    public void setId(String id) {
-        this.id = id;
+    public void setEmail(String email) {
+        this.Email = email;
     }
 
-    public String getName() {
-        return name;
+    public String getHoTen() {
+        return HoTen;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHoTen(String hoTen) {
+        this.HoTen = hoTen;
     }
 
-    public String getDofBirth() {
-        return dofBirth;
+    public String getNgaySinh() {
+        return NgaySinh;
     }
 
-    public void setDofBirth(String dofBirth) {
-        this.dofBirth = dofBirth;
+    public void setNgaySinh(String ngaySinh) {
+        this.NgaySinh = ngaySinh;
     }
 
-    public String getGender() {
-        return gender;
+    public String getGioiTinh() {
+        return GioiTinh;
     }
 
-    public void setGender(String gender) {
-        this.gender = gender;
+    public void setGioiTinh(String gioiTinh) {
+        this.GioiTinh = gioiTinh;
     }
 
-    public String getPhone() {
-        return phone;
+    public String getDienThoai() {
+        return DienThoai;
     }
 
-    public void setPhone(String phone) {
-        this.phone = phone;
+    public void setDienThoai(String dienThoai) {
+        this.DienThoai = dienThoai;
     }
 
-    public String getAddress() {
-        return address;
+    public String getDiaChi() {
+        return DiaChi;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public void setDiaChi(String diaChi) {
+        this.DiaChi = diaChi;
     }
 }

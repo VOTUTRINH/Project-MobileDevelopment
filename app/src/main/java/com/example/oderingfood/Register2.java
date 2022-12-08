@@ -35,6 +35,7 @@ public class Register2 extends Activity {
 
         Intent i=getIntent();
         String id=i.getStringExtra("id");
+        String email=i.getStringExtra("email");
         add_image1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -56,7 +57,7 @@ public class Register2 extends Activity {
                 String gender=regGender.getEditableText().toString();
                 String phone=regPhone.getEditableText().toString();
                 String address=regAddress.getEditableText().toString();
-                User user=new User(id,name,doBirth,gender,phone,address);
+                User user=new User(email,name,doBirth,gender,phone,address);
 
                 reference.child(id).setValue(user);
 

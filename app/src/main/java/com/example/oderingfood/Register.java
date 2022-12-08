@@ -75,13 +75,15 @@ public class Register extends Activity {
 
                     if (isNewUser) {
                         auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
-                            String id=   auth.getCurrentUser().getUid();
+
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
+                                    String id=   auth.getUid();
                                     Toast.makeText(Register.this, "Đăng kí thành công.", Toast.LENGTH_SHORT).show();
                                     Intent intent=new Intent(Register.this,Register2.class);
                                     intent.putExtra("id",id);
+                                    intent.putExtra("email",email);
                                     startActivity(intent);
                                     finish();
                                 }else {
