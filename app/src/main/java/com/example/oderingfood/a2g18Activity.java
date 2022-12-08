@@ -33,14 +33,19 @@ public class a2g18Activity extends Activity {
     private TextView txtEmail;
     private TextView txtAddress;
     private TextView txtSalary;
+    private TextView txtSalaryPerHour;
+    private TextView txtTotalSalary;
     private CircleImageView txtAvatar;
+    private EditText edtSalaryPerHour;
+    private Button btnThanhToan;
+    private String salaryTemp;
     private TextView txtDebt;
-    private EditText editTextFullName;
-    private EditText editTextID;
-    private EditText editTextPhone;
-    private EditText editTextEmail;
-    private EditText editTextAddress;
-    private EditText editTextSalary;
+    //    private EditText editTextFullName;
+//    private EditText editTextID;
+//    private EditText editTextPhone;
+//    private EditText editTextEmail;
+//    private EditText editTextAddress;
+//    private EditText editTextSalary;
     String idUser;
 
 
@@ -59,6 +64,18 @@ public class a2g18Activity extends Activity {
         txtAddress = this.findViewById(R.id.afo_txtAddress);
         txtSalary = this.findViewById(R.id.afo_txtSalary);
         txtAvatar = this.findViewById(R.id.afo_avatar);
+        txtSalaryPerHour = this.findViewById(R.id.afo_txtSalaryPerHour);
+        txtTotalSalary = this.findViewById(R.id.afo_txtTotalSalary);
+        edtSalaryPerHour = this.findViewById(R.id.df_salaryPerHour);
+        btnThanhToan = this.findViewById(R.id.afo_btnThanhToan);
+        btnThanhToan.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                double salary = Double.parseDouble(salaryTemp) - Double.parseDouble(edtSalaryPerHour.getText().toString());
+
+                txtTotalSalary.setText("Tổng lương: " + String.valueOf(salary));
+            }
+        });
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
@@ -75,6 +92,8 @@ public class a2g18Activity extends Activity {
                 String email = snapshot.child("GioiTinh").getValue(String.class);
                 String address = snapshot.child("DiaChi").getValue(String.class);
                 String salary = snapshot.child("NgaySinh").getValue(String.class);
+                String salaryPerHour = snapshot.child("LuongTrenGio").getValue(String.class);
+                String totalSalary = snapshot.child("TongLuong").getValue(String.class);
                 String urlImage;
                 try {
                     urlImage = snapshot.child("Avatar").getValue(String.class).toString();
@@ -89,6 +108,9 @@ public class a2g18Activity extends Activity {
                 txtEmail.setText("Giới tính: " + email);
                 txtAddress.setText("Địa chỉ: " + address);
                 txtSalary.setText("Ngày sinh: " + salary);
+                txtSalaryPerHour.setText("Lương trên giờ: " + salaryPerHour);
+                txtTotalSalary.setText("Tổng lương: " + totalSalary);
+                salaryTemp = totalSalary;
             }
 
             @Override
@@ -117,33 +139,36 @@ public class a2g18Activity extends Activity {
 //        TextView debt1 = this.findViewById(R.id.afo_txtDebt);
         CustomDialog.EmployeeListener listener = new CustomDialog.EmployeeListener() {
             @Override
-            public void fullNameEntered(String fullName) {
-                txtName.setText("Họ và tên: " + fullName);
-            }
-
-//            public void IDEntered(String ID) {
-//                txtID.setText("ID: " + ID);
+//            public void fullNameEntered(String fullName) {
+//                txtName.setText("Họ và tên: " + fullName);
 //            }
-
-            public void phoneEntered(String phone) {
-                txtPhone.setText("Số điện thoại: " + phone);
-            }
-
-            public void emailEntered(String email) {
-                txtEmail.setText("Giới tính: " + email);
-            }
-
-            public void addressEntered(String address) {
-                txtAddress.setText("Địa chỉ: " + address);
-            }
-
-            public void salaryEntered(String salary) {
-                txtSalary.setText("Ngày sinh: " + salary);
-            }
+//
+////            public void IDEntered(String ID) {
+////                txtID.setText("ID: " + ID);
+////            }
+//
+//            public void phoneEntered(String phone) {
+//                txtPhone.setText("Số điện thoại: " + phone);
+//            }
+//
+//            public void emailEntered(String email) {
+//                txtEmail.setText("Giới tính: " + email);
+//            }
+//
+//            public void addressEntered(String address) {
+//                txtAddress.setText("Địa chỉ: " + address);
+//            }
+//
+//            public void salaryEntered(String salary) {
+//                txtSalary.setText("Ngày sinh: " + salary);
+//            }
 
 //            public void debtEntered(String debt) {
 //                debt1.setText("Tổng tiền lương còn nợ: " + debt);
 //            }
+            public void salaryEntered(String salary) {
+                txtSalaryPerHour.setText("Lương trên giờ: " + salary);
+            }
         };
         final CustomDialog dialog = new CustomDialog(this, listener, idUser);
 
