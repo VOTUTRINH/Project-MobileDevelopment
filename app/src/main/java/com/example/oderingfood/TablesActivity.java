@@ -81,7 +81,7 @@ public class TablesActivity extends Fragment {
                         }
                     }
                 }).attach();
-
+        adapter.notifyDataSetChanged();
         btnAddTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -5,7 +5,7 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:background="@drawable/table_item_background"
-    android:padding="20dp"
+    android:padding="15dp"
     >
     <TextView
         android:id="@+id/btn_moremenu"
@@ -31,7 +31,7 @@
         android:textSize="25sp"
         android:textAlignment="center"/>
 
-    <com.example.oderingfood.models.CustomRunninTextview
+    <TextView
         android:id="@+id/table_state"
         android:layout_width="match_parent"
         android:layout_height="20dp"
@@ -40,9 +40,8 @@
         android:text="Đang hoạt động"
         android:textAlignment="center"
         android:textColor="#EC808D"
-        android:ellipsize="marquee"
-        android:marqueeRepeatLimit="marquee_forever"
-        android:scrollHorizontally="true"
+
+
       />
 
 </LinearLayout>

@@ -68,11 +68,12 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
             state = "Đang sử dụng";
         }
         else if (tb.getState().equals("IsWaiting")){
-            state = "Đang đợi món, độ ưu tiên: " +  Integer.toString(tb.getPriority());
+            state = "Đang đợi, độ ưu tiên: " +  Integer.toString(tb.getPriority());
         }
         else{
             state = "Còn trống";
         }
+
         txtState.setText(state);
         if(tb.getState().equals("IsUsing")) {
             table.setBackgroundResource(R.drawable.table_using_not_wait_bg);

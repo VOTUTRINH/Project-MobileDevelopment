@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.GlobalVariables;
 
 import java.util.List;
 
@@ -44,7 +45,7 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         Glide.with(context).load(menu.get(position).getUrlImage()).into(holder.foodImageView);
         holder.foodNameView.setText(menu.get(position).getName());
-        holder.foodPriceView.setText(Double.toString(menu.get(position).getPrice()));
+        holder.foodPriceView.setText(GlobalVariables.displayCurrency(menu.get(position).getPrice()));
         holder.numOfFoods.setText(Integer.toString(menu.get(position).getQuantity()));
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override

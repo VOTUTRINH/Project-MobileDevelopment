@@ -21,6 +21,7 @@ public class ListTableViewPagerAdapter extends FragmentStateAdapter {
             case 2: return new TableListPage3();
             default: return new TableListPage1();
         }
+
     }
 
     @Override

@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -9,6 +10,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
@@ -70,9 +72,9 @@ public class FoodAdapter extends BaseAdapter {
         Food food = dataList.get(position);
         Glide.with(activity.getBaseContext()).load(food.getUrlImage()).into(thumbnail);
         name.setText("Tên: " + food.getName());
-        price.setText("Giá: " + String.valueOf(food.getPrice()) + " $");
+        price.setText("Giá: " + GlobalVariables.displayCurrency(food.getPrice()));
         quantity.setText("Số lượng: " + String.valueOf(food.getQuantity()));
-        total.setText("Tổng tiền: " + String.valueOf(food.getPrice() * food.getQuantity()) + " $");
+        total.setText("Tổng tiền: " + GlobalVariables.displayCurrency(food.getPrice() * food.getQuantity()));
         if (food.isServed() == true){
             giaoMon.setText("Đã giao");
             giaoMon.setClickable(false);
@@ -125,6 +127,7 @@ public class FoodAdapter extends BaseAdapter {
                 }
                 if (check){
                     yourtable.child("TrangThai").setValue("IsUsing");
+                    yourtable.child("Priority").setValue(9999);
                     GlobalVariables.priority--;
                 }
                 else {
@@ -137,6 +140,8 @@ public class FoodAdapter extends BaseAdapter {
 
         return view;
     }
+
+
 
 }
 
