@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.view.LayoutInflater;
@@ -12,13 +13,16 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Table;
+import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,11 +37,18 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
     private  Context context;
     private List<Table> listTables;
 
+    Bottomnavigation bottomnavigation ;
+    String user;
+    String idRes;
 
     public ListTablesAdapter(Context context, int resource, List<Table> listTables) {
         super(context,R.layout.table_layout_item,listTables);
         this.context = context;
         this.listTables = listTables;
+
+        bottomnavigation = (Bottomnavigation) context;
+        user= bottomnavigation.getUser();
+        idRes = bottomnavigation.getIdRes();
     }
 
 
@@ -48,10 +59,28 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         View row = inflater.inflate(R.layout.table_layout_item, null);
         TextView name = (TextView) row.findViewById(R.id.table_item_text);
         name.setText("Bàn " + listTables.get(position).getName());
+        LinearLayout table = row.findViewById(R.id.table_linear_layout);
 
         TextView txtState = (TextView) row.findViewById(R.id.table_state);
-        String state = (listTables.get(position).getState().equals("IsUsing")?"Đang sử dụng":"Còn trống");
+        Table tb = listTables.get(position);
+        String state;
+        if(tb.getState().equals("IsUsing")){
+            state = "Đang sử dụng";
+        }
+        else if (tb.getState().equals("IsWaiting")){
+            state = "Đang đợi, độ ưu tiên: " +  Integer.toString(tb.getPriority());
+        }
+        else{
+            state = "Còn trống";
+        }
+
         txtState.setText(state);
+        if(tb.getState().equals("IsUsing")) {
+            table.setBackgroundResource(R.drawable.table_using_not_wait_bg);
+        }
+        else if(tb.getState().equals("IsWaiting")){
+            table.setBackgroundResource(R.drawable.table_wait_food_bg);
+        }
 
         TextView btnMoreAction = (TextView) row.findViewById(R.id.btn_moremenu);
 
@@ -64,6 +93,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                     @Override
 
                     public boolean onMenuItemClick(MenuItem menuItem) {
+
                         switch (menuItem.getItemId()) {
                             case R.id.menu_thanhtoan:
                                 if(listTables.get(position).getState().equals("Empty")){
@@ -118,7 +148,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mDatabase;
 
-                mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+                mDatabase = database.getReference("/restaurant/"+idRes+"/BanAn");
 
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override

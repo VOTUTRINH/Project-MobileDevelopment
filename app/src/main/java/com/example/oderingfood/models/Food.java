@@ -7,11 +7,16 @@ public class Food implements Serializable {
     String name;
     double price;
     int quantity;
-    double total;
+    int total;
     int totalOrder;
     String urlImage;
+    boolean available = true;
+    boolean isServed = false;
 
-    public Food(){}
+    public Food(){
+    }
+
+
 
     public Food(String id) {
         this.id = id;
@@ -23,7 +28,7 @@ public class Food implements Serializable {
         this.quantity = quantity;
     }
 
-    public Food(String id, String name, double price, int quantity, double total) {
+    public Food(String id, String name, double price, int quantity, int total) {
         this.id = id;
         this.name = name;
         this.price = price;
@@ -37,6 +42,30 @@ public class Food implements Serializable {
         this.totalOrder = totalOrder;
         this.urlImage = urlImage;
         quantity = 0;
+    }
+    public Food(String id, String name, double price, String urlImage){
+        this.id=id;
+        this.name = name;
+        this.price = price;
+        this.totalOrder =0;
+        this.quantity = 0;
+        this.urlImage=urlImage;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public boolean isServed() {
+        return isServed;
+    }
+
+    public void setServed(boolean served) {
+        isServed = served;
     }
 
     public String getId() {
@@ -55,6 +84,10 @@ public class Food implements Serializable {
         this.name = name;
     }
 
+    public void setUrlImage(String urlImage) {
+        this.urlImage = urlImage;
+    }
+
     public double getPrice() {
         return price;
     }
@@ -71,11 +104,11 @@ public class Food implements Serializable {
         this.quantity = quantity;
     }
 
-    public double getTotal() {
+    public int getTotal() {
         return total;
     }
 
-    public void setTotal(double total) {
+    public void setTotal(int total) {
         this.total = total;
     }
 

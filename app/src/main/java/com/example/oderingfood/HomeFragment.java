@@ -31,12 +31,14 @@ public class HomeFragment extends Fragment {
     Bottomnavigation bottomnavigation ;
     String user;
     String idRes;
+    String role;
 
     FirebaseDatabase database ;
     DatabaseReference myRef ;
 
     ArrayList Img =new ArrayList<>();
     ArrayList Img2 =new ArrayList<>();
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -44,11 +46,12 @@ public class HomeFragment extends Fragment {
         bottomnavigation = (Bottomnavigation) getActivity();
         user= bottomnavigation.getUser();
         idRes = bottomnavigation.getIdRes();
+        role = bottomnavigation.getRole();
+
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("restaurant/"+idRes);
 
-      //  Toast.makeText(bottomnavigation, idRes, Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -76,6 +79,11 @@ public class HomeFragment extends Fragment {
         txt_home_tongban = (TextView) homeFragment.findViewById(R.id.txt_home_tongban);
         txt_home_bantrong =(TextView) homeFragment.findViewById(R.id.txt_home_bantrong);
 
+        txt_home_tongban.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -114,7 +122,7 @@ public class HomeFragment extends Fragment {
                 //load menu image
                 try{
                     for(DataSnapshot postSnapshot: snapshot.child("Menu").getChildren()){
-                        String link =  postSnapshot.child("HinhAnh").getValue().toString();
+                        String link =  postSnapshot.child("urlImage").getValue().toString();
                         Img.add(link);
                     }
                     adapter2.notifyDataSetChanged();
@@ -146,9 +154,6 @@ public class HomeFragment extends Fragment {
 
             }
         });
-
-
-
 
 
 

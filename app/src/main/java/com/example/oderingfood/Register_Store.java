@@ -18,6 +18,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
+import com.example.oderingfood.models.Food;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -145,8 +146,6 @@ public class Register_Store extends Activity {
                 mapImage.put(String.valueOf(i+1),Urlimages.get(i).toString());
             }
             db.setValue(mapImage);
-
-
             // Create table when create restaurant
             DatabaseReference dbTables = database.child(id).child("BanAn");
 
@@ -159,12 +158,8 @@ public class Register_Store extends Activity {
 
                 mapTables.put(String.valueOf(i), mapTableValue);
             }
-
             dbTables.setValue(mapTables);
-
             Intent intent = new Intent(this,ListRestaurant.class);
-
-
             startActivity(intent);
             finish();
 

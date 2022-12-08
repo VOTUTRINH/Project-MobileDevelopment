@@ -1,6 +1,6 @@
 package com.example.oderingfood;
 
-import static com.bumptech.glide.gifdecoder.GifHeaderParser.TAG;
+
 import static com.example.oderingfood.models.GlobalVariables.pathRestaurentID;
 
 import android.content.Context;
@@ -65,7 +65,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
                 pathRestaurentID = restaurant.getId();
                 GlobalVariables.menu = new ArrayList<>();
 
-                Intent intent=new Intent(context,Bottomnavigation.class);
+                Intent intent=new Intent(context,StartResActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurant",restaurant.getId());
                 bundle.putString("user",idUser);
@@ -98,5 +98,6 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
         }
 
     }
+
 
 }

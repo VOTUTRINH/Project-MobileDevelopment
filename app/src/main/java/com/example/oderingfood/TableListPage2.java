@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -26,6 +27,8 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -48,6 +51,10 @@ public class TableListPage2 extends Fragment {
     Context context;
     GridView gv;
     List<Table> listTable = new ArrayList<Table>();
+
+    Bottomnavigation bottomnavigation ;
+    String user;
+    String idRes;
 
     ListTablesAdapter tablesAdapter;
     public TableListPage2() {
@@ -87,12 +94,18 @@ public class TableListPage2 extends Fragment {
         }catch (Exception e)
         {
         }
+        bottomnavigation = (Bottomnavigation) getActivity();
+        user= bottomnavigation.getUser();
+        idRes = bottomnavigation.getIdRes();
+
+
+
         tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, listTable);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn");
+        mDatabase = database.getReference("/restaurant/" + idRes + "/BanAn");
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -100,14 +113,29 @@ public class TableListPage2 extends Fragment {
                 {
                     listTable.clear();
                 }
+                GlobalVariables.priority = 0;
                 for(DataSnapshot postSnapShot: snapshot.getChildren())
                 {
                     String tenBan = postSnapShot.getKey();
+                    int pri;
                     String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
+                    if (trangThai.equals(getString(R.string.waiting_state))) {
+                        GlobalVariables.priority++;
+                    }
+                    try {
+                        pri = postSnapShot.child("Priority").getValue(Integer.class);
+                    }catch (Exception e){
+                        pri = 1000;
+                    }
+                    // add table
 
-                    if(trangThai.equals("IsUsing"))
+
+                    if(trangThai.equals("Empty"))
                     {
-                        Table table = new Table(tenBan);
+
+                    }
+                    else {
+                        Table table = new Table(tenBan, pri);
                         table.setState(trangThai);
 
                         // Get foods was ordered for table
@@ -125,6 +153,12 @@ public class TableListPage2 extends Fragment {
                             }
                         }
                         listTable.add(table);
+                        Collections.sort(listTable, new Comparator<Table>() {
+                            @Override
+                            public int compare(Table o1, Table o2) {
+                                return o1.getPriority() - o2.getPriority();
+                            }
+                        });
                     }
                 }
                 tablesAdapter.notifyDataSetChanged();
@@ -148,8 +182,15 @@ public class TableListPage2 extends Fragment {
         gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent=new Intent(context,ChatActivity.class);
-                context.startActivity(intent);
+
+                GlobalVariables.pathTable = listTable.get(i).getName();
+                    Intent intdn = new Intent(context, A2G7Activity.class); // Your nxt activity name instead of List_Activity
+
+                    Bundle b = new Bundle();
+                    b.putString("key", listTable.get(i).getName()); //Your id
+                    intdn.putExtras(b); //Put your id to your next Intent
+                    context.startActivity(intdn);
+
             }
         });
         return layout_page2;

@@ -81,7 +81,7 @@ public class TablesActivity extends Fragment {
                         }
                     }
                 }).attach();
-
+        adapter.notifyDataSetChanged();
         btnAddTable.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -133,6 +133,7 @@ public class TablesActivity extends Fragment {
         DatabaseReference mDatabase;
 
         mDatabase = database.getReference("/restaurant/" + idRes);
+        Log.i("ID BAN", idRes);
         Table newTable = new Table(tableName);
         DatabaseReference mDatabaseBanAn = mDatabase.child("BanAn");
         mDatabaseBanAn.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -149,10 +150,11 @@ public class TablesActivity extends Fragment {
                 mDatabaseBanAn.child(tableName).child("TrangThai").setValue(newTable.getState());
                 mDatabaseBanAn.child(tableName).child("Order").setValue("");
 
-
                 // Update count table
                 DatabaseReference mDatabaseSoBanAn = mDatabase.child("SoBanAn");
                 mDatabaseSoBanAn.setValue(snapshot.getChildrenCount() + 1);
+                Toast.makeText(getActivity(),"Thêm bàn thành công",Toast.LENGTH_SHORT).show();
+
             }
 
             @Override
