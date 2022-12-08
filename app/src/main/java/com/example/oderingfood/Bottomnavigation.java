@@ -138,6 +138,9 @@ public class Bottomnavigation extends AppCompatActivity {
             }
             case R.id.message: {
                 Intent intent = new Intent(bottomNavigationView.getContext(), ChatActivity.class);
+                intent.putExtra("idRes", idRes);
+                intent.putExtra("user", user);
+                intent.putExtra("role", role);
                 startActivity(intent);
                 break;
             }
