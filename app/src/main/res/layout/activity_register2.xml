@@ -39,7 +39,7 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
+                android:id="@+id/reg_name"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -60,6 +60,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="date"
+                android:id="@+id/reg_dofBirth"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -78,6 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:id="@+id/reg_gender"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -98,6 +100,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:id="@+id/reg_phone"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -116,6 +119,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="text"
+                android:id="@+id/reg_address"
                 />
         </com.google.android.material.textfield.TextInputLayout>
 

@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
         String pass=password.getText().toString();
 
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(this,"Vui long nhap email!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,"Vui long nhap email!!",Toast.LENGTH_SHORT).show();
         }
         if(TextUtils.isEmpty(pass)){
-            Toast.makeText(this,"Vui long nhap password!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,"Vui long nhap password!!",Toast.LENGTH_SHORT).show();
         }
 //        auth.signInWithEmailAndPassword(username, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
 //            @Override

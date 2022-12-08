@@ -1,20 +1,17 @@
 package com.example.oderingfood;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+
 import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
@@ -78,11 +75,13 @@ public class Register extends Activity {
 
                     if (isNewUser) {
                         auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+                            String id=   auth.getCurrentUser().getUid();
                             @Override
                             public void onComplete(@NonNull Task<AuthResult> task) {
                                 if(task.isSuccessful()){
                                     Toast.makeText(Register.this, "Đăng kí thành công.", Toast.LENGTH_SHORT).show();
                                     Intent intent=new Intent(Register.this,Register2.class);
+                                    intent.putExtra("id",id);
                                     startActivity(intent);
                                     finish();
                                 }else {
