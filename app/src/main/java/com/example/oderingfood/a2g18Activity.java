@@ -71,7 +71,7 @@ public class a2g18Activity extends Activity {
                 // Get data
                 String name = snapshot.child("HoTen").getValue(String.class);
                 String id = snapshot.child("id").getValue(String.class);
-                String phone = String.valueOf(snapshot.child("Sdt").getValue(Long.class));
+                String phone = snapshot.child("Sdt").getValue(String.class);
                 String email = snapshot.child("GioiTinh").getValue(String.class);
                 String address = snapshot.child("DiaChi").getValue(String.class);
                 String salary = snapshot.child("NgaySinh").getValue(String.class);

@@ -136,7 +136,7 @@ public class EmployeeManageActivity extends Fragment {
                 // Duyet danh sach nhan vien
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String trangThai = postSnapshotNhanVien.child("TrangThai").getValue(String.class);
-                    String sdt =String.valueOf(postSnapshotNhanVien.child("Sdt").getValue(Long.class));
+                    String sdt = postSnapshotNhanVien.child("Sdt").getValue(String.class);
                     List<String> employee = new ArrayList<String>();
                     employee.add(trangThai);
                     employee.add(sdt);
@@ -156,7 +156,7 @@ public class EmployeeManageActivity extends Fragment {
                             String hoTen = postSnapshotUser.child("HoTen").getValue(String.class);
                             String avatar = postSnapshotUser.child("Avatar").getValue(String.class);
 
-                            String sdt =String.valueOf(postSnapshotUser.child("Sdt").getValue(Long.class));
+                            String sdt = postSnapshotUser.child("Sdt").getValue(String.class);
 
                             baseInfoOfUser.add(id);
                             baseInfoOfUser.add(hoTen);
@@ -169,7 +169,8 @@ public class EmployeeManageActivity extends Fragment {
                         for(int i = 0; i<listEmployee.size();i++)
                         {
                             List<String> info = mapUsers.get(listEmployee.get(i).get(1));
-
+                            if(info == null)
+                                continue;
                             Employee employee = new Employee(info.get(0), info.get(1), info.get(2));
                             employees.add(employee);
                             if(listEmployee.get(i).get(0).equals("DangLamViec"))
@@ -334,7 +335,7 @@ public class EmployeeManageActivity extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot postSnapShot: snapshot.getChildren())
                 {
-                    if(postSnapShot.child("Sdt").getValue(Long.class).equals(employeeSdt))
+                    if(postSnapShot.child("Sdt").getValue(String.class).equals(String.valueOf(employeeSdt)))
                     {
                         Toast.makeText(getActivity(),"Nhân viên đã tồn tại",Toast.LENGTH_SHORT).show();
                         return;
@@ -349,7 +350,7 @@ public class EmployeeManageActivity extends Fragment {
                         String idUser = "";
                         for(DataSnapshot postSnapshotUser: snapshot.getChildren())
                         {
-                            if(String.valueOf(postSnapshotUser.child("Sdt").getValue(Long.class)).equals(String.valueOf(employeeSdt)))
+                            if(postSnapshotUser.child("Sdt").getValue(String.class).equals(String.valueOf(employeeSdt)))
                             {
                                 idUser = postSnapshotUser.child("id").getValue(String.class);
                                 canAdd = true;
