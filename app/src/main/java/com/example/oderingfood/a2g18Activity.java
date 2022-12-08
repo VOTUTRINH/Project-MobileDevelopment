@@ -68,18 +68,39 @@ public class a2g18Activity extends Activity {
         txtTotalSalary = this.findViewById(R.id.afo_txtTotalSalary);
         edtSalaryPerHour = this.findViewById(R.id.df_salaryPerHour);
         btnThanhToan = this.findViewById(R.id.afo_btnThanhToan);
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase;
+
+        mDatabase = database.getReference("/user/" + idUser);
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 double salary = Double.parseDouble(salaryTemp) - Double.parseDouble(edtSalaryPerHour.getText().toString());
 
                 txtTotalSalary.setText("Tổng lương: " + String.valueOf(salary));
+                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+//                    mDatabase.child("HoTen").setValue(fullName);
+////                    mDatabase.child("id").setValue(id);
+//                    mDatabase.child("Sdt").setValue(Long.parseLong(phone));
+//                    mDatabase.child("GioiTinh").setValue(email);
+//                    mDatabase.child("DiaChi").setValue(address);
+                        mDatabase.child("TongLuong").setValue(String.valueOf(salary));
+
+                        // Update count table
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+                    }
+                });
             }
         });
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/user/" + idUser);
 
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
