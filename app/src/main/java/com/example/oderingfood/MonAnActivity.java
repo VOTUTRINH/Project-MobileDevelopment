@@ -35,7 +35,7 @@ import java.util.Map;
 public class MonAnActivity extends AppCompatActivity {
 
     RecyclerView dataList;
-
+    int countWaiting = 0;
     AdapterMonAn adapter;
     Button btnOrder;
     FloatingActionButton addFood;
@@ -110,6 +110,8 @@ public class MonAnActivity extends AppCompatActivity {
                 Map<String, Food> data = new HashMap<>();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mDatabase;
+                DatabaseReference tableDatabase;
+                tableDatabase = database.getReference(pathR + "/BanAn");
 
                 mDatabase = database.getReference(pathR + "/BanAn/"+ tablePath);
                 for(int i=0; i< temp.size(); i++){
@@ -124,7 +126,11 @@ public class MonAnActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    mDatabase.child("TrangThai").setValue(getString(R.string.using_state));
+                    //check co bao nhieu bang dang doi
+                    //set priority
+                    GlobalVariables.priority ++;
+                    mDatabase.child("Priority").setValue(GlobalVariables.priority);
+                    mDatabase.child("TrangThai").setValue(getString(R.string.waiting_state));
                     mDatabase.child("Order").setValue(data, new DatabaseReference.CompletionListener() {
                       @Override
                       public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -145,6 +151,9 @@ public class MonAnActivity extends AppCompatActivity {
             }
         });
     }
+    public void plusCountWating(){
+        countWaiting++;
+    };
 
 
 }

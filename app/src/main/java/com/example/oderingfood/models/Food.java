@@ -10,6 +10,8 @@ public class Food implements Serializable {
     int total;
     int totalOrder;
     String urlImage;
+    boolean available = true;
+    boolean isServed = false;
 
     public Food(){
     }
@@ -48,6 +50,22 @@ public class Food implements Serializable {
         this.totalOrder =0;
         this.quantity = 0;
         this.urlImage=urlImage;
+    }
+
+    public boolean isAvailable() {
+        return available;
+    }
+
+    public void setAvailable(boolean available) {
+        this.available = available;
+    }
+
+    public boolean isServed() {
+        return isServed;
+    }
+
+    public void setServed(boolean served) {
+        isServed = served;
     }
 
     public String getId() {

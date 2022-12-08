@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id = "@+id/table_linear_layout"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:orientation="vertical"
@@ -30,14 +31,18 @@
         android:textSize="25sp"
         android:textAlignment="center"/>
 
-    <TextView
+    <com.example.oderingfood.models.CustomRunninTextview
         android:id="@+id/table_state"
         android:layout_width="match_parent"
         android:layout_height="20dp"
-        android:textAlignment="center"
-        android:text="Đang hoạt động"
-        android:textColor="#EC808D"
+        android:layout_marginTop="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="5dp"/>
+        android:text="Đang hoạt động"
+        android:textAlignment="center"
+        android:textColor="#EC808D"
+        android:ellipsize="marquee"
+        android:marqueeRepeatLimit="marquee_forever"
+        android:scrollHorizontally="true"
+      />
 
 </LinearLayout>

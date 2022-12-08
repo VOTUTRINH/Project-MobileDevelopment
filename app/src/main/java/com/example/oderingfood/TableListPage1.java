@@ -19,6 +19,7 @@ import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -28,6 +29,8 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -111,15 +114,23 @@ public class TableListPage1 extends Fragment {
                 {
                     tableList.clear();
                 }
-
+                GlobalVariables.priority = 0;
                 for(DataSnapshot postSnapShot: snapshot.getChildren())
                 {
                     // Get data
                     String tenBan = postSnapShot.getKey();
+                    int pri;
                     String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
-
+                    if (trangThai.equals(getString(R.string.waiting_state))) {
+                        GlobalVariables.priority++;
+                    }
+                    try {
+                        pri = postSnapShot.child("Priority").getValue(Integer.class);
+                    }catch (Exception e){
+                        pri = 1000;
+                    }
                     // add table
-                    Table table = new Table(tenBan);
+                    Table table = new Table(tenBan, pri);
                     table.setState(trangThai);
                     // Get foods was ordered for table
                     DataSnapshot menuSnapShot = postSnapShot.child("Order");
@@ -136,6 +147,12 @@ public class TableListPage1 extends Fragment {
 
                     tableList.add(table);
                 }
+                Collections.sort(tableList, new Comparator<Table>() {
+                    @Override
+                    public int compare(Table o1, Table o2) {
+                        return o1.getPriority() - o2.getPriority();
+                    }
+                });
 
                 tablesAdapter.notifyDataSetChanged();
             }
@@ -160,7 +177,7 @@ public class TableListPage1 extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-
+                GlobalVariables.pathTable = tableList.get(i).getName();
                 if(tableList.get(i).getState().equals("Empty")){
                     Intent intent=new Intent(context,MonAnActivity.class);
                     Bundle b = new Bundle();

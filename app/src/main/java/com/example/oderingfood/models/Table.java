@@ -11,6 +11,7 @@ import java.util.List;
 public class Table implements Serializable {
     private String name;
     private String state;
+    private int priority = 1000;
     private List<Food> order; // Su dung Pair: String la ten mon an, Interger la so luong ordered
 
 
@@ -39,7 +40,14 @@ public class Table implements Serializable {
         this.order = order;
     }
 
-    // END SETTER - GETTER
+    public int getPriority() {
+        return priority;
+    }
+
+    public void setPriority(int priority) {
+        this.priority = priority;
+    }
+// END SETTER - GETTER
 
     public Table(String name)
     {
@@ -47,10 +55,18 @@ public class Table implements Serializable {
         state = "Empty";
         order = new ArrayList<Food>();
     }
+    public Table(String name, int pri)
+    {
+        this.name = name;
+        state = "Empty";
+        priority = pri;
+        order = new ArrayList<Food>();
+    }
 
     public void AddFood(Food food)
     {
         order.add(food);
     }
+
 
 }
