@@ -32,7 +32,6 @@ public class ListRestaurant extends AppCompatActivity {
                     tab.setText("Quán của tôi");
                     break;
             }
-
         }).attach();
     }
 
