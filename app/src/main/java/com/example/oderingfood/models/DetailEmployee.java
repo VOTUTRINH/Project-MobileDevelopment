@@ -57,7 +57,7 @@ public class DetailEmployee {
         this.phone = phone;
     }
 
-    public DetailEmployee(String id, String name, String avatar, String date, String address, String sex, String phone) {
+    public DetailEmployee(String id, String name, String avatar, String date, String address, String sex, String phone, String salary, String totalSalary) {
         this.id = id;
         this.name = name;
         this.avatar = avatar;
@@ -65,6 +65,8 @@ public class DetailEmployee {
         this.address = address;
         this.sex = sex;
         this.phone = phone;
+        this.salary = salary;
+        this.totalSalary = totalSalary;
     }
 
     private String id;
@@ -74,4 +76,23 @@ public class DetailEmployee {
     private String address;
     private String sex;
     private String phone;
+
+    public String getSalary() {
+        return salary;
+    }
+
+    public void setSalary(String salary) {
+        this.salary = salary;
+    }
+
+    public String getTotalSalary() {
+        return totalSalary;
+    }
+
+    public void setTotalSalary(String totalSalary) {
+        this.totalSalary = totalSalary;
+    }
+
+    private String salary;
+    private String totalSalary;
 }

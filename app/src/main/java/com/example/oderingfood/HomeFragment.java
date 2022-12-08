@@ -47,7 +47,7 @@ public class HomeFragment extends Fragment {
         user= bottomnavigation.getUser();
         idRes = bottomnavigation.getIdRes();
         role = bottomnavigation.getRole();
-        //Toast.makeText(bottomnavigation, role, Toast.LENGTH_SHORT).show();
+
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("restaurant/"+idRes);

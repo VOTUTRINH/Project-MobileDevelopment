@@ -10,6 +10,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import java.util.List;
 
+import de.hdodenhof.circleimageview.CircleImageView;
+
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
     private List<Object> mObjects;
@@ -71,12 +73,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class FromOtherViewHolder extends RecyclerView.ViewHolder {
         private TextView message;
-        private ImageView img;
+        private CircleImageView img;
         private TextView name;
         public FromOtherViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.ac_txt_from_other);
-            img = (ImageView) itemView.findViewById(R.id.ac_img_from_other);
+            img = (CircleImageView) itemView.findViewById(R.id.ac_img_from_other);
             name = (TextView) itemView.findViewById(R.id.ac_txt_name);
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -89,12 +91,12 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
     public class ToOtherViewHolder extends RecyclerView.ViewHolder {
         private TextView message;
-        private ImageView img;
+        private CircleImageView img;
 
         public ToOtherViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.ac_txt_to_other);
-            img = (ImageView) itemView.findViewById(R.id.ac_img_to_other);
+            img = (CircleImageView) itemView.findViewById(R.id.ac_img_to_other);
 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -110,32 +112,38 @@ class messageFromOther{
     public String name;
     public String message;
     public Integer img;
-    messageFromOther(){
-        message = "Test tin nhắn gửi đến Test tin nhắn gửi đến Test tin nhắn gửi đến Test tin nhắn gửi đến ";
-        img = R.drawable.img_1;
-        name = "Boss";
+    messageFromOther(String name, String msg, Integer img){
+        this.name = name;
+        this.message = msg;
+        this.img = img;
     }
-    public String getMessage() {
+
+    public String getMessage()
+    {
         return message;
     }
 
-    public Integer getImg() {
+    public Integer getImg()
+    {
         return img;
     }
+
 }
 
 class messageToOther{
     public String message;
     public Integer img;
-    messageToOther(){
-        message = "Test tin nhắn gửi đi Test tin nhắn gửi đi Test tin nhắn gửi đi Test tin nhắn gửi đi ";
-        img = R.drawable.img_1;
+    messageToOther(String msg, Integer img){
+        this.message = msg;
+        this.img = img;
     }
-    public String getMessage() {
+    public String getMessage()
+    {
         return message;
     }
 
-    public Integer getImg() {
+    public Integer getImg()
+    {
         return img;
     }
 }

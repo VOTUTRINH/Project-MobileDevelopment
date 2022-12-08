@@ -57,16 +57,33 @@ public class Bottomnavigation extends AppCompatActivity {
             idRes = bundle.getString("restaurant");
             role = bundle.getString("role");
         }
-        Toast.makeText(this, idRes, Toast.LENGTH_SHORT).show();
-        bottomNavigationView = findViewById(R.id.buttom_navigation);
-        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+
+        bottomNavigationView=findViewById(R.id.buttom_navigation);
+        Menu menu = bottomNavigationView.getMenu();
+        switch (role)
+        {
+            case "KhachHang":
+//                bottomNavigationView.setVisibility(View.INVISIBLE);
+                menu.getItem(2).setVisible(false);
+                menu.getItem(3).setVisible(false);
+                break;
+            case "NhanVien":
+                menu.getItem(3).setVisible(false);
+                break;
+            case "ChuQuan":
+                break;
+            default:
+                break;
+        }
+        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
         bottomNavigationView.setOnItemSelectedListener(new NavigationBarView.OnItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
                 switch (item.getItemId()) {
                     case R.id.home:
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container, homeFragment).commit();
+
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                         return true;
                     case R.id.booking:
                         BookingFragment bookingFragment = new BookingFragment();
@@ -99,9 +116,13 @@ public class Bottomnavigation extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.toolbar_menu, menu);
-        return true;
+        if(!role.equals("KhachHang"))
+        {
+            MenuInflater inflater = getMenuInflater();
+            inflater.inflate(R.menu.toolbar_menu, menu);
+            return true;
+        }
+        return false;
     }
 
     @Override
