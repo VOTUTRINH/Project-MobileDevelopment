@@ -31,6 +31,9 @@ public class StartResActivity extends AppCompatActivity {
     ArrayList list = new ArrayList<>();
 
     String role = "null";
+
+    private float maxTimeRemain = 5000f;
+    private float countTime = 0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -51,16 +54,32 @@ public class StartResActivity extends AppCompatActivity {
 
         new Thread(new Runnable() {
             public void run() {
-                while (role.equals("null")) {
+                try {
+
+                    while (role.equals("null")) {
+                        Thread.sleep(150);
+                        countTime += 150;
+                        if(countTime > maxTimeRemain) {
+                            returnToListRes();
+                            return;
+                        }
+                    }
+                    startActivityFromMainThread();
+                    return;
+                }catch (InterruptedException e)
+                {
+
                 }
-                startActivityFromMainThread();
             }
+
 
         }).start();
     }
     private void changeRole(String role){
         this.role = role;
+        Toast.makeText(this, role, Toast.LENGTH_SHORT).show();
     }
+
     public void setRole(){
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -88,28 +107,31 @@ public class StartResActivity extends AppCompatActivity {
 
     }
 
-//    private class MyThread extends Thread{
-//        @Override
-//        public void run() {
-//            while (!role.equals("null")){
-//            }
-//
-//            Intent intent = new Intent(StartResActivity.this, Bottomnavigation.class);
-//            intent.putExtra("role",role);
-//            startActivity(intent);
-//        }
-//    }
+    public void returnToListRes()
+    {
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent (StartResActivity.this, ListRestaurant.class);
+                startActivity(intent);
+                finish();
+            }
+        });
+    }
     public void startActivityFromMainThread(){
-
         Handler handler = new Handler(Looper.getMainLooper());
         handler.post(new Runnable() {
             @Override
             public void run() {
                 Intent intent = new Intent (StartResActivity.this, Bottomnavigation.class);
-                intent.putExtra("role",role);
-                intent.putExtra("user",user);
-                intent.putExtra("restaurant", idRes);
+                Bundle bundle = new Bundle();
+                bundle.putString("role",role);
+                bundle.putString("user",user);
+                bundle.putString("restaurant", idRes);
+                intent.putExtras(bundle);
                 startActivity(intent);
+                finish();
             }
         });
     }

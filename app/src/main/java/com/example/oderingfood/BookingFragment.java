@@ -53,7 +53,6 @@ public class BookingFragment extends Fragment {
         recyclerView1 = (RecyclerView) bookingFragment.findViewById(R.id.list_booking);
         // Setting the layout as linear
 
-
         // layout for vertical orientation
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(),LinearLayoutManager.VERTICAL, false);
 

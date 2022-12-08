@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -59,6 +60,12 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
         holder.item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
+                Intent intent = new Intent(view.getContext(),a2g18Activity.class);
+                intent.putExtra("idUser",employee.getId());
+
+                view.getContext().startActivity(intent);
+
                 Toast.makeText(view.getContext(), "Click Vao Nhan Vien", Toast.LENGTH_SHORT).show();
             }
         });

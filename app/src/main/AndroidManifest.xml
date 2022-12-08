@@ -84,6 +84,9 @@
             android:name=".A2G7Activity"
             android:exported="false" />
         <activity
+            android:name=".a2g18Activity"
+            android:exported="false" />
+        <activity
             android:name=".Register_Store"
             android:exported="false" />
         <activity
