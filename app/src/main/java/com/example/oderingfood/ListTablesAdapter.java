@@ -4,9 +4,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,17 +18,13 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
-import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Table;
-import com.google.android.material.tabs.TabLayout;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 public class ListTablesAdapter extends ArrayAdapter<Table> {
@@ -68,7 +62,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
             state = "Đang sử dụng";
         }
         else if (tb.getState().equals("IsWaiting")){
-            state = "Đang đợi, độ ưu tiên: " +  Integer.toString(tb.getPriority());
+            state = "Đang đợi món ăn, độ ưu tiên: " +  Integer.toString(tb.getPriority());
         }
         else{
             state = "Còn trống";

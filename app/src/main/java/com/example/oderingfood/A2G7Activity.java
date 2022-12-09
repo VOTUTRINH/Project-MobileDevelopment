@@ -3,27 +3,23 @@ package com.example.oderingfood;
 import android.app.Activity;
 import android.app.Dialog;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
-import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,6 +29,7 @@ public class A2G7Activity extends Activity {
     List<Food> dataList = new ArrayList<>();
     FoodAdapter foodAdapter;
     Button thanhtoan;
+    TextView tenban;
     DatabaseReference mDatabase;
     String tablePath;
     FirebaseDatabase database;
@@ -65,13 +62,14 @@ public class A2G7Activity extends Activity {
 
         listView = findViewById(R.id.afo_listview);
         thanhtoan = findViewById(R.id.thanhtoan_btn_thanhtoan);
+        tenban = findViewById(R.id.thanhtoan_txt_tenban);
 
         double TotalPrice;
 
         TextView allTotal = findViewById(R.id.afo_txtTotal);
 //        TotalPrice = Double.parseDouble(txtPrice.getText().toString()) * Double.parseDouble(txtQuantity.getText().toString());
         TotalPrice = 2;
-
+        tenban.setText("Bàn " + tablePath);
 
         foodAdapter = new FoodAdapter(this, dataList);
 
