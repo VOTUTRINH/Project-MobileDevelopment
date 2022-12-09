@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "586213103222",
+    "firebase_url": "https://orderingfood-ab91f-default-rtdb.firebaseio.com",
     "project_id": "orderingfood-ab91f",
     "storage_bucket": "orderingfood-ab91f.appspot.com"
   },

@@ -49,6 +49,7 @@
             android:layout_margin="20dp"
             >
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnprofile"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
