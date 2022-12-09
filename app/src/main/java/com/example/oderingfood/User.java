@@ -1,18 +1,27 @@
 package com.example.oderingfood;
 
 public class User {
-    String Email,HoTen,NgaySinh,GioiTinh, DienThoai, DiaChi;
+    String Avatar,Email,HoTen,NgaySinh,GioiTinh, DienThoai, DiaChi;
 
     public User() {
     }
 
-    public User(String email, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi) {
+    public User(String avatar,String email, String hoTen, String ngaySinh, String gioiTinh, String dienThoai, String diaChi) {
+        this.Avatar=avatar;
         this.Email = email;
         this.HoTen = hoTen;
         this.NgaySinh = ngaySinh;
         this.GioiTinh = gioiTinh;
         this.DienThoai = dienThoai;
         this.DiaChi = diaChi;
+    }
+
+    public String getAvatar() {
+        return Avatar;
+    }
+
+    public void setAvatar(String avatar) {
+        this.Avatar = avatar;
     }
 
     public String getEmail() {
