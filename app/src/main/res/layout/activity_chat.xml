@@ -12,7 +12,17 @@
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent">
+        <TextView
+            android:id="@+id/ac_txt_tenquan"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Tên quán"
+            android:gravity="center_vertical"
+            android:paddingLeft="20dp"
+            android:textSize="25sp"
+            android:textStyle="bold"/>
+    </androidx.cardview.widget.CardView>
 
     <EditText
         android:id="@+id/ac_input_chat"

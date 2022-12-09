@@ -3,7 +3,6 @@ package com.example.oderingfood;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -135,7 +134,7 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
             disableScreen = itemView.findViewById(R.id.txt_disablescreen);
             plus = itemView.findViewById(R.id.btn_plus);
             minus = itemView.findViewById(R.id.btn_minus);
-            numOfFoods = itemView.findViewById(R.id.menu_txt_count);
+            numOfFoods = itemView.findViewById(R.id.thanhtoan_txt_tenban);
 
         }
     }

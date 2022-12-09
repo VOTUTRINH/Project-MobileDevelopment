@@ -8,6 +8,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.bumptech.glide.Glide;
+
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -54,14 +57,16 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 messageFromOther user = (messageFromOther) mObjects.get(position);
                 FromOtherViewHolder fromOtherViewHolder = (FromOtherViewHolder) holder;
                 fromOtherViewHolder.message.setText(user.getMessage());
-                fromOtherViewHolder.img.setImageResource(user.getImg());
+                Glide.with(mContext).load(((messageFromOther) mObjects.get(position)).getImg()).into(fromOtherViewHolder.img);
+
                 fromOtherViewHolder.name.setText(user.name);
                 break;
             case TO_OTHER:
                 messageToOther you = (messageToOther) mObjects.get(position);
                 ToOtherViewHolder toOtherViewHolder= (ToOtherViewHolder) holder;
                 toOtherViewHolder.message.setText(you.getMessage());
-                toOtherViewHolder.img.setImageResource(you.getImg());
+                Glide.with(mContext).load(((messageToOther) mObjects.get(position)).getImg()).into(toOtherViewHolder.img);
+
                 break;
         }
     }
@@ -111,8 +116,8 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 class messageFromOther{
     public String name;
     public String message;
-    public Integer img;
-    messageFromOther(String name, String msg, Integer img){
+    public String img;
+    messageFromOther(String name, String msg, String img){
         this.name = name;
         this.message = msg;
         this.img = img;
@@ -123,7 +128,7 @@ class messageFromOther{
         return message;
     }
 
-    public Integer getImg()
+    public String getImg()
     {
         return img;
     }
@@ -132,8 +137,8 @@ class messageFromOther{
 
 class messageToOther{
     public String message;
-    public Integer img;
-    messageToOther(String msg, Integer img){
+    public String img;
+    messageToOther(String msg, String img){
         this.message = msg;
         this.img = img;
     }
@@ -142,7 +147,7 @@ class messageToOther{
         return message;
     }
 
-    public Integer getImg()
+    public String getImg()
     {
         return img;
     }
