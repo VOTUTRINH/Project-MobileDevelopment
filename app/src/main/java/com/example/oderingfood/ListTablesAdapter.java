@@ -68,7 +68,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
             state = "Đang sử dụng";
         }
         else if (tb.getState().equals("IsWaiting")){
-            state = "Đang đợi, độ ưu tiên: " +  Integer.toString(tb.getPriority());
+            state = "Đang đợi món ăn, độ ưu tiên: " +  Integer.toString(tb.getPriority());
         }
         else{
             state = "Còn trống";

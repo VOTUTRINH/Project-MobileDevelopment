@@ -63,11 +63,11 @@
             android:paddingVertical="@dimen/cardview_compat_inset_shadow"
             android:text=" + "
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/menu_txt_count"
+            app:layout_constraintBottom_toBottomOf="@+id/thanhtoan_txt_tenban"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.0"
-            app:layout_constraintStart_toEndOf="@+id/menu_txt_count"
-            app:layout_constraintTop_toTopOf="@+id/menu_txt_count" />
+            app:layout_constraintStart_toEndOf="@+id/thanhtoan_txt_tenban"
+            app:layout_constraintTop_toTopOf="@+id/thanhtoan_txt_tenban" />
 
 
         <android.widget.Button
@@ -79,15 +79,15 @@
             android:paddingVertical="@dimen/cardview_compat_inset_shadow"
             android:text=" - "
             android:textColor="#FFFFFF"
-            app:layout_constraintBottom_toBottomOf="@+id/menu_txt_count"
-            app:layout_constraintEnd_toStartOf="@+id/menu_txt_count"
+            app:layout_constraintBottom_toBottomOf="@+id/thanhtoan_txt_tenban"
+            app:layout_constraintEnd_toStartOf="@+id/thanhtoan_txt_tenban"
             app:layout_constraintHorizontal_bias="1.0"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/menu_txt_count" />
+            app:layout_constraintTop_toTopOf="@+id/thanhtoan_txt_tenban" />
 
 
         <TextView
-            android:id="@+id/menu_txt_count"
+            android:id="@+id/thanhtoan_txt_tenban"
             android:layout_width="40dp"
             android:layout_height="16dp"
             android:layout_marginTop="20dp"

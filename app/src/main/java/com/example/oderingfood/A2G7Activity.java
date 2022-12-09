@@ -33,6 +33,7 @@ public class A2G7Activity extends Activity {
     List<Food> dataList = new ArrayList<>();
     FoodAdapter foodAdapter;
     Button thanhtoan;
+    TextView tenban;
     DatabaseReference mDatabase;
     String tablePath;
     FirebaseDatabase database;
@@ -65,13 +66,14 @@ public class A2G7Activity extends Activity {
 
         listView = findViewById(R.id.afo_listview);
         thanhtoan = findViewById(R.id.thanhtoan_btn_thanhtoan);
+        tenban = findViewById(R.id.thanhtoan_txt_tenban);
 
         double TotalPrice;
 
         TextView allTotal = findViewById(R.id.afo_txtTotal);
 //        TotalPrice = Double.parseDouble(txtPrice.getText().toString()) * Double.parseDouble(txtQuantity.getText().toString());
         TotalPrice = 2;
-
+        tenban.setText("Bàn " + tablePath);
 
         foodAdapter = new FoodAdapter(this, dataList);
 
