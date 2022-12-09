@@ -110,25 +110,29 @@ public class HomeFragment extends Fragment {
                     txt_home_tongban.setText("0");
                 }
                 //load images restaurant
-                try{
-                    for(DataSnapshot postSnapshot: snapshot.child("HinhAnh").getChildren()){
-                        String urlImage = postSnapshot.getValue().toString();
-                        Img2.add(urlImage);
+
+                for(DataSnapshot postSnapshot: snapshot.child("HinhAnh").getChildren()){
+                    try{
+                    String urlImage = postSnapshot.getValue().toString();
+                    Img2.add(urlImage);
+                    }catch(Exception e){
+                        //not have images
                     }
-                    adapter1.notifyDataSetChanged();
-                }catch(Exception e){
-                    //not have images
                 }
+                    adapter1.notifyDataSetChanged();
+
                 //load menu image
-                try{
+
                     for(DataSnapshot postSnapshot: snapshot.child("Menu").getChildren()){
+                        try{
                         String link =  postSnapshot.child("urlImage").getValue().toString();
                         Img.add(link);
+                        }catch (Exception e){
+                            //not have images
+                        }
+
                     }
                     adapter2.notifyDataSetChanged();
-                }catch (Exception e){
-                    //not have images
-                }
 
                 if(Img2.isEmpty()){
                     TextView txt_images_restaurant = (TextView) homeFragment.findViewById(R.id.txt_images_restaurant);
