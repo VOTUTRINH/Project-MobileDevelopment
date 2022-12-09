@@ -148,7 +148,7 @@ public class CustomDialog extends Dialog {
 //                    mDatabase.child("Sdt").setValue(Long.parseLong(phone));
 //                    mDatabase.child("GioiTinh").setValue(email);
 //                    mDatabase.child("DiaChi").setValue(address);
-                    mDatabase.child("LuongTrenGio").setValue(salaryPerHour);
+                    mDatabase.child("luongTheoGio").setValue(salaryPerHour);
 
                     // Update count table
 
