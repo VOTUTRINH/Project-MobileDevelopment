@@ -87,7 +87,7 @@ public class a2g18Activity extends Activity {
 //                    mDatabase.child("Sdt").setValue(Long.parseLong(phone));
 //                    mDatabase.child("GioiTinh").setValue(email);
 //                    mDatabase.child("DiaChi").setValue(address);
-                        mDatabase.child("TongLuong").setValue(String.valueOf(salary));
+                        mDatabase.child("tongLuong").setValue(String.valueOf(salary));
 
                         // Update count table
 
@@ -107,17 +107,17 @@ public class a2g18Activity extends Activity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 // Get data
-                String name = snapshot.child("HoTen").getValue(String.class);
+                String name = snapshot.child("hoTen").getValue(String.class);
                 String id = snapshot.child("id").getValue(String.class);
-                String phone = snapshot.child("Sdt").getValue(String.class);
-                String email = snapshot.child("GioiTinh").getValue(String.class);
-                String address = snapshot.child("DiaChi").getValue(String.class);
-                String salary = snapshot.child("NgaySinh").getValue(String.class);
-                String salaryPerHour = snapshot.child("LuongTrenGio").getValue(String.class);
-                String totalSalary = snapshot.child("TongLuong").getValue(String.class);
+                String phone = snapshot.child("dienThoai").getValue(String.class);
+                String email = snapshot.child("gioiTinh").getValue(String.class);
+                String address = snapshot.child("diaChi").getValue(String.class);
+                String salary = snapshot.child("ngaySinh").getValue(String.class);
+                String salaryPerHour = snapshot.child("luongTheoGio").getValue(String.class);
+                String totalSalary = snapshot.child("tongLuong").getValue(String.class);
                 String urlImage;
                 try {
-                    urlImage = snapshot.child("Avatar").getValue(String.class).toString();
+                    urlImage = snapshot.child("avatar").getValue(String.class).toString();
                 }catch (Exception e){
                     urlImage = "https://firebasestorage.googleapis.com/v0/b/orderingfood-ab91f.appspot.com/o/store_default.png?alt=media&token=de6a404a-dd66-4a21-b6ae-eda751d79983";
                 }
