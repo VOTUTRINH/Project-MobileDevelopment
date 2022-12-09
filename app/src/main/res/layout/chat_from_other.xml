@@ -20,7 +20,9 @@
         android:id="@+id/ac_txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
         android:text="TextView"
+        app:layout_constraintBottom_toTopOf="@+id/cardView2"
         app:layout_constraintStart_toStartOf="@+id/cardView2"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -29,20 +31,19 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="16dp"
         app:cardCornerRadius="20dp"
         app:layout_constraintBottom_toBottomOf="@+id/ac_img_from_other"
         app:layout_constraintStart_toEndOf="@+id/ac_img_from_other"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="@+id/ac_img_from_other">
 
         <TextView
             android:id="@+id/ac_txt_from_other"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="66dp"
+            android:layout_height="match_parent"
             android:background="@color/white"
             android:maxWidth="220dp"
             android:padding="4pt"
-            android:text="content to test chat hehe content to test chat hehecontent to test chat hehe"
+            android:text="hi"
             android:textColor="@color/black"
             android:textSize="8pt" />
     </androidx.cardview.widget.CardView>

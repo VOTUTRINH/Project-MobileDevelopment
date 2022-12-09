@@ -3,7 +3,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="20dp"
+    >
 
     <!--    <TextView-->
     <!--        android:id="@+id/menu_txt_count"-->
@@ -20,11 +22,21 @@
     <!--        android:inputType="textPersonName"-->
     <!--        android:text="" />-->
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:text=" Lương"
+        android:gravity="center"
+        android:textColor="@color/color_main"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="25dp"
+        />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_margin="15dp"
+        android:layout_margin="5dp"
         android:layout_marginTop="0dp">
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -140,19 +152,27 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:gravity="center_horizontal">
+
+
 
         <Button
             android:id="@+id/df_btnOk"
+            android:layout_marginLeft="0dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="OK" />
+            android:text="OK"
+            android:backgroundTint="@color/color_main"
+
+            />
 
         <Button
             android:id="@+id/df_btnCancel"
+            android:layout_marginLeft="50dp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
+            android:backgroundTint="@color/color_main"
             android:text="Cancel" />
     </LinearLayout>
 

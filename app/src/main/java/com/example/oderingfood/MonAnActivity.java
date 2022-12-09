@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -19,6 +20,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.Table;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -33,9 +35,10 @@ import java.util.Map;
 public class MonAnActivity extends AppCompatActivity {
 
     RecyclerView dataList;
-
+    int countWaiting = 0;
     AdapterMonAn adapter;
     Button btnOrder;
+    FloatingActionButton addFood;
     String tablePath;
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -43,6 +46,11 @@ public class MonAnActivity extends AppCompatActivity {
         setContentView(R.layout.activity_mon_an);
         dataList = findViewById(R.id.dishesList);
         btnOrder = findViewById(R.id.ac_btn_send);
+        addFood = (FloatingActionButton)findViewById(R.id.am_button_add_food);
+
+        Bottomnavigation bottomnavigation = new Bottomnavigation();
+        String user= bottomnavigation.getUser();
+        String idRes = bottomnavigation.getIdRes();
 
         Bundle b = getIntent().getExtras();
 
@@ -58,7 +66,8 @@ public class MonAnActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/Menu");
+        String pathR = "/restaurant/" + GlobalVariables.pathRestaurentID;
+        mDatabase = database.getReference(pathR +"/Menu") ;
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -68,19 +77,20 @@ public class MonAnActivity extends AppCompatActivity {
 
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                     // Get data
-                    String IDFood = postSnapShot.getKey();
-                    String FoodName = postSnapShot.child("TenMon").getValue(String.class);
-                    double Price = postSnapShot.child("Gia").getValue(Double.class);
-                    int totalOrdered = postSnapShot.child("SoLuotGoi").getValue(Integer.class);
+                            // Get data
+                            String foodName = postSnapShot.getKey();
+                            Food food = postSnapShot.getValue(Food.class);
+
+                            // Add food ordered to table
+
+
                     String urlImage;
                     try {
-                        urlImage = postSnapShot.child("HinhAnh").getValue(String.class).toString();
+                        urlImage = postSnapShot.child("urlImage").getValue(String.class).toString();
                     } catch (Exception e) {
                         urlImage = "https://firebasestorage.googleapis.com/v0/b/orderingfood-ab91f.appspot.com/o/store_default.png?alt=media&token=de6a404a-dd66-4a21-b6ae-eda751d79983";
-
+                        food.setUrlImage(urlImage);
                     }
-                    // add table
-                    Food food = new Food(IDFood, FoodName, Price, totalOrdered, urlImage);
 
                     GlobalVariables.menu.add(food);
                 }
@@ -100,8 +110,10 @@ public class MonAnActivity extends AppCompatActivity {
                 Map<String, Food> data = new HashMap<>();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mDatabase;
+                DatabaseReference tableDatabase;
+                tableDatabase = database.getReference(pathR + "/BanAn");
 
-                mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/BanAn/"+ tablePath);
+                mDatabase = database.getReference(pathR + "/BanAn/"+ tablePath);
                 for(int i=0; i< temp.size(); i++){
                     if (temp.get(i).getQuantity() != 0){
                         data.put(temp.get(i).getId(), temp.get(i));
@@ -114,7 +126,11 @@ public class MonAnActivity extends AppCompatActivity {
                 }
                 else
                 {
-                    mDatabase.child("TrangThai").setValue(getString(R.string.using_state));
+                    //check co bao nhieu bang dang doi
+                    //set priority
+                    GlobalVariables.priority ++;
+                    mDatabase.child("Priority").setValue(GlobalVariables.priority);
+                    mDatabase.child("TrangThai").setValue(getString(R.string.waiting_state));
                     mDatabase.child("Order").setValue(data, new DatabaseReference.CompletionListener() {
                       @Override
                       public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -126,7 +142,18 @@ public class MonAnActivity extends AppCompatActivity {
 
             }
         });
+        //nhan nut add
+        addFood.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MonAnActivity.this,AddFoodToMenu.class);
+                startActivity(intent);
+            }
+        });
     }
+    public void plusCountWating(){
+        countWaiting++;
+    };
 
 
 }

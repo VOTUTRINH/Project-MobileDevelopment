@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -9,10 +10,12 @@ import androidx.fragment.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -136,6 +139,19 @@ public class TableListPage3 extends Fragment {
         gv = (GridView) layout_page3.findViewById(R.id.grid_view);
 
         gv.setAdapter(tablesAdapter);
+        gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                GlobalVariables.pathTable = listTable.get(i).getName();
+
+                    Intent intent = new Intent(context, MonAnActivity.class);
+                    Bundle b = new Bundle();
+                    b.putString("key", listTable.get(i).getName()); //Your id
+                    intent.putExtras(b); //Put your id to your next Intent
+                    context.startActivity(intent);
+                }
+            });
 
         return layout_page3;
     }

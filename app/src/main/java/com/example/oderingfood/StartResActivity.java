@@ -55,6 +55,7 @@ public class StartResActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 try {
+
                     while (role.equals("null")) {
                         Thread.sleep(150);
                         countTime += 150;
@@ -67,6 +68,7 @@ public class StartResActivity extends AppCompatActivity {
                     return;
                 }catch (InterruptedException e)
                 {
+
                 }
             }
 
@@ -77,6 +79,7 @@ public class StartResActivity extends AppCompatActivity {
         this.role = role;
         Toast.makeText(this, role, Toast.LENGTH_SHORT).show();
     }
+
     public void setRole(){
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
@@ -122,9 +125,11 @@ public class StartResActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent (StartResActivity.this, Bottomnavigation.class);
-                intent.putExtra("role",role);
-                intent.putExtra("user",user);
-                intent.putExtra("restaurant", idRes);
+                Bundle bundle = new Bundle();
+                bundle.putString("role",role);
+                bundle.putString("user",user);
+                bundle.putString("restaurant", idRes);
+                intent.putExtras(bundle);
                 startActivity(intent);
                 finish();
             }

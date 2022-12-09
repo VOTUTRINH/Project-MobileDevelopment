@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import androidx.appcompat.widget.Toolbar;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationBarView;
 import com.google.firebase.database.DataSnapshot;
@@ -27,14 +28,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
-import org.checkerframework.checker.units.qual.A;
-
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
 
 
 public class Bottomnavigation extends AppCompatActivity {
@@ -44,7 +37,8 @@ public class Bottomnavigation extends AppCompatActivity {
     ChatActivity chatActivity = new ChatActivity();
     Toolbar toolbar;
 
-    String user,idRes;
+    String user, idRes;
+
     FirebaseDatabase database;
     DatabaseReference myRef;
     String role;
@@ -54,17 +48,17 @@ public class Bottomnavigation extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bottomnavigation);
-         database = FirebaseDatabase.getInstance();
-         myRef = database.getReference("restaurant/"+  idRes);
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("restaurant/" + idRes);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
-        if(bundle !=null) {
+        if (bundle != null) {
             user = bundle.getString("user");
             idRes = bundle.getString("restaurant");
             role = bundle.getString("role");
+            GlobalVariables.pathRestaurentID = idRes;
         }
-
 
         bottomNavigationView=findViewById(R.id.buttom_navigation);
         Menu menu = bottomNavigationView.getMenu();
@@ -88,26 +82,27 @@ public class Bottomnavigation extends AppCompatActivity {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
 
-                switch (item.getItemId()){
+                switch (item.getItemId()) {
                     case R.id.home:
+
                         getSupportFragmentManager().beginTransaction().replace(R.id.container,homeFragment).commit();
                         return true;
                     case R.id.booking:
                         BookingFragment bookingFragment = new BookingFragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,bookingFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, bookingFragment).commit();
                         return true;
                     case R.id.order:
                         TablesActivity orderFragment = new TablesActivity();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,orderFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, orderFragment).commit();
                         return true;
                     case R.id.employee:
                         EmployeeManageActivity employeeManagerFragment = new EmployeeManageActivity();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,employeeManagerFragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, employeeManagerFragment).commit();
                         return true;
 
                     case R.id.menu:
                         TuyChon_Fragment tuyChon_fragment = new TuyChon_Fragment();
-                        getSupportFragmentManager().beginTransaction().replace(R.id.container,tuyChon_fragment).commit();
+                        getSupportFragmentManager().beginTransaction().replace(R.id.container, tuyChon_fragment).commit();
                         return true;
                 }
 
@@ -135,23 +130,27 @@ public class Bottomnavigation extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
 
-        switch (item.getItemId()){
+        switch (item.getItemId()) {
             case R.id.notification: {
                 FragmentNotification noticeFragment = new FragmentNotification();
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, noticeFragment).commit();
                 break;
             }
-            case R.id.message:{
+            case R.id.message: {
                 Intent intent = new Intent(bottomNavigationView.getContext(), ChatActivity.class);
+                intent.putExtra("idRes", idRes);
+                intent.putExtra("user", user);
+                intent.putExtra("role", role);
                 startActivity(intent);
                 break;
             }
-            case R.id.camera:{
+            case R.id.camera: {
 
                 Intent intent = new Intent(bottomNavigationView.getContext(), ScanQRCode.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("idRes",idRes);
-                bundle.putString("idUser",user);
+                bundle.putString("idRes", idRes);
+                bundle.putString("idUser", user);
+                bundle.putString("role",role);
                 intent.putExtras(bundle);
                 startActivity(intent);
                 break;
@@ -161,13 +160,15 @@ public class Bottomnavigation extends AppCompatActivity {
     }
 
 
-    public String getUser(){
+    public String getUser() {
         return user;
     }
 
-    public String getIdRes(){
+    public String getIdRes() {
         return idRes;
     }
 
-    public String getRole(){return role;}
+    public String getRole() {
+        return role;
+    }
 }

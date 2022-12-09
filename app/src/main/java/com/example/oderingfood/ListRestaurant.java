@@ -12,6 +12,7 @@ public class ListRestaurant extends AppCompatActivity {
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter ;
     TabLayout tabLayout;
+
     String user = "xzxHmkiUMHVjqNu67Ewzsv2TQjr2";
 //    String user = "Ky0a3h3coIbKvBapDSpNiqsOfrQ2";
 //    String user = "khach";
@@ -33,7 +34,6 @@ public class ListRestaurant extends AppCompatActivity {
                     tab.setText("Quán của tôi");
                     break;
             }
-
         }).attach();
     }
 

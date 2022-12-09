@@ -90,6 +90,9 @@
             android:name=".Register_Store"
             android:exported="false" />
         <activity
+            android:name=".AddFoodToMenu"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
