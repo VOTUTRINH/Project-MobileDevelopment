@@ -216,8 +216,8 @@ public class ScanQRCode extends AppCompatActivity {
                                     String bf = postSnapshot.child("ThoiGianLamViec").getValue(String.class).toString();
 
                                     try {
-                                        int hour = (int) ((formatTime.parse(currentTime).getTime() - formatTime.parse(start).getTime()) / 3600000);
-                                        int rs = (Integer.valueOf(bf) + (hour));
+                                        float hour =  ((formatTime.parse(currentTime).getTime() - formatTime.parse(start).getTime()) / 3600000);
+                                        int rs = (Integer.valueOf(bf) + Math.round(hour));
                                         db.child("ThoiGianLamViec").setValue(String.valueOf(rs));
 
                                     } catch (ParseException e) {

@@ -55,10 +55,12 @@ public class Register2 extends Activity {
         regGender=(EditText)findViewById(R.id.reg_gender);
         regPhone=(EditText)findViewById(R.id.reg_phone);
         regAddress=(EditText)findViewById(R.id.reg_address);
-        strg= FirebaseStorage.getInstance().getReference("");
-        Intent i=getIntent();
-        String id=i.getStringExtra("id");
-        String email=i.getStringExtra("email");
+        strg= FirebaseStorage.getInstance().getReference();
+
+        Intent intent = getIntent();
+        Bundle bundle = intent.getExtras();
+        String id = bundle.getString("id");
+        String email = bundle.getString("email");
 
         add_image1.setOnClickListener(new View.OnClickListener() {
             @Override
