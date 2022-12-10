@@ -107,7 +107,7 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <CheckBox android:id="@+id/checkbox_meat"
+            <CheckBox android:id="@+id/checkbox_agree"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="I agree to the Teams of Services and Privacy Policy"

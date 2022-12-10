@@ -24,6 +24,8 @@ public class Register extends Activity {
     EditText email,password,confirm_pass;
     CheckBox agree;
     FirebaseAuth auth;
+    private int temp=0;
+    private int flag=0;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -34,7 +36,21 @@ public class Register extends Activity {
         email =(EditText) findViewById(R.id.signup_email);
         password=(EditText) findViewById(R.id.signup_pass);
         confirm_pass =(EditText) findViewById(R.id.confirm_pass);
-        agree =(CheckBox) findViewById(R.id.checkbox_meat);
+        agree =(CheckBox) findViewById(R.id.checkbox_agree);
+
+
+
+        agree.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                temp++;
+                if(temp%2==0){
+                    flag=0;
+                }else{
+                    flag=1;
+                }
+            }
+        });
 
         auth =FirebaseAuth.getInstance();
 
@@ -49,7 +65,13 @@ public class Register extends Activity {
                     Toast.makeText(Register.this, "Thông tin chưa đầy đủ.", Toast.LENGTH_SHORT).show();
                 }else if(!text_confirm.equals(text_pass)){
                     Toast.makeText(Register.this, "Mật khẩu không trùng khớp.", Toast.LENGTH_SHORT).show();
-                }else{
+                }else if(text_pass.length()<6){
+                    Toast.makeText(Register.this, "Mật khẩu phải chứa ít nhất 6 kĩ tự", Toast.LENGTH_SHORT).show();
+                }
+                else if(flag==0)
+                {
+                    Toast.makeText(Register.this, "Bạn cần đồng ý điều khoản sử dụng", Toast.LENGTH_SHORT).show();
+                } else{
                     register(text_email,text_pass);
                 }
 

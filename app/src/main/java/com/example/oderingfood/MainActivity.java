@@ -65,10 +65,10 @@ public class MainActivity extends AppCompatActivity {
         String pass=password.getText().toString();
 
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(MainActivity.this,"Vui long nhap email!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,"Vui lòng nhập email!!",Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(pass)){
-            Toast.makeText(MainActivity.this,"Vui long nhap password!!",Toast.LENGTH_SHORT).show();
+        else if(TextUtils.isEmpty(pass)){
+            Toast.makeText(MainActivity.this,"Vui lòng nhập password!!",Toast.LENGTH_SHORT).show();
         }
 //        auth.signInWithEmailAndPassword(username, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
 //            @Override
@@ -79,17 +79,21 @@ public class MainActivity extends AppCompatActivity {
 //                finish();
 //            }
 //        });
-        auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(MainActivity.this,ListRestaurant.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Đăng nhập không thành công",Toast.LENGTH_SHORT).show();
+        else {
+            auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        String uid=   auth.getCurrentUser().getUid();
+                        Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
+                        intent.putExtra("Uid",uid);
+                        startActivity(intent);
+                    } else {
+                        Toast.makeText(getApplicationContext(), "Email hoặc Password không chính xác", Toast.LENGTH_SHORT).show();
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }

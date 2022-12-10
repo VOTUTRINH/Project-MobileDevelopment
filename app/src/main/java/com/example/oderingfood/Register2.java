@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
@@ -8,6 +9,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
@@ -19,8 +22,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.StorageTask;
@@ -29,6 +36,7 @@ import com.google.firebase.storage.UploadTask;
 
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -38,6 +46,11 @@ public class Register2 extends Activity {
     Uri uri;
     String avatar;
     EditText regName,regDofBirth,regGender, regPhone, regAddress;
+    CheckBox truth;
+    public int check=1;
+    private int checkPic=0;
+    private int temp=0;
+    private int flag=0;
 
     private StorageTask mUploadTask;
     FirebaseDatabase rootNode;
@@ -55,7 +68,8 @@ public class Register2 extends Activity {
         regGender=(EditText)findViewById(R.id.reg_gender);
         regPhone=(EditText)findViewById(R.id.reg_phone);
         regAddress=(EditText)findViewById(R.id.reg_address);
-        strg= FirebaseStorage.getInstance().getReference("");
+        truth=(CheckBox)findViewById(R.id.checkbox_true);
+        strg= FirebaseStorage.getInstance().getReference();
         Intent i=getIntent();
         String id=i.getStringExtra("id");
         String email=i.getStringExtra("email");
@@ -70,21 +84,64 @@ public class Register2 extends Activity {
             }
         });
 
+        regDofBirth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                chonNgay();
+            }
+        });
+        truth.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                temp++;
+                if(temp%2==0){
+                    flag=0;
+                }else{
+                    flag=1;
+                }
+            }
+        });
         btn_submit = findViewById(R.id.submit);
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                rootNode=FirebaseDatabase.getInstance();
-                reference=rootNode.getReference("user");
+
 
                 String name=regName.getEditableText().toString();
                 String doBirth=regDofBirth.getEditableText().toString();
                 String gender=regGender.getEditableText().toString();
                 String phone=regPhone.getEditableText().toString();
                 String address=regAddress.getEditableText().toString();
-                User user=new User(avatar,email,name,doBirth,gender,phone,address);
+                checkphone(phone);
 
-                reference.child(id).setValue(user);
+
+
+
+                if(name.isEmpty() || doBirth.isEmpty() || gender.isEmpty()||phone.isEmpty()||address.isEmpty()){
+                    Toast.makeText(Register2.this, "Thông tin chưa đầy đủ.", Toast.LENGTH_SHORT).show();
+                }
+                else if(checkPic==0 ) {
+                    Toast.makeText(Register2.this, "Vui lòng thêm ảnh đại diện", Toast.LENGTH_SHORT).show();
+                }
+                else if(check==0){
+                    Toast.makeText(Register2.this, "Số điện thoại này đã được sử dụng", Toast.LENGTH_SHORT).show();
+                    check=1;
+                }else if(flag==0)
+                {
+                    Toast.makeText(Register2.this, "Bạn cần xác nhận thông tin", Toast.LENGTH_SHORT).show();
+                }
+
+                else
+                {
+                    rootNode=FirebaseDatabase.getInstance();
+                    reference=rootNode.getReference("user");
+                    User user=new User(avatar,email,name,doBirth,gender,phone,address);
+                    reference.child(id).setValue(user);
+                    Toast.makeText(Register2.this, "Hoàn tất đăng kí", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(Register2.this,MainActivity.class);
+                    startActivity(intent);
+                }
+
 
             }
         });
@@ -99,6 +156,7 @@ public class Register2 extends Activity {
         if (requestCode == 1 && data != null && data.getData() != null) {
             uri = data.getData();
             add_image1.setImageURI(uri);
+            checkPic=1;
 
             SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss", Locale.CHINA);
             Date now = new Date();
@@ -119,7 +177,6 @@ public class Register2 extends Activity {
                                     avatar=task.getResult().toString();
 //                                    dbref.push().child("imageurl").setValue(downloadUrl);
 //                                    progressDialog.dismiss();
-                                    Toast.makeText(Register2.this,"Image uploaded",Toast.LENGTH_LONG).show();
                                 }
                             });
                         }
@@ -136,7 +193,22 @@ public class Register2 extends Activity {
         }
     }
 
+    private  void chonNgay(){
+        Calendar calendar=Calendar.getInstance();
+        int ngay=calendar.get(Calendar.DATE);
+        int thang=calendar.get(Calendar.MONDAY);
+        int nam=calendar.get(Calendar.YEAR);
+        DatePickerDialog datePickerDialog=new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
+            @Override
+            public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
+                calendar.set(year,month,dayOfMonth);
+                SimpleDateFormat simpleDateFormat=new SimpleDateFormat("dd/MM/yyyy");
 
+                regDofBirth.setText(simpleDateFormat.format(calendar.getTime()));
+            }
+        },nam,thang, ngay);
+        datePickerDialog.show();
+    }
 
     private void uploadFile(){
 
@@ -144,7 +216,26 @@ public class Register2 extends Activity {
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();
+
         MimeTypeMap mime = MimeTypeMap.getSingleton();
         return mime.getExtensionFromMimeType(cR.getType(uri));
+    }
+
+    private void checkphone(String phone){
+
+        Query checkPhone=FirebaseDatabase.getInstance().getReference("user").orderByChild("dienThoai").equalTo(phone);
+        checkPhone.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    check=0;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 }
