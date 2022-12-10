@@ -11,57 +11,55 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
-        android:gravity="center"
-        android:orientation="vertical"
         android:layout_marginLeft="15dp"
-        android:layout_marginRight="15dp">
+        android:layout_marginRight="15dp"
+        android:gravity="center"
+        android:orientation="vertical">
 
 
         <ImageView
             android:id="@+id/add_img"
             android:layout_width="100dp"
             android:layout_height="100dp"
-            android:src="@drawable/add_img"
-            android:layout_marginBottom="30dp"/>
+            android:layout_marginBottom="30dp"
+            android:src="@drawable/add_img" />
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Name"
-
-            app:startIconDrawable="@drawable/ic_baseline_account_circle_24"
             android:layout_marginTop="10dp"
+
+            android:hint="Name"
             app:endIconMode="clear_text"
             app:helperTextEnabled="false"
-            app:helperTextTextColor="@android:color/holo_red_dark">
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:startIconDrawable="@drawable/ic_baseline_account_circle_24">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
                 android:id="@+id/reg_name"
-                />
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Ngày sinh"
-            app:startIconDrawable="@drawable/ic_date"
-
-
             android:layout_marginTop="10dp"
+            android:hint="Ngày sinh"
+
 
             app:helperTextEnabled="false"
-            app:helperTextTextColor="@android:color/holo_red_dark">
+
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:startIconDrawable="@drawable/ic_date">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_dofBirth"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="date"
-                android:id="@+id/reg_dofBirth"
-                />
+                android:inputType="date" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
@@ -83,44 +81,41 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
 
-
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Số điện thoại"
-
-            app:startIconDrawable="@drawable/ic_phone"
             android:layout_marginTop="10dp"
 
+            android:hint="Số điện thoại"
             app:helperTextEnabled="false"
-            app:helperTextTextColor="@android:color/holo_red_dark">
+
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:startIconDrawable="@drawable/ic_phone">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_phone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:id="@+id/reg_phone"
-                />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Địa chỉ"
-            app:startIconDrawable="@drawable/ic_home"
             android:layout_marginTop="10dp"
-
+            android:hint="Địa chỉ"
             app:helperTextEnabled="false"
-            app:helperTextTextColor="@android:color/holo_red_dark">
+
+            app:helperTextTextColor="@android:color/holo_red_dark"
+            app:startIconDrawable="@drawable/ic_home">
 
             <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/reg_address"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
-                android:id="@+id/reg_address"
-                />
+                android:inputType="text" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <LinearLayout
@@ -128,11 +123,11 @@
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <CheckBox android:id="@+id/checkbox_meat"
+            <CheckBox
+                android:id="@+id/checkbox_true"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Tôi cam kết những thông tin trên là sự thật"
-                 />
+                android:text="Tôi cam kết những thông tin trên là sự thật" />
 
         </LinearLayout>
 
@@ -142,9 +137,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:backgroundTint="#E91E63"
-            android:text="submit"
-            />
-
+            android:text="submit" />
 
 
     </LinearLayout>

@@ -3,6 +3,7 @@ package com.example.oderingfood;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.google.android.material.tabs.TabLayout;
@@ -13,13 +14,17 @@ public class ListRestaurant extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter ;
     TabLayout tabLayout;
 
-    String user = "xzxHmkiUMHVjqNu67Ewzsv2TQjr2";
+
+    String user;
 //    String user = "Ky0a3h3coIbKvBapDSpNiqsOfrQ2";
 //    String user = "khach";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_restaurant);
+
+        Intent intent =getIntent();
+        user= intent.getStringExtra("Uid");
         viewPager = (ViewPager2) findViewById(R.id.view_pager);
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);

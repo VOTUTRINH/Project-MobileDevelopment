@@ -15,6 +15,7 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -65,31 +66,44 @@ public class MainActivity extends AppCompatActivity {
         String pass=password.getText().toString();
 
         if(TextUtils.isEmpty(email)){
-            Toast.makeText(MainActivity.this,"Vui long nhap email!!",Toast.LENGTH_SHORT).show();
+            Toast.makeText(MainActivity.this,"Vui lòng nhập email!!",Toast.LENGTH_SHORT).show();
         }
-        if(TextUtils.isEmpty(pass)){
-            Toast.makeText(MainActivity.this,"Vui long nhap password!!",Toast.LENGTH_SHORT).show();
+        else if(TextUtils.isEmpty(pass)){
+            Toast.makeText(MainActivity.this,"Vui lòng nhập password!!",Toast.LENGTH_SHORT).show();
         }
-//        auth.signInWithEmailAndPassword(username, password).addOnSuccessListener(new OnSuccessListener<AuthResult>() {
-//            @Override
-//            public void onSuccess(AuthResult authResult) {
-//                Toast.makeText(MainActivity.this,"Dang nhap thanh cong", Toast.LENGTH_SHORT).show();
-//                Intent intent=new Intent(MainActivity.this,Register.class);
-//                startActivity(intent);
-//                finish();
-//            }
-//        });
-        auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-                if(task.isSuccessful()){
-                    Toast.makeText(getApplicationContext(),"Đăng nhập thành công",Toast.LENGTH_SHORT).show();
-                    Intent intent=new Intent(MainActivity.this,ListRestaurant.class);
-                    startActivity(intent);
-                }else{
-                    Toast.makeText(getApplicationContext(),"Đăng nhập không thành công",Toast.LENGTH_SHORT).show();
+
+        else {
+            auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                @Override
+                public void onComplete(@NonNull Task<AuthResult> task) {
+                    if (task.isSuccessful()) {
+                        String uid=   auth.getCurrentUser().getUid();
+                        Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                        Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
+                        intent.putExtra("Uid",uid);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        String str = ((FirebaseAuthException) task.getException()).getErrorCode();
+
+                        if (str.equals("ERROR_INVALID_EMAIL")) {
+                            Toast.makeText(MainActivity.this, "Email không đúng định dạng.", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else if(str.equals("ERROR_WRONG_PASSWORD")){
+                            Toast.makeText(MainActivity.this, "Mật khẩu không chính xác.", Toast.LENGTH_SHORT).show();
+
+                        }
+                        else if (str.equals("ERROR_USER_NOT_FOUND")) {
+                            Toast.makeText(MainActivity.this, "Tài khoản không tồn tại.", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(MainActivity.this, "Đăng kí không thành công.", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(MainActivity.this, ((FirebaseAuthException) task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
-            }
-        });
+            });
+        }
     }
 }
