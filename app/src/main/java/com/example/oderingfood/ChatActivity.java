@@ -61,6 +61,7 @@ public class ChatActivity extends AppCompatActivity {
         btnSend = findViewById(R.id.ac_btn_send);
         txtTenQuan = findViewById(R.id.ac_txt_tenquan);
 
+        // Set ten quan
         DatabaseReference dbRefTenQuan = database.getReference("restaurant/" + idRes + "/TenQuan");
         dbRefTenQuan.addValueEventListener(new ValueEventListener() {
             @Override
@@ -76,10 +77,11 @@ public class ChatActivity extends AppCompatActivity {
         });
         mData = new ArrayList<Object>();
 
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         linearLayoutManager.setReverseLayout(true);
         chatList.setLayoutManager(linearLayoutManager);
-        ChatAdapter chatAdapter = new ChatAdapter(this, mData);
+        ChatAdapter chatAdapter = new ChatAdapter(this, mData ,idRes);
         chatList.setAdapter(chatAdapter);
 
 
@@ -91,29 +93,28 @@ public class ChatActivity extends AppCompatActivity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 mData.clear();
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
+                    String id = postSnapshotNhanVien.getKey();
                     String msg = postSnapshotNhanVien.child("msg").getValue(String.class);
                     String sendby = postSnapshotNhanVien.child("sendby").getValue(String.class);
 
                     dbRefUser.child(sendby).addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshotUser) {
-                            String avt = snapshotUser.child("Avatar").getValue(String.class);
-                            String name = snapshotUser.child("HoTen").getValue(String.class);
+                            String avt = snapshotUser.child("avatar").getValue(String.class);
+                            String name = snapshotUser.child("hoTen").getValue(String.class);
 
                             Object msgObject;
                             if(sendby.equals(user))
                             {
-                                msgObject = new messageToOther(msg,avt);
+                                msgObject = new messageToOther(id,msg,avt);
                             }else
                             {
-                                msgObject = new messageFromOther(name,msg,avt);
+                                msgObject = new messageFromOther(id,name,msg,avt);
                             }
 
                             mData.add(0,msgObject);
                             chatAdapter.notifyDataSetChanged();
                         }
-
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 

@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
@@ -71,7 +72,7 @@ public class EmployeeManageActivity extends Fragment {
 
     Bottomnavigation bottomnavigation ;
     String user;
-    String idRestaurent = "xzxHmkiUMHVjqNu67Ewzsv2TQjr2";
+    String idRestaurent;
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -114,9 +115,9 @@ public class EmployeeManageActivity extends Fragment {
         bottomnavigation = (Bottomnavigation) getActivity();
         user= bottomnavigation.getUser();
         idRestaurent = bottomnavigation.getIdRes();
-        Log.i("IDRES", idRestaurent);
-        adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees, idRestaurent);
-        adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking, idRestaurent);
+
+        adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees);
+        adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking);
 
 
         // Get data list employee from firebase
@@ -143,7 +144,7 @@ public class EmployeeManageActivity extends Fragment {
 
                     listEmployee.add(employee);
                 }
-                Log.i("Size", String.valueOf(employees.size()));
+
                 // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
                 DatabaseReference dbRefUser = database.getReference("user");
                 dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -226,6 +227,9 @@ public class EmployeeManageActivity extends Fragment {
         btnViewListEmployees.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                Intent intent = new Intent(context, DetailListEmployeesActivity.class);
+                intent.putExtra("idRes",idRestaurent);
+                startActivity(intent);
             }
         });
 
@@ -246,12 +250,23 @@ public class EmployeeManageActivity extends Fragment {
                 int year= calender.get(calender.YEAR);
                 int month= calender.get(calender.MONTH);
                 int day=calender.get(calender.DATE);
+                String previousDate = txtDateChosen.getText().toString();
+
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
                         calender.set(i,i1,i2);
                         SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
-                        txtDateChosen.setText(simpleDateFormat.format(calender.getTime()));
+                        String newDate = simpleDateFormat.format(calender.getTime());
+
+                        // Nếu ngày chọn mới khác với ngày cũ, thì thực hiện lấy danh sách nhân viên đang làm việc của ngày mới
+                        if(!newDate.equals(previousDate))
+                        {
+                            newDate = newDate.replaceAll("/","-");
+                            getListEmployeesAreWorking(newDate);
+                        }
+
+                        txtDateChosen.setText(newDate);
                     }
                 },year, month,day);
                 datePickerDialog.show();
@@ -273,6 +288,51 @@ public class EmployeeManageActivity extends Fragment {
         listEmployeesWorking.setAdapter(adapterListEmployeesWorking);
 
         return employeeManagerFragment;
+    }
+
+    private void getListEmployeesAreWorking(String date)
+    {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabaseNhanVien = database.getReference("/restaurant/" + idRestaurent + "/NhanVien");
+
+        mDatabaseNhanVien.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                employeesWorking.clear();
+                for(DataSnapshot postSnapShot: snapshot.getChildren())
+                {
+                    if(postSnapShot.child("LamViec") == null) continue;
+
+                    if(postSnapShot.child("LamViec").hasChild(date)){
+                        String id = postSnapShot.getKey();
+
+                        DatabaseReference dbRefUser = database.getReference("user");
+                        dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                String avt = snapshot.child(id).child("avatar").getValue(String.class);
+                                String name = snapshot.child(id).child("hoTen").getValue(String.class);
+
+                                Employee employee = new Employee(id,name,avt);
+                                employeesWorking.add(employee);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+                    }
+                }
+
+                adapterListEmployeesWorking.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     // Show dialog to add table

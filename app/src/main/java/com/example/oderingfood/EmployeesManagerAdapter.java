@@ -70,8 +70,6 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
                 bundle.putString("idRes", idRes);
                 intent.putExtras(bundle);
                 view.getContext().startActivity(intent);
-
-                Toast.makeText(view.getContext(), "Click Vao Nhan Vien", Toast.LENGTH_SHORT).show();
             }
         });
     }
