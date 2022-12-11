@@ -73,25 +73,30 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
                 // Duyet danh sach nhan vien
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
+                    String dateChosen = txtDateChosen.getText().toString();
+                    dateChosen = dateChosen.replaceAll("/","-");
 
-                    // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
-                    DatabaseReference dbRefUser = database.getReference("user/" + id);
-                    dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshotUser) {
-                            String hoTen = snapshotUser.child("hoTen").getValue(String.class);
-                            String avatar = snapshotUser.child("avatar").getValue(String.class);
+                    if(postSnapshotNhanVien.hasChild("LamViec") && postSnapshotNhanVien.child("LamViec").hasChild(dateChosen)){
+                        Toast.makeText(ListNhanVienDangLamViec.this, dateChosen,Toast.LENGTH_SHORT).show();
+                        // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
+                        DatabaseReference dbRefUser = database.getReference("user/" + id);
+                        dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshotUser) {
+                                String hoTen = snapshotUser.child("hoTen").getValue(String.class);
+                                String avatar = snapshotUser.child("avatar").getValue(String.class);
 
-                            Employee employee = new Employee(id, hoTen, avatar);
+                                Employee employee = new Employee(id, hoTen, avatar);
 
-                            employees.add(employee);
-                            adapterListEmployees.notifyDataSetChanged();
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                                employees.add(employee);
+                                adapterListEmployees.notifyDataSetChanged();
+                            }
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
                 }
 
             }
@@ -111,9 +116,9 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
             @Override
             public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
                 if (charSequence.toString().isEmpty()) {
-                    searchAllEmployees();
+                    searchAllEmployeesWorking();
                 }else{
-                    searchEmployeesByName(charSequence.toString());
+                    searchEmployeesWorkingByName(charSequence.toString());
                 }
             }
 
@@ -145,8 +150,7 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
                         // Nếu ngày chọn mới khác với ngày cũ, thì thực hiện lấy danh sách nhân viên đang làm việc của ngày mới
                         if(!newDate.equals(previousDate))
                         {
-                            newDate = newDate.replaceAll("/","-");
-//                            getListEmployeesAreWorking(newDate);
+                            searchAllEmployeesWorking();
                         }
 
                         txtDateChosen.setText(newDate);
@@ -157,7 +161,7 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
         });
     }
 
-    private void searchAllEmployees(){
+    private void searchAllEmployeesWorking(){
         DatabaseReference dbRefEmployee = database.getReference("restaurant/" + idRes + "/NhanVien");
         dbRefEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -167,26 +171,32 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
 
-                    // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
-                    DatabaseReference dbRefUser = database.getReference("user/" + id);
-                    dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshotUser) {
-                            String hoTen = snapshotUser.child("hoTen").getValue(String.class);
-                            String avatar = snapshotUser.child("avatar").getValue(String.class);
+                    String dateChosen = txtDateChosen.getText().toString();
+                    dateChosen = dateChosen.replaceAll("/","-");
+                    if(postSnapshotNhanVien.hasChild("LamViec") && postSnapshotNhanVien.child("LamViec").hasChild(dateChosen)){
+                        // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
+                        DatabaseReference dbRefUser = database.getReference("user/" + id);
+                        dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshotUser) {
+                                String hoTen = snapshotUser.child("hoTen").getValue(String.class);
+                                String avatar = snapshotUser.child("avatar").getValue(String.class);
 
-                            Employee employee = new Employee(id, hoTen, avatar);
+                                Employee employee = new Employee(id, hoTen, avatar);
 
-                            if(!checkDup(employees, employee)) {
-                                employees.add(employee);
+                                if(!checkDup(employees, employee)) {
+                                    employees.add(employee);
+                                }
+                                Toast.makeText(ListNhanVienDangLamViec.this, String.valueOf(employees.size()), Toast.LENGTH_SHORT).show();
+                                adapterListEmployees.notifyDataSetChanged();
                             }
-                            adapterListEmployees.notifyDataSetChanged();
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
                 }
             }
 
@@ -208,7 +218,7 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
         return false;
     }
 
-    private void searchEmployeesByName(String name){
+    private void searchEmployeesWorkingByName(String name){
         DatabaseReference dbRefEmployee = database.getReference("restaurant/" + idRes + "/NhanVien");
         dbRefEmployee.addValueEventListener(new ValueEventListener() {
             @Override
@@ -218,24 +228,32 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
 
-                    // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
-                    DatabaseReference dbRefUser = database.getReference("user/" + id);
-                    dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshotUser) {
-                            String hoTen = snapshotUser.child("hoTen").getValue(String.class);
-                            String avatar = snapshotUser.child("avatar").getValue(String.class);
-                            if(hoTen.toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT))){
-                                Employee employee = new Employee(id, hoTen, avatar);
-                                employees.add(employee);
+                    String dateChosen = txtDateChosen.getText().toString();
+                    dateChosen = dateChosen.replaceAll("/","-");
+                    if(postSnapshotNhanVien.hasChild("LamViec") && postSnapshotNhanVien.child("LamViec").hasChild(dateChosen)){
+                        // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
+                        DatabaseReference dbRefUser = database.getReference("user/" + id);
+                        dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshotUser) {
+                                String hoTen = snapshotUser.child("hoTen").getValue(String.class);
+                                String avatar = snapshotUser.child("avatar").getValue(String.class);
+                                if(hoTen.toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT))){
+                                    Employee employee = new Employee(id, hoTen, avatar);
+                                    if(!checkDup(employees,employee))
+                                    {
+                                        employees.add(employee);
+                                    }
+                                }
+                                adapterListEmployees.notifyDataSetChanged();
                             }
-                            adapterListEmployees.notifyDataSetChanged();
-                        }
-                        @Override
-                        public void onCancelled(@NonNull DatabaseError error) {
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
 
-                        }
-                    });
+                            }
+                        });
+                    }
+
                 }
             }
 

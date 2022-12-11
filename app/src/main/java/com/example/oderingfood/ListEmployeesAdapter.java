@@ -100,14 +100,14 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         Long timeWorked = snapshot.child("ThoiGianLamViec").getValue(Long.class);
-                        if(timeWorked > 0)
+                        String trangThai = snapshot.child("TrangThai").getValue(String.class);
+                        if(timeWorked > 0 || trangThai.equals("DangLamViec"))
                         {
                             Toast.makeText(context, "Thanh toán tiền lương trước khi xóa", Toast.LENGTH_SHORT).show();
                             return;
                         }
                         dbRefEmployee.setValue(null);
                     }
-
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 

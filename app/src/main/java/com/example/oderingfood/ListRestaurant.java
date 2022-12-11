@@ -27,11 +27,11 @@ public class ListRestaurant extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
-        Intent intent = getIntent();
-        Bundle bundle = intent.getExtras();
-        if (bundle != null) {
-            user = bundle.getString("Uid");
-        }
+//        Intent intent = getIntent();
+//        Bundle bundle = intent.getExtras();
+//        if (bundle != null) {
+//            user = bundle.getString("Uid");
+//        }
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position){
