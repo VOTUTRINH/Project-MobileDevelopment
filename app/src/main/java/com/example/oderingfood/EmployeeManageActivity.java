@@ -115,8 +115,8 @@ public class EmployeeManageActivity extends Fragment {
         user= bottomnavigation.getUser();
         idRestaurent = bottomnavigation.getIdRes();
         Log.i("IDRES", idRestaurent);
-        adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees);
-        adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking);
+        adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees, idRestaurent);
+        adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking, idRestaurent);
 
 
         // Get data list employee from firebase
