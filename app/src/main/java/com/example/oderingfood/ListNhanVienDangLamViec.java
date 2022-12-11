@@ -1,5 +1,12 @@
 package com.example.oderingfood;
 
+import androidx.annotation.RequiresApi;
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.app.DatePickerDialog;
+import android.os.Build;
+import android.os.Bundle;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -7,23 +14,28 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.View;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.Toast;
 
 import com.example.oderingfood.models.Employee;
 import com.example.oderingfood.models.Restaurant;
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Locale;
 
-public class ListNhanVien extends AppCompatActivity {
+public class ListNhanVienDangLamViec extends AppCompatActivity {
     ListEmployeesAdapter adapterListEmployees;
     GridView gv;
     List<Employee> employees = new ArrayList<Employee>();
@@ -32,10 +44,13 @@ public class ListNhanVien extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     String idRes;
+
+    TextInputEditText txtDateChosen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_list_nhan_vien);
+        setContentView(R.layout.activity_list_nhan_vien_dang_lam_viec);
 
         Intent intent = getIntent();
         Bundle bundle = intent.getExtras();
@@ -44,7 +59,7 @@ public class ListNhanVien extends AppCompatActivity {
         }
 
         edtSearchEmployee = (EditText) findViewById(R.id.edt_search_employee);
-
+        txtDateChosen = (TextInputEditText) findViewById(R.id.txt_date_chosen);
         adapterListEmployees = new ListEmployeesAdapter(this, R.layout.custom_item_employee, employees, idRes);
         gv = (GridView) findViewById(R.id.gvNhanvien);
         gv.setAdapter(adapterListEmployees);
@@ -105,6 +120,39 @@ public class ListNhanVien extends AppCompatActivity {
             @Override
             public void afterTextChanged(Editable editable) {
 
+            }
+        });
+
+        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
+        txtDateChosen.setText(simpleDateFormat.format( Calendar.getInstance().getTime()));
+        txtDateChosen.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                Calendar calender =Calendar.getInstance();
+                int year= calender.get(calender.YEAR);
+                int month= calender.get(calender.MONTH);
+                int day=calender.get(calender.DATE);
+                String previousDate = txtDateChosen.getText().toString();
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ListNhanVienDangLamViec.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        calender.set(i,i1,i2);
+                        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
+                        String newDate = simpleDateFormat.format(calender.getTime());
+
+                        // Nếu ngày chọn mới khác với ngày cũ, thì thực hiện lấy danh sách nhân viên đang làm việc của ngày mới
+                        if(!newDate.equals(previousDate))
+                        {
+                            newDate = newDate.replaceAll("/","-");
+//                            getListEmployeesAreWorking(newDate);
+                        }
+
+                        txtDateChosen.setText(newDate);
+                    }
+                },year, month,day);
+                datePickerDialog.show();
             }
         });
     }

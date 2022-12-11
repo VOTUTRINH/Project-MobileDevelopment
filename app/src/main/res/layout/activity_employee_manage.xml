@@ -115,6 +115,7 @@ android:orientation="vertical"
             android:orientation="vertical"
             android:layout_marginTop="30dp">
             <Button
+                android:id="@+id/btn_list_employees_working"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:text="Nhân viên đang làm việc"

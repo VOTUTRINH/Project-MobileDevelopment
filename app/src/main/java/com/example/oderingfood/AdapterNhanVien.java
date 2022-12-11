@@ -59,6 +59,5 @@ public class AdapterNhanVien extends BaseAdapter {
 //        viewHolder.imgAvt.setImageResource(arrayList.get(i).urlImageAvatar);
         Glide.with(context).load(arrayList.get(i).getAvatar()).into(viewHolder.imgAvt);
         return view;
-
     }
 }
