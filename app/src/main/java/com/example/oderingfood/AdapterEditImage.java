@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,12 +56,19 @@ public class AdapterEditImage  extends RecyclerView.Adapter<AdapterEditImage.Vie
     }
 
     // Initializing the Views
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         ImageView images;
 
         public ViewHolder(View view) {
             super(view);
             images = (ImageView) view.findViewById(R.id.img_item);
+            view.setOnCreateContextMenuListener(this);
+        }
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+            menu.add(getAdapterPosition(), R.id.menu_delete_item, 1, "Xóa");
+
         }
 
     }
