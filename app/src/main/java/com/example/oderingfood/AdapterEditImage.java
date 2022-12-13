@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -46,6 +47,16 @@ public class AdapterEditImage  extends RecyclerView.Adapter<AdapterEditImage.Vie
         // TypeCast Object to int type
         String res = Img.get(position).getUrl().toString();
         Glide.with(context).load(res).into(holder.images);
+        holder.images.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get id to acess database
+                Intent intent = new Intent(context, FullScreenActivity.class);
+                intent.putExtra("id", res);
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -58,10 +69,11 @@ public class AdapterEditImage  extends RecyclerView.Adapter<AdapterEditImage.Vie
     // Initializing the Views
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         ImageView images;
-
         public ViewHolder(View view) {
             super(view);
             images = (ImageView) view.findViewById(R.id.img_item);
+
+
             view.setOnCreateContextMenuListener(this);
         }
         @Override
