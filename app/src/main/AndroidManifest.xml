@@ -73,6 +73,9 @@
             android:name=".ChatActivity"
             android:exported="false" />
         <activity
+            android:name=".FullScreenActivity"
+            android:exported="false" />
+        <activity
             android:name=".TablesActivity"
             android:exported="false">
             <meta-data
