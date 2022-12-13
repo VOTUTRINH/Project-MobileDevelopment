@@ -79,11 +79,7 @@ public class HomeFragment extends Fragment {
         txt_home_tongban = (TextView) homeFragment.findViewById(R.id.txt_home_tongban);
         txt_home_bantrong =(TextView) homeFragment.findViewById(R.id.txt_home_bantrong);
 
-        txt_home_tongban.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
+
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
