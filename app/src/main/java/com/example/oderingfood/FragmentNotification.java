@@ -39,14 +39,14 @@ public class FragmentNotification extends Fragment {
         super.onCreate(savedInstanceState);
         context = getActivity();
         items = new ArrayList<NotificationItem>();
-        items.add(new NotificationItem(R.drawable.ic_person, "A Đã đặt bàn 10", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
-        items.add(new NotificationItem(R.drawable.ic_person, "Bàn 2 Đã thanh toán", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
-        items.add(new NotificationItem(R.drawable.ic_person, "Chủ quán vừa cập nhập menu mới", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
-        items.add(new NotificationItem(R.drawable.ic_person, "B Đã đặt bàn 30", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
-        items.add(new NotificationItem(R.drawable.ic_person, "Bàn 30 vừa gọi thêm món", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
-        items.add(new NotificationItem(R.drawable.ic_person, "A Đã đặt bàn 10", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
-        items.add(new NotificationItem(R.drawable.ic_person, "AXXXXXXXXX", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
-        items.add(new NotificationItem(R.drawable.ic_person, "A Đã đặt bàn 10", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "A Đã đặt bàn 10", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "Bàn 2 Đã thanh toán", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "Chủ quán vừa cập nhập menu mới", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "B Đã đặt bàn 30", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "Bàn 30 vừa gọi thêm món", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "A Đã đặt bàn 10", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "AXXXXXXXXX", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
+        //items.add(new NotificationItem(R.drawable.ic_person, "A Đã đặt bàn 10", "Danh sách món: A, B, C Danh sách món: A, B, C Danh sách món: A, B, C "));
 
 
     }
