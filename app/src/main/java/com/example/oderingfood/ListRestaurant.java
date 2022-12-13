@@ -6,6 +6,7 @@ import androidx.viewpager2.widget.ViewPager2;
 import android.content.Intent;
 import android.os.Bundle;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
 
@@ -14,10 +15,7 @@ public class ListRestaurant extends AppCompatActivity {
     ViewPagerAdapter viewPagerAdapter ;
     TabLayout tabLayout;
 
-
-    String user;
-//    String user = "Ky0a3h3coIbKvBapDSpNiqsOfrQ2";
-//    String user = "khach";
+    String user ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +27,11 @@ public class ListRestaurant extends AppCompatActivity {
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+//        Intent intent = getIntent();
+//        Bundle bundle = intent.getExtras();
+//        if (bundle != null) {
+//            user = bundle.getString("Uid");
+//        }
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position){

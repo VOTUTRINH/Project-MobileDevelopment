@@ -19,6 +19,7 @@
         android:theme="@style/Theme.OderingFood"
         tools:targetApi="31">
         <activity
+<<<<<<< HEAD
             android:name=".Res_infor"
             android:exported="false">
             <meta-data
@@ -27,6 +28,9 @@
         </activity>
         <activity
             android:name=".Voucher"
+=======
+            android:name=".ListNhanVienDangLamViec"
+>>>>>>> 1db2f60ac44e2118f8efa362197d4e9ff2a6807c
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"

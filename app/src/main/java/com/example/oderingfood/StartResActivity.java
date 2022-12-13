@@ -77,7 +77,6 @@ public class StartResActivity extends AppCompatActivity {
     }
     private void changeRole(String role){
         this.role = role;
-        Toast.makeText(this, role, Toast.LENGTH_SHORT).show();
     }
 
     public void setRole(){

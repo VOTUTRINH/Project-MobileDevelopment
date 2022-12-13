@@ -2,6 +2,7 @@ package com.example.oderingfood;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,6 +24,7 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
     List<Employee> employees;
     LayoutInflater inflater;
     Context context;
+    String idRes;
 
     class MyViewHolder extends RecyclerView.ViewHolder {
         LinearLayout item;
@@ -37,11 +39,12 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
     }
 
 
-    public EmployeesManagerAdapter(Context context, List<Employee>employees)
+    public EmployeesManagerAdapter(Context context, List<Employee>employees, String idRes)
     {
         this.context = context;
         this.inflater =LayoutInflater.from(context);
         this.employees = employees;
+        this.idRes = idRes;
     }
 
     @NonNull
@@ -62,11 +65,11 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
             public void onClick(View view) {
 
                 Intent intent = new Intent(view.getContext(),a2g18Activity.class);
-                intent.putExtra("idUser",employee.getId());
-
+                Bundle bundle = new Bundle();
+                bundle.putString("idUser", employee.getId());
+                bundle.putString("idRes", idRes);
+                intent.putExtras(bundle);
                 view.getContext().startActivity(intent);
-
-                Toast.makeText(view.getContext(), "Click Vao Nhan Vien", Toast.LENGTH_SHORT).show();
             }
         });
     }
