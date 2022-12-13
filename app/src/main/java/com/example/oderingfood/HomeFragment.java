@@ -106,7 +106,7 @@ public class HomeFragment extends Fragment {
                     txt_home_tongban.setText("0");
                 }
                 //load images restaurant
-
+                Img2.clear();
                 for(DataSnapshot postSnapshot: snapshot.child("HinhAnh").getChildren()){
                     try{
                     String urlImage = postSnapshot.getValue().toString();
@@ -118,7 +118,7 @@ public class HomeFragment extends Fragment {
                     adapter1.notifyDataSetChanged();
 
                 //load menu image
-
+                    Img.clear();
                     for(DataSnapshot postSnapshot: snapshot.child("Menu").getChildren()){
                         try{
                         String link =  postSnapshot.child("urlImage").getValue().toString();

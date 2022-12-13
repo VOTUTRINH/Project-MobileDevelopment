@@ -70,6 +70,7 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
                 bundle.putString("idRes", idRes);
                 intent.putExtras(bundle);
                 view.getContext().startActivity(intent);
+
             }
         });
     }

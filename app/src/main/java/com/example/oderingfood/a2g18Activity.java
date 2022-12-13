@@ -137,6 +137,7 @@ public class a2g18Activity extends Activity {
                 txtAddress.setText("Địa chỉ: " + address);
                 txtSalary.setText("Ngày sinh: " + salary);
 
+
             }
 
             @Override

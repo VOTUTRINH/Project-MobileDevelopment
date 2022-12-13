@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
+import android.view.MenuItem;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -128,7 +129,7 @@ public class Res_infor extends AppCompatActivity {
                     avt = "https://firebasestorage.googleapis.com/v0/b/orderingfood-ab91f.appspot.com/o/store_default.png?alt=media&token=de6a404a-dd66-4a21-b6ae-eda751d79983";
                 }
                 Glide.with(getApplication()).load(avt).into(add_image);
-
+                Img.clear();
                 for(DataSnapshot postSnapshot: snapshot.child("HinhAnh").getChildren()){
                     try{
                         String urlImage = postSnapshot.getValue().toString();
@@ -155,6 +156,12 @@ public class Res_infor extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 isEditable = true;
+
+                edt_name.setEnabled(true);
+                edt_address.setEnabled(true);
+                edt_description.setEnabled(true);
+                add_image1.setImageResource(R.drawable.add_image);
+
                 add_image1.setVisibility(View.VISIBLE);
                 edt_name.setInputType(InputType.TYPE_CLASS_TEXT);
                 edt_address.setInputType(InputType.TYPE_CLASS_TEXT);
@@ -181,24 +188,34 @@ public class Res_infor extends AppCompatActivity {
         btn_submit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                String name = edt_name.getText().toString();
-                String address = edt_address.getText().toString();
-                String description = edt_description.getText().toString();
+                if(isEditable) {
+                    String name = edt_name.getText().toString();
+                    String address = edt_address.getText().toString();
+                    String description = edt_description.getText().toString();
 
 
-                if(name.isEmpty()){
-                    Toast.makeText(Res_infor.this, "Tên quán không dược để trống", Toast.LENGTH_SHORT).show();
-                }else if (address.isEmpty()){
-                    Toast.makeText(Res_infor.this, "Địa chỉ không dược để trống", Toast.LENGTH_SHORT).show();
-                }else {
 
-                    myRef.child("TenQuan").setValue(name);
-                    myRef.child("DiaChi").setValue(address);
-                    myRef.child("MoTa").setValue(description);
 
-                    Intent intent = new Intent(Res_infor.this, Bottomnavigation.class);
-                    startActivity(intent);
-                    finish();
+                    if (name.isEmpty()) {
+                        Toast.makeText(Res_infor.this, "Tên quán không dược để trống", Toast.LENGTH_SHORT).show();
+                    } else if (address.isEmpty()) {
+                        Toast.makeText(Res_infor.this, "Địa chỉ không dược để trống", Toast.LENGTH_SHORT).show();
+                    } else {
+
+                        myRef.child("TenQuan").setValue(name);
+                        myRef.child("DiaChi").setValue(address);
+                        myRef.child("MoTa").setValue(description);
+
+                        add_image1.setVisibility(View.INVISIBLE);
+                        btn_add_image.setVisibility(View.INVISIBLE);
+
+                        edt_name.setEnabled(false);
+                        edt_address.setEnabled(false);
+                        edt_description.setEnabled(false);
+                        isEditable = false;
+
+
+                }
             }}
         });
 
@@ -249,6 +266,25 @@ public class Res_infor extends AppCompatActivity {
                 Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
             }
         }
+    }
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+        if(isEditable) {
+            int clickedItemPosition = item.getGroupId();
+
+            if (item.getItemId() == R.id.menu_delete_item) {
+
+                Image image = Img.get(clickedItemPosition);
+
+                myRef.child("HinhAnh").child(image.getId()).removeValue();
+
+                return true;
+            }
+        }
+
+        return super.onContextItemSelected(item);
+
     }
     private void load_image(Uri uri) {
         StorageReference reference = FirebaseStorage.getInstance().getReference();

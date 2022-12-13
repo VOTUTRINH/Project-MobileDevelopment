@@ -117,8 +117,8 @@ public class EmployeeManageActivity extends Fragment {
         user= bottomnavigation.getUser();
         idRestaurent = bottomnavigation.getIdRes();
 
-        adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees);
-        adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking);
+        adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees,idRestaurent);
+        adapterListEmployeesWorking = new EmployeesManagerAdapter(getActivity(), employeesWorking,idRestaurent);
 
 
         // Get data list employee from firebase
@@ -404,6 +404,8 @@ public class EmployeeManageActivity extends Fragment {
                             map.put("TrangThai", "KhongLamViec");
 
                             mDatabaseNhanVien.child(idUser).setValue(map);
+
+
                             Toast.makeText(context, "Thêm nhân viên thành công",Toast.LENGTH_SHORT).show();
 
                         }
@@ -426,4 +428,6 @@ public class EmployeeManageActivity extends Fragment {
             }
         });
     }
+
+
 }
