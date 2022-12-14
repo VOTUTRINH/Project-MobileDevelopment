@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
@@ -18,6 +19,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
@@ -48,8 +50,10 @@ public class ProfileUserActivity extends AppCompatActivity {
     LinearLayout group_button_edit;
     String oldName, oldPhone, oldSex, oldAddress, oldBirthday;
     Button btn_cancel_edit, btn_confirm_edit;
+    ProgressBar progress_bar;
 
-    boolean isEditing = false;
+
+    boolean isEditing = false;int SELECT_IMAGE_CODE=1;Uri uri;
 
     FirebaseDatabase database;
     DatabaseReference refUser;
@@ -71,6 +75,7 @@ public class ProfileUserActivity extends AppCompatActivity {
         lv_danhsachluong = (ListView) findViewById(R.id.lv_danh_sach_luong);
         btn_editinfo = (Button) findViewById(R.id.btn_edit);
         group_button_edit = (LinearLayout) findViewById(R.id.group_btn_edit);
+        progress_bar =(ProgressBar)findViewById(R.id.progress_bar);
 
         btn_cancel_edit = (Button) findViewById(R.id.btn_cancel);
         btn_confirm_edit = (Button) findViewById(R.id.btn_submit);
@@ -172,6 +177,17 @@ public class ProfileUserActivity extends AppCompatActivity {
                 lv_danhsachluong.setVisibility(View.VISIBLE);
 
                 group_button_edit.setVisibility(View.INVISIBLE);
+                progress_bar.setVisibility(View.INVISIBLE);
+            }
+        });
+
+        img_add_avatar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent= new Intent();
+                intent.setType("image/*");
+                intent.setAction(Intent.ACTION_GET_CONTENT);
+                startActivityForResult(Intent.createChooser(intent,"title"),SELECT_IMAGE_CODE);
             }
         });
 
@@ -203,6 +219,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                     }
                 });
 
+                load_image_avt(uri);
                 // Edit another info
                 edt_name.setEnabled(false);
                 edt_phone.setEnabled(false);
@@ -216,5 +233,53 @@ public class ProfileUserActivity extends AppCompatActivity {
             }
         });
     }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 1) {
+            uri = data.getData();
+            if (uri != null) {
+                img_add_avatar.setImageURI(uri);
+            } else {
+                Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private void load_image_avt(Uri uri) {
+        StorageReference reference = FirebaseStorage.getInstance().getReference();
+        StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
+
+        fileRef.putFile(uri).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                fileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {
+                    @Override
+                    public void onSuccess(Uri uri) {
+                        refUser.child("avatar").setValue(uri.toString());
+                        progress_bar.setVisibility(View.INVISIBLE);
+                    }
+                });
+            }
+        }).addOnProgressListener(new OnProgressListener<UploadTask.TaskSnapshot>() {
+            @Override
+            public void onProgress(@NonNull UploadTask.TaskSnapshot snapshot) {
+                progress_bar.setVisibility(View.VISIBLE);
+            }
+        }).addOnFailureListener(new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                progress_bar.setVisibility(View.INVISIBLE);
+                Toast.makeText(ProfileUserActivity.this, "Upload image fail !!", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    private  String getFileExtension(Uri mUri){
+        ContentResolver cr= getContentResolver();
+        MimeTypeMap mime = MimeTypeMap.getSingleton();
+        return mime.getExtensionFromMimeType(cr.getType(mUri));
+    }
+
 
 }

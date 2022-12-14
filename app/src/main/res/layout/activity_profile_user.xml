@@ -47,6 +47,7 @@
             android:layout_gravity="right"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
+
             android:layout_gravity="center_horizontal"
             android:id="@+id/afo_avatar"
             android:layout_width="130dp"
@@ -178,6 +179,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"/>
 
+            <ProgressBar
+                android:id="@+id/progress_bar"
+                android:layout_gravity="center_horizontal"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
             <LinearLayout
                 android:id="@+id/group_btn_edit"
                 android:gravity="center_horizontal"
@@ -202,6 +209,7 @@
                     android:backgroundTint="@color/color_main"/>
             </LinearLayout>
         </LinearLayout>
+
 
     </ScrollView>
 
