@@ -18,11 +18,11 @@
         android:text="Chi tiết nhân viên"
         android:textSize="23dp"
         android:textStyle="bold"
-        android:textColor="@color/black"
+        android:textColor="@color/color_main"
         android:layout_marginLeft="1dp"
         android:layout_marginRight="1dp"
         android:layout_marginTop="1dp"
-        android:background="#f48fb1"
+
         android:fontFamily="@font/quicksand_bold"/>
 
     <Button

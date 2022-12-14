@@ -1,12 +1,16 @@
 package com.example.oderingfood;
 
+import static android.app.PendingIntent.getActivity;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.ContentResolver;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -54,7 +58,7 @@ public class Res_infor extends AppCompatActivity {
     DatabaseReference myRef ;
 
     int SELECT_IMAGE_CODE=1;
-    Uri uri;
+    Uri uri, avt;
     boolean isEditable = false;
 
     ArrayList<Image> Img =new ArrayList<>();
@@ -189,33 +193,7 @@ public class Res_infor extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if(isEditable) {
-                    String name = edt_name.getText().toString();
-                    String address = edt_address.getText().toString();
-                    String description = edt_description.getText().toString();
-
-
-
-
-                    if (name.isEmpty()) {
-                        Toast.makeText(Res_infor.this, "Tên quán không dược để trống", Toast.LENGTH_SHORT).show();
-                    } else if (address.isEmpty()) {
-                        Toast.makeText(Res_infor.this, "Địa chỉ không dược để trống", Toast.LENGTH_SHORT).show();
-                    } else {
-
-                        myRef.child("TenQuan").setValue(name);
-                        myRef.child("DiaChi").setValue(address);
-                        myRef.child("MoTa").setValue(description);
-
-                        add_image1.setVisibility(View.INVISIBLE);
-                        btn_add_image.setVisibility(View.INVISIBLE);
-
-                        edt_name.setEnabled(false);
-                        edt_address.setEnabled(false);
-                        edt_description.setEnabled(false);
-                        isEditable = false;
-
-
-                }
+                  save();
             }}
         });
 
@@ -248,7 +226,6 @@ public class Res_infor extends AppCompatActivity {
         if (requestCode == 1) {
             uri = data.getData();
             if (uri != null){
-
                 btn_add_image.setVisibility(View.VISIBLE);
                 add_image1.setImageURI(uri);
             }
@@ -256,17 +233,45 @@ public class Res_infor extends AppCompatActivity {
             Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
         }
         }else if(requestCode == 2){
-            Uri url = data.getData();
-            if (url != null){
-                load_image_avt(url);
-                add_image.setImageURI(url);
-
+            avt = data.getData();
+            if (avt != null){
+                add_image.setImageURI(avt);
             }
             else {
                 Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
             }
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        if(isEditable) {
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCancelable(false);
+            builder.setMessage("Bạn có muốn lưu thông tin đã chỉnh sửa ?");
+            builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //if user pressed "yes", then he is allowed to exit from application
+                    save();
+                    finish();
+                }
+            });
+            builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    //if user select "No", just cancel this dialog and continue with app
+                    finish();
+                }
+            });
+
+            AlertDialog alert = builder.create();
+            alert.show();
+        }else{
+            finish();
+        }
+    }
+
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 //        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
@@ -286,6 +291,33 @@ public class Res_infor extends AppCompatActivity {
         return super.onContextItemSelected(item);
 
     }
+    public void save(){
+        String name = edt_name.getText().toString();
+        String address = edt_address.getText().toString();
+        String description = edt_description.getText().toString();
+        load_image_avt(avt);
+
+        if (name.isEmpty()) {
+            Toast.makeText(Res_infor.this, "Tên quán không dược để trống", Toast.LENGTH_SHORT).show();
+        } else if (address.isEmpty()) {
+            Toast.makeText(Res_infor.this, "Địa chỉ không dược để trống", Toast.LENGTH_SHORT).show();
+        } else {
+
+            myRef.child("TenQuan").setValue(name);
+            myRef.child("DiaChi").setValue(address);
+            myRef.child("MoTa").setValue(description);
+
+            add_image1.setVisibility(View.INVISIBLE);
+            btn_add_image.setVisibility(View.INVISIBLE);
+
+            edt_name.setEnabled(false);
+            edt_address.setEnabled(false);
+            edt_description.setEnabled(false);
+            isEditable = false;
+
+        }
+    }
+
     private void load_image(Uri uri) {
         StorageReference reference = FirebaseStorage.getInstance().getReference();
         StorageReference fileRef = reference.child(System.currentTimeMillis() + "." + getFileExtension(uri));
@@ -342,8 +374,6 @@ public class Res_infor extends AppCompatActivity {
             }
         });
     }
-
-
 
     private  String getFileExtension(Uri mUri){
         ContentResolver cr= getContentResolver();
