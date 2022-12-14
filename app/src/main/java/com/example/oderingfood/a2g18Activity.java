@@ -151,12 +151,12 @@ public class a2g18Activity extends Activity {
 
                 // Get data
 
-                String salaryPerHour = snapshot.child("ThoiGianLamViec").getValue(String.class);
+                Long salaryPerHour = snapshot.child("ThoiGianLamViec").getValue(Long.class);
                 String totalSalary = snapshot.child("TongLuong").getValue(String.class);
 
 
 
-                txtSalaryPerHour.setText("Lương trên giờ: " + salaryPerHour);
+                txtSalaryPerHour.setText("Lương trên giờ: " + String.valueOf(salaryPerHour));
                 txtTotalSalary.setText("Tổng lương: " + totalSalary);
                 salaryTemp = totalSalary;
             }

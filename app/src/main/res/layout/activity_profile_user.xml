@@ -1,0 +1,208 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".a2g18Activity"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    >
+
+
+        <TextView
+            android:id="@+id/afo_txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="Thông tin cá nhân"
+            android:textSize="23dp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:layout_marginLeft="1dp"
+            android:layout_marginRight="1dp"
+            android:layout_marginTop="1dp"
+            android:background="#f48fb1"
+            android:fontFamily="@font/quicksand_bold"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/btn_edit"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:textSize="10dp"
+            android:layout_marginRight="5dp"
+            android:text="Edit"
+            android:textColor="@color/white"
+            android:backgroundTint="@color/color_main"
+            android:layout_gravity="right"/>
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/afo_avatar"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
+            android:src="@drawable/food"
+            tools:ignore="MissingClass" />
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:layout_gravity="center_horizontal"
+            android:id="@+id/afo_add_avatar"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:src="@drawable/addimageround"
+            tools:ignore="MissingClass"
+            android:visibility="invisible"/>
+
+
+        <TextView
+            android:id="@+id/txt_info"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Thông tin cơ bản"
+            android:textSize="20sp"
+            android:padding="15dp"
+            android:textColor="@color/color_main"/>
+        <com.google.android.material.textfield.TextInputLayout
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Họ và tên: "
+            app:helperTextEnabled="false"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Số điện thoại: "
+            android:layout_marginTop="10dp"
+            app:helperTextEnabled="false"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_sdt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Giới tính: "
+            android:layout_marginTop="10dp"
+            app:helperTextEnabled="false"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_sex"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Địa chỉ: "
+            android:layout_marginTop="10dp"
+            app:helperTextEnabled="false"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Ngày sinh: "
+            android:layout_marginTop="10dp"
+            app:helperTextEnabled="false"
+
+            >
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/edt_birthday"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:editable="false"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/txt_danhsachluong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Danh sách lương"
+            android:textSize="20sp"
+            android:padding="15dp"
+            android:textColor="@color/color_main"/>
+        <ListView
+            android:id="@+id/lv_danh_sach_luong"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+            <LinearLayout
+                android:id="@+id/group_btn_edit"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="invisible">
+                <Button
+                    android:id="@+id/btn_cancel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Hủy"
+                    android:backgroundTint="@color/color_main"
+                    android:layout_marginRight="15dp"/>
+
+                <Button
+                    android:id="@+id/btn_submit"
+                    android:layout_marginLeft="15dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Xác nhận"
+                    android:backgroundTint="@color/color_main"/>
+            </LinearLayout>
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>
