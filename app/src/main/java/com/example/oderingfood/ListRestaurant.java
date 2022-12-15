@@ -1,29 +1,66 @@
 package com.example.oderingfood;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager2.widget.ViewPager2;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 
+import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.tabs.TabLayoutMediator;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ListRestaurant extends AppCompatActivity {
     ViewPager2 viewPager;
     ViewPagerAdapter viewPagerAdapter ;
     TabLayout tabLayout;
 
-    String user = "xzxHmkiUMHVjqNu67Ewzsv2TQjr2";
-//    String user = "Ky0a3h3coIbKvBapDSpNiqsOfrQ2";
-//    String user = "khach";
+    CircleImageView profileImgView;
+    String user ="";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list_restaurant);
+
+        Intent intent =getIntent();
+        user= intent.getStringExtra("Uid");
         viewPager = (ViewPager2) findViewById(R.id.view_pager);
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);
         tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        profileImgView = (CircleImageView) findViewById(R.id.profile);
+
+
+        // Lay avatar profile
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refUser = database.getReference("user/" + user);
+
+        refUser.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                String avatar = snapshot.child("avatar").getValue(String.class);
+                Glide.with(ListRestaurant.this).load(avatar).into(profileImgView);
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
 
         new TabLayoutMediator(tabLayout, viewPager, (tab, position) -> {
             switch (position){
@@ -35,6 +72,16 @@ public class ListRestaurant extends AppCompatActivity {
                     break;
             }
         }).attach();
+
+
+        profileImgView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(ListRestaurant.this, ProfileUserActivity.class);
+                intent.putExtra("Uid", user);
+                startActivity(intent);
+            }
+        });
     }
 
     public String getUser() {

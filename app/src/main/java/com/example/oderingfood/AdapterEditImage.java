@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,18 +12,22 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.Image;
 
 import java.util.ArrayList;
 
-public class AdapterImage extends RecyclerView.Adapter<AdapterImage.ViewHolder> {
-    ArrayList Img;
+public class AdapterEditImage  extends RecyclerView.Adapter<AdapterEditImage.ViewHolder> {
+    ArrayList<Image> Img;
     Context context;
+    String idRes;
 
     // Constructor for initialization
-    public AdapterImage(Context context, ArrayList Img) {
+    public AdapterEditImage(Context context, ArrayList<Image> Img,String idRes) {
         this.context = context;
-        this.Img =Img;
+        this.Img = Img;
+        this.idRes =idRes;
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -31,17 +36,27 @@ public class AdapterImage extends RecyclerView.Adapter<AdapterImage.ViewHolder> 
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.image_item, parent, false);
 
         // Passing view to ViewHolder
-        ViewHolder viewHolder = new ViewHolder(view);
+        AdapterEditImage.ViewHolder viewHolder = new AdapterEditImage.ViewHolder(view);
 
         return viewHolder;
     }
 
     // Binding data to the into specified position
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull AdapterEditImage.ViewHolder holder, int position) {
         // TypeCast Object to int type
-        String res = Img.get(position).toString();
+        String res = Img.get(position).getUrl().toString();
         Glide.with(context).load(res).into(holder.images);
+        holder.images.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // get id to acess database
+                Intent intent = new Intent(context, FullScreenActivity.class);
+                intent.putExtra("id", res);
+                context.startActivity(intent);
+
+            }
+        });
     }
 
     @Override
@@ -52,12 +67,20 @@ public class AdapterImage extends RecyclerView.Adapter<AdapterImage.ViewHolder> 
     }
 
     // Initializing the Views
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener {
         ImageView images;
-
         public ViewHolder(View view) {
             super(view);
             images = (ImageView) view.findViewById(R.id.img_item);
+
+
+            view.setOnCreateContextMenuListener(this);
+        }
+        @Override
+        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+
+            menu.add(getAdapterPosition(), R.id.menu_delete_item, 1, "Xóa");
+
         }
 
     }

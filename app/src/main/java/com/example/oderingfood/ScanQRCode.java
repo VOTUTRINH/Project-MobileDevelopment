@@ -210,20 +210,23 @@ public class ScanQRCode extends AppCompatActivity {
                                 String str =data.child("End").getValue().toString();
                                 if(str.equals("0")) {
                                     String key = data.getKey().toString();
-                                    String start = data.child("Start").getValue(String.class).toString();
+
                                     db.child("LamViec").child(currentDate).child(key).child("End").setValue(currentTime);
 
-                                    String bf = postSnapshot.child("ThoiGianLamViec").getValue(String.class).toString();
+                                    int bf = postSnapshot.child("ThoiGianLamViec").getValue(int.class);
+                                    String start = data.child("Start").getValue(String.class).toString();
 
                                     try {
-                                        int hour = (int) ((formatTime.parse(currentTime).getTime() - formatTime.parse(start).getTime()) / 3600000);
-                                        int rs = (Integer.valueOf(bf) + (hour));
-                                        db.child("ThoiGianLamViec").setValue(String.valueOf(rs));
+                                        float hour =  ((formatTime.parse(currentTime).getTime() - formatTime.parse(start).getTime()) / 3600000);
+                                        int rs = (bf + Math.round(hour));
+                                        db.child("ThoiGianLamViec").setValue((rs));
 
                                     } catch (ParseException e) {
                                         e.printStackTrace();
                                     }
+
                                     db.child("TrangThai").setValue("KhongLamViec");
+
 
                                     result.setText("Kết thúc: " + currentDate + '-' + currentTime);
                                 }

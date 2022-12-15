@@ -68,6 +68,7 @@ public class Register2 extends Activity {
         regGender=(EditText)findViewById(R.id.reg_gender);
         regPhone=(EditText)findViewById(R.id.reg_phone);
         regAddress=(EditText)findViewById(R.id.reg_address);
+
         truth=(CheckBox)findViewById(R.id.checkbox_true);
         strg= FirebaseStorage.getInstance().getReference();
         Intent i=getIntent();
@@ -140,6 +141,7 @@ public class Register2 extends Activity {
                     Toast.makeText(Register2.this, "Hoàn tất đăng kí", Toast.LENGTH_SHORT).show();
                     Intent intent=new Intent(Register2.this,MainActivity.class);
                     startActivity(intent);
+                    finish();
                 }
 
 
@@ -210,9 +212,7 @@ public class Register2 extends Activity {
         datePickerDialog.show();
     }
 
-    private void uploadFile(){
 
-    }
 
     private String getFileExtension(Uri uri) {
         ContentResolver cR = getContentResolver();

@@ -30,6 +30,7 @@ public class CustomDialog extends Dialog {
 
     public Context context;
     public String idUser;
+    public String idRes;
     private EditText editTextFullName;
     private EditText editTextID;
     private EditText editTextPhone;
@@ -43,11 +44,17 @@ public class CustomDialog extends Dialog {
 
     private CustomDialog.EmployeeListener listener;
 
-    public CustomDialog(Context context, CustomDialog.EmployeeListener listener, String idUser) {
+    public static boolean isNumeric(String str) {
+        return str.matches("-?\\d+(\\.\\d+)?");  //match a number with optional '-' and decimal.
+    }
+
+    public CustomDialog(Context context, CustomDialog.EmployeeListener listener, String idUser, String idRes) {
         super(context);
         this.context = context;
         this.listener = listener;
         this.idUser = idUser;
+        this.idRes = idRes;
+
     }
 
     @Override
@@ -86,7 +93,7 @@ public class CustomDialog extends Dialog {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 
-        mDatabase = database.getReference("/user/" + this.idUser);
+        mDatabase = database.getReference("/restaurant/" + this.idRes +"/NhanVien/"+ this.idUser);
 //        String fullName = this.editTextFullName.getText().toString();
 //
 //        if(fullName== null || fullName.isEmpty())  {
@@ -134,40 +141,57 @@ public class CustomDialog extends Dialog {
 //        }
         String salaryPerHour = this.editTextSalaryPerHour.getText().toString();
 
+
+
         if(salaryPerHour== null || salaryPerHour.isEmpty())  {
             Toast.makeText(this.context, "Please enter salary", Toast.LENGTH_LONG).show();
             return;
         }
-        if(this.listener!= null)  {
-            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot snapshot) {
+        if(isNumeric(salaryPerHour))
+        {
+            if (Double.parseDouble(salaryPerHour) < 0){
+                Toast.makeText(this.context, "Không được điền số âm", Toast.LENGTH_LONG).show();
+
+            }
+            else {
+                if(this.listener!= null)  {
+                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 //                    mDatabase.child("HoTen").setValue(fullName);
 ////                    mDatabase.child("id").setValue(id);
 //                    mDatabase.child("Sdt").setValue(Long.parseLong(phone));
 //                    mDatabase.child("GioiTinh").setValue(email);
 //                    mDatabase.child("DiaChi").setValue(address);
-                    mDatabase.child("luongTheoGio").setValue(salaryPerHour);
+                            mDatabase.child("Luong").setValue(salaryPerHour);
 
-                    // Update count table
+                            // Update count table
 
-                }
+                        }
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                }
-            });
+                        }
+                    });
 //            this.listener.fullNameEntered(fullName);
 ////            this.listener.IDEntered(id);
 //            this.listener.phoneEntered(phone);
 //            this.listener.emailEntered(email);
 //            this.listener.addressEntered(address);
-            this.listener.salaryEntered(salaryPerHour);
+                    this.listener.salaryEntered(salaryPerHour);
 //            this.listener.debtEntered(debt);
+                }
+            }
+        }
+
+        else {
+            Toast.makeText(this.context, "Không được điền ký tự khác số", Toast.LENGTH_LONG).show();
+
         }
     }
+
 
     // User click "Cancel" button.
     private void buttonCancelClick()  {

@@ -12,9 +12,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.SignInMethodQueryResult;
 
 public class Register extends Activity {
@@ -88,37 +90,39 @@ public class Register extends Activity {
     }
 
     private void register(String email, String pass) {
-        auth.fetchSignInMethodsForEmail(email)
-            .addOnCompleteListener(new OnCompleteListener<SignInMethodQueryResult>() {
-                @Override
-                public void onComplete(@NonNull Task<SignInMethodQueryResult> task) {
 
-                    boolean isNewUser = task.getResult().getSignInMethods().isEmpty();
+        auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
 
-                    if (isNewUser) {
-                        auth.createUserWithEmailAndPassword(email, pass).addOnCompleteListener(Register.this, new OnCompleteListener<AuthResult>() {
+            @Override
+            public void onComplete(@NonNull Task<AuthResult> task) {
+                if(task.isSuccessful()){
+                    String id=  auth.getUid();
+                    Toast.makeText(Register.this, "Đăng kí thành công.", Toast.LENGTH_SHORT).show();
+                    Intent intent=new Intent(Register.this,Register2.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putString("id",id);
+                    bundle.putString("email",email);
+                    intent.putExtras(bundle);
+                    startActivity(intent);
+                    finish();
+                }else {
+                    String str = ((FirebaseAuthException) task.getException()).getErrorCode();
+                    if (str.equals("ERROR_INVALID_EMAIL")) {
+                        Toast.makeText(Register.this, "Email không đúng định dạng.", Toast.LENGTH_SHORT).show();
 
-                            @Override
-                            public void onComplete(@NonNull Task<AuthResult> task) {
-                                if(task.isSuccessful()){
-                                    String id=   auth.getUid();
-                                    Toast.makeText(Register.this, "Đăng kí thành công.", Toast.LENGTH_SHORT).show();
-                                    Intent intent=new Intent(Register.this,Register2.class);
-                                    intent.putExtra("id",id);
-                                    intent.putExtra("email",email);
-                                    startActivity(intent);
-                                    finish();
-                                }else {
-                                    Toast.makeText(Register.this, "Đăng kí thất bại.", Toast.LENGTH_SHORT).show();
-                                }
-                            }
-                        });
-                    } else {
-                        Toast.makeText(Register.this, "Email đã tồn tại.", Toast.LENGTH_SHORT).show();
                     }
+                    if (str.equals("ERROR_EMAIL_ALREADY_IN_USE")) {
+                        Toast.makeText(Register.this, "Email đã tồn tại.", Toast.LENGTH_SHORT).show();
 
+                    } else {
+                        Toast.makeText(Register.this, "Đăng kí không thành công.", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(Register.this, ((FirebaseAuthException) task.getException()).getMessage(), Toast.LENGTH_SHORT).show();
+                    }
                 }
-            });
+            }
+        });
+
+
 
     }
 }

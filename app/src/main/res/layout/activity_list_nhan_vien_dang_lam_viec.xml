@@ -16,11 +16,12 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="   Danh sách nhân viên"
+            android:text="Danh sách nhân viên làm việc"
             android:backgroundTint="@color/color_main"
             android:background="@color/color_main"
-            android:textSize="30dp"
-            android:textStyle="bold"/>
+            android:textSize="26sp"
+            android:textStyle="bold"
+            android:gravity="center"/>
         <com.google.android.material.textfield.TextInputLayout
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
@@ -38,6 +39,34 @@
                 android:maxLength="25" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <LinearLayout
+            android:layout_marginTop="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="Chọn ngày:       "
+                android:paddingTop="20dp"
+                />
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="200dp"
+                android:layout_height="match_parent"
+                app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+                android:hint="dd/mm/yyyy"
+                android:focusable="false">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/txt_date_chosen"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:focusable="false"
+                    android:padding="4dp"
+                    android:textColor="@color/black"/>
+            </com.google.android.material.textfield.TextInputLayout>
+        </LinearLayout>
         <GridView
             android:id="@+id/gvNhanvien"
             android:layout_marginTop="10dp"

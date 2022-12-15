@@ -47,7 +47,7 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
     @Override
     public void onBindViewHolder(@NonNull AdapterNotification.ViewHolder holder, int position) {
         // TypeCast Object to int type
-        holder.images.setImageResource(this.items.get(position).getNoticeImg());
+        //holder.images.setImageResource(this.items.get(position).getNoticeImg());
         holder.txt_label.setText(this.items.get(position).getNoticeLabel());
         holder.txt_content.setText(this.items.get(position).getNoticeContent());
         holder.txt_time.setText(this.items.get(position).getTimeString());

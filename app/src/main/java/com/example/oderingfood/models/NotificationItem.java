@@ -3,24 +3,24 @@ package com.example.oderingfood.models;
 import java.sql.Time;
 
 public class NotificationItem {
-    Integer noticeImg;
+    String noticeImg;
     String noticeLabel;
     String noticeContent;
-    Time timeNotice;
+    String timeNotice;
     public boolean isRead;
-    public NotificationItem(int img, String label, String content){
+    public NotificationItem(String img, String label, String content,String time){
         noticeImg = img;
         noticeLabel = label;
         noticeContent = content;
-//        timeNotice = time;
+       timeNotice = time;
         isRead = false;
     }
 
-    public void setNoticeImg(Integer noticeImg) {
+    public void setNoticeImg(String noticeImg) {
         this.noticeImg = noticeImg;
     }
 
-    public Integer getNoticeImg() {
+    public String getNoticeImg() {
         return noticeImg;
     }
 
@@ -35,6 +35,18 @@ public class NotificationItem {
 
     public String getTimeString(){
         //todo tinh thoi gian tu time den hien tai
-        return "10 phút trước.";
+        return timeNotice;
+    }
+
+    public void setNoticeContent(String noticeContent) {
+        this.noticeContent = noticeContent;
+    }
+
+    public void setNoticeLabel(String noticeLabel) {
+        this.noticeLabel = noticeLabel;
+    }
+
+    public void setTimeNotice(String timeNotice) {
+        this.timeNotice = timeNotice;
     }
 }

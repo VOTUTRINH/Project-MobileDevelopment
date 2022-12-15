@@ -47,7 +47,7 @@ public class a2g18Activity extends Activity {
 //    private EditText editTextAddress;
 //    private EditText editTextSalary;
     String idUser;
-
+    String idRes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +56,12 @@ public class a2g18Activity extends Activity {
 //
 //        context = getBaseContext();
         Intent intent = getIntent();
-        idUser = intent.getStringExtra("idUser");
+        Bundle bundle = intent.getExtras();
+        if (bundle != null) {
+            idUser = intent.getStringExtra("idUser");
+            idRes = intent.getStringExtra("idRes");
+        }
+
         txtName = this.findViewById(R.id.afo_txtName);
         txtID = this.findViewById(R.id.afo_txtId);
         txtPhone = this.findViewById(R.id.afo_txtPhone);
@@ -70,11 +75,13 @@ public class a2g18Activity extends Activity {
         btnThanhToan = this.findViewById(R.id.afo_btnThanhToan);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
-
-        mDatabase = database.getReference("/user/" + idUser);
+        DatabaseReference mDatabaseUser;
+        mDatabaseUser = database.getReference("/user/" + idUser);
+        mDatabase = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 double salary = Double.parseDouble(salaryTemp) - Double.parseDouble(edtSalaryPerHour.getText().toString());
 
                 txtTotalSalary.setText("Tổng lương: " + String.valueOf(salary));
@@ -87,7 +94,7 @@ public class a2g18Activity extends Activity {
 //                    mDatabase.child("Sdt").setValue(Long.parseLong(phone));
 //                    mDatabase.child("GioiTinh").setValue(email);
 //                    mDatabase.child("DiaChi").setValue(address);
-                        mDatabase.child("tongLuong").setValue(String.valueOf(salary));
+                        mDatabase.child("TongLuong").setValue(String.valueOf(salary));
 
                         // Update count table
 
@@ -102,7 +109,7 @@ public class a2g18Activity extends Activity {
         });
 
 
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        mDatabaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
@@ -113,8 +120,8 @@ public class a2g18Activity extends Activity {
                 String email = snapshot.child("gioiTinh").getValue(String.class);
                 String address = snapshot.child("diaChi").getValue(String.class);
                 String salary = snapshot.child("ngaySinh").getValue(String.class);
-                String salaryPerHour = snapshot.child("luongTheoGio").getValue(String.class);
-                String totalSalary = snapshot.child("tongLuong").getValue(String.class);
+//                String salaryPerHour = snapshot.child("luongTheoGio").getValue(String.class);
+//                String totalSalary = snapshot.child("tongLuong").getValue(String.class);
                 String urlImage;
                 try {
                     urlImage = snapshot.child("avatar").getValue(String.class).toString();
@@ -129,7 +136,27 @@ public class a2g18Activity extends Activity {
                 txtEmail.setText("Giới tính: " + email);
                 txtAddress.setText("Địa chỉ: " + address);
                 txtSalary.setText("Ngày sinh: " + salary);
-                txtSalaryPerHour.setText("Lương trên giờ: " + salaryPerHour);
+
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+        mDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                // Get data
+
+                Long salaryPerHour = snapshot.child("ThoiGianLamViec").getValue(Long.class);
+                String totalSalary = snapshot.child("TongLuong").getValue(String.class);
+
+
+
+                txtSalaryPerHour.setText("Lương trên giờ: " + String.valueOf(salaryPerHour));
                 txtTotalSalary.setText("Tổng lương: " + totalSalary);
                 salaryTemp = totalSalary;
             }
@@ -139,6 +166,7 @@ public class a2g18Activity extends Activity {
 
             }
         });
+
         this.buttonOpenDialog = (Button) this.findViewById(R.id.afo_txtEdit);
 
         this.buttonOpenDialog.setOnClickListener(new View.OnClickListener() {
@@ -191,7 +219,7 @@ public class a2g18Activity extends Activity {
                 txtSalaryPerHour.setText("Lương trên giờ: " + salary);
             }
         };
-        final CustomDialog dialog = new CustomDialog(this, listener, idUser);
+        final CustomDialog dialog = new CustomDialog(this, listener, idUser, idRes);
 
         dialog.show();
     }
