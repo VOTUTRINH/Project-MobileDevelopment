@@ -86,7 +86,11 @@ public class MainActivity extends AppCompatActivity {
                     if (task.isSuccessful()) {
                         String uid=   auth.getCurrentUser().getUid();
                         Toast.makeText(getApplicationContext(), "Đăng nhập thành công", Toast.LENGTH_SHORT).show();
+                        Account account = new Account(uid,email,pass);
+                        SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
+                        sessionManagement.saveSession(account);
                         Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Uid",uid);
                         startActivity(intent);
                     } else {
@@ -96,4 +100,27 @@ public class MainActivity extends AppCompatActivity {
             });
         }
     }
+
+    @Override
+    protected void onStart(){
+        super.onStart();
+        checkSession();
+    }
+
+    private void checkSession(){
+        SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
+
+        String uid=sessionManagement.getSession();
+
+        if(!uid.equals("emptyString")){
+            Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("Uid",uid);
+            startActivity(intent);
+
+        }else {
+            //do nothing
+        }
+    }
+
 }
