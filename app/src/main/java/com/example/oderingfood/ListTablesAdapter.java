@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.oderingfood.models.NotificationItem;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class ListTablesAdapter extends ArrayAdapter<Table> {
@@ -149,14 +152,41 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot postSnapShot: snapshot.getChildren())
                         {
-                            if(postSnapShot.getKey().equals(name))
-                            {
-                                if(postSnapShot.child("TrangThai").getValue(String.class).equals("IsUsing"))
-                                {
-                                    Toast.makeText(context,"Không thể xóa bàn đang hoạt động",Toast.LENGTH_SHORT).show();
+                            if(postSnapShot.getKey().equals(name)) {
+                                if (postSnapShot.child("TrangThai").getValue(String.class).equals("IsUsing")) {
+                                    Toast.makeText(context, "Không thể xóa bàn đang hoạt động", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                                 mDatabase.child(name).removeValue();
+
+                                //------------notify
+
+                                database.getReference("user/" + user + "/avatar").addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                        String avt = snapshot.getValue(String.class).toString();
+
+                                        String str = snapshot.getValue(String.class).toString();
+                                        String label = "<b> Xoá bàn <b>";
+                                        String content = "Chủ quán vừa xóa bàn "+ name + "<b>" + str + "</b> ";
+                                        Calendar calendar = Calendar.getInstance();
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                        String currentDate = format.format(calendar.getTime());
+
+                                        NotificationItem notificationItem = new NotificationItem(avt, label, content, currentDate);
+
+                                        database.getReference("restaurant/" + idRes).child("notification").push().setValue(notificationItem);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+
+                                    }
+                                });
+
+
+
                             }
                         }
                     }
