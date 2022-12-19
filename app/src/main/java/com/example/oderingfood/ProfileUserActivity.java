@@ -18,11 +18,14 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.Booking;
+import com.example.oderingfood.models.EmployeeSalary;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -35,6 +38,7 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -42,7 +46,8 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileUserActivity extends AppCompatActivity {
 
     String user;
-
+    List<EmployeeSalary> dataList = new ArrayList<>();
+    EmployeeSalaryAdapter adapter;
     CircleImageView img_avatar, img_add_avatar;
     EditText edt_name, edt_phone, edt_sex, edt_address, edt_birthday;
     ListView lv_danhsachluong;
@@ -57,6 +62,7 @@ public class ProfileUserActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference refUser;
+    DatabaseReference refRes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,8 +85,10 @@ public class ProfileUserActivity extends AppCompatActivity {
 
         btn_cancel_edit = (Button) findViewById(R.id.btn_cancel);
         btn_confirm_edit = (Button) findViewById(R.id.btn_submit);
+        adapter = new EmployeeSalaryAdapter(getApplicationContext(), dataList);
 
         database = FirebaseDatabase.getInstance();
+        refRes = database.getReference("restaurant/");
         refUser = database.getReference("user/"+user);
         refUser.addValueEventListener(new ValueEventListener() {
             @Override
@@ -107,6 +115,40 @@ public class ProfileUserActivity extends AppCompatActivity {
             }
         });
 
+        refRes.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                dataList.clear();
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    // Get data
+                    for (DataSnapshot postSnapShot1 : postSnapShot.getChildren()) {
+                        // Get data
+                        if (postSnapShot1.getKey().equals("NhanVien")){
+                            for (DataSnapshot postSnapShot2 : postSnapShot1.getChildren()) {
+                                // Get data
+                                if (postSnapShot2.getKey().equals(user)  ){
+                                    String name = postSnapShot.child("TenQuan").getValue(String.class);
+                                    String salary = postSnapShot2.child("Luong").getValue(String.class);
+                                    EmployeeSalary employeeSalary = new EmployeeSalary(name, salary);
+                                    dataList.add(employeeSalary);
+
+                                }
+                                adapter.notifyDataSetChanged();
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        lv_danhsachluong.setAdapter(adapter);
         btn_editinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
