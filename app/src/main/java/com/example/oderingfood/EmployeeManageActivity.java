@@ -390,7 +390,7 @@ public class EmployeeManageActivity extends Fragment {
 
                             mDatabaseNhanVien.child(idUser).setValue(map);
 
-                            //idAddedStaff(idUser);
+
 
 
                             //------------notify
@@ -405,7 +405,10 @@ public class EmployeeManageActivity extends Fragment {
                                     Calendar calendar = Calendar.getInstance();
                                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
                                     String currentDate = format.format(calendar.getTime());
-                                    NotificationItem notificationItem = new NotificationItem(img, label, content, currentDate);
+
+
+                                    String _id = database.getReference("restaurant/" + idRestaurent).child("notification").push().getKey().toString();
+                                    NotificationItem notificationItem = new NotificationItem(_id,img, label, content, currentDate);
 
                                     database.getReference("user/" + user + "/avatar").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
@@ -419,7 +422,7 @@ public class EmployeeManageActivity extends Fragment {
 
                                         }
                                     });
-                                    database.getReference("restaurant/" + idRestaurent).child("notification").push().setValue(notificationItem);
+                                    database.getReference("restaurant/" + idRestaurent).child("notification").child(_id).setValue(notificationItem);
 
 
                                 }

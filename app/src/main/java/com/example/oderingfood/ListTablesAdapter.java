@@ -161,21 +161,22 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
 
                                 //------------notify
 
-                                database.getReference("user/" + user + "/avatar").addListenerForSingleValueEvent(new ValueEventListener() {
+                                database.getReference("user/" + user ).addListenerForSingleValueEvent(new ValueEventListener() {
                                     @Override
                                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                                        String avt = snapshot.getValue(String.class).toString();
 
-                                        String str = snapshot.getValue(String.class).toString();
+                                        String avt = snapshot.child("avatar").getValue(String.class).toString();
+                                        String ad = snapshot.child("hoTen").getValue(String.class).toString();
                                         String label = "<b> Xoá bàn <b>";
-                                        String content = "Chủ quán vừa xóa bàn "+ name + "<b>" + str + "</b> ";
+                                        String content = ad + " vừa xóa bàn "+ name;
                                         Calendar calendar = Calendar.getInstance();
                                         SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
                                         String currentDate = format.format(calendar.getTime());
 
-                                        NotificationItem notificationItem = new NotificationItem(avt, label, content, currentDate);
+                                        String _id =database.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                                        NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
 
-                                        database.getReference("restaurant/" + idRes).child("notification").push().setValue(notificationItem);
+                                        database.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
                                     }
 
                                     @Override

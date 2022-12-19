@@ -9,7 +9,6 @@
     android:padding="20dp">
 
     <TextView
-
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
@@ -29,14 +28,29 @@
         android:gravity="center"
         android:fontFamily="@font/quicksand_bold"
         android:background="@drawable/no_shadow"
-        android:editable="false"/>
+        android:enabled="false"/>
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_edit"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="50dp"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:text="Chỉnh sửa"
+        android:textColor="@color/black"
+        android:fontFamily="@font/quicksand_bold"
+        android:textSize="17sp"
+        android:textAllCaps="false"
+        app:cornerRadius="20dp"
+        android:backgroundTint="#ff9298"
+        app:icon="@drawable/ic_baseline_edit_note_24"
+        app:iconGravity="textStart"
+        />
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_submit"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:text="Hoàn thành"
         android:textColor="@color/black"
         android:fontFamily="@font/quicksand_bold"
         android:textSize="17sp"

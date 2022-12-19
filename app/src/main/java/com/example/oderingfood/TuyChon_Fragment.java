@@ -1,8 +1,11 @@
 package com.example.oderingfood;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.fragment.app.Fragment;
 
 import android.view.LayoutInflater;
@@ -11,7 +14,13 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.oderingfood.R;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -25,6 +34,9 @@ public class TuyChon_Fragment extends Fragment {
     CircleImageView avt_user;
     TextView nav_txt_name,nav_txt_sdt;
     Button btn_res_infor,btn_voucher,btn_out;
+
+    FirebaseDatabase database ;
+    DatabaseReference myRef ;
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -43,6 +55,8 @@ public class TuyChon_Fragment extends Fragment {
         btn_voucher =(Button) view.findViewById(R.id.btn_voucher);
         btn_out = (Button)  view.findViewById(R.id.btn_out);
 
+        database = FirebaseDatabase.getInstance();
+        myRef = database.getReference("user/"+user);
 
         btn_res_infor.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -57,7 +71,57 @@ public class TuyChon_Fragment extends Fragment {
             }
         });
 
+        btn_voucher.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), Voucher.class);
+                Bundle bundle = new Bundle();
+                bundle.putString("idRes", idRes);
+                bundle.putString("idUser", user);
+                bundle.putString("role",role);
+                intent.putExtras(bundle);
+                startActivity(intent);
+            }
+        });
 
+        myRef.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Glide.with(getContext()).load(snapshot.child("avatar").getValue(String.class).toString()).into(avt_user);
+                nav_txt_name.setText(snapshot.child("hoTen").getValue(String.class).toString());
+                nav_txt_sdt.setText(snapshot.child("dienThoai").getValue(String.class).toString());
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+        btn_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setCancelable(false);
+                builder.setMessage("Bạn có thật sự muốn rời khỏi quán ?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        bottomnavigation.finish();
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if user select "No", just cancel this dialog and continue with app
+
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+            }
+        });
 
         return view;
     }

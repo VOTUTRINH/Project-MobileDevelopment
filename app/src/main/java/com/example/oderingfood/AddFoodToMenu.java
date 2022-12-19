@@ -17,6 +17,7 @@ import androidx.annotation.Nullable;
 
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
+import com.example.oderingfood.models.NotificationItem;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.database.DataSnapshot;
@@ -28,7 +29,9 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +50,9 @@ public class AddFoodToMenu extends Activity {
     StorageReference reference ;
     int SELECT_IMAGE_CODE=1;
     String url;
+
+    String user;
+    String idRes;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,6 +60,13 @@ public class AddFoodToMenu extends Activity {
 
 //        Intent intent = getIntent();
 //        idOwner = intent.getStringExtra("idOwner");
+
+        Bundle b = getIntent().getExtras();
+
+        if(b !=null){
+            user = b.getString("idUser");
+            idRes = b.getString("idRes");
+        }
 
         database = FirebaseDatabase.getInstance().getReference("/restaurant/" + GlobalVariables.pathRestaurentID);
         database = database.child("Menu");
@@ -116,7 +129,36 @@ public class AddFoodToMenu extends Activity {
                 database.child(id).setValue(food, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+
+                        FirebaseDatabase noti = FirebaseDatabase.getInstance();
+
+
+                        noti.getReference("user/" + user ).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                String avt = snapshot.child("avatar").getValue(String.class).toString();
+                                String ad = snapshot.child("hoTen").getValue(String.class).toString();
+                                String label = "<b> Thêm món <b>";
+                                String content = ad + " vừa thêm món "+ name;
+                                Calendar calendar = Calendar.getInstance();
+                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                String currentDate = format.format(calendar.getTime());
+                                String _id =  noti.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                                NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
+
+                                noti.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+
+                            }
+                        });
                         Toast.makeText(AddFoodToMenu.this,getString(R.string.themmonthanhcong), Toast.LENGTH_SHORT).show();
+
+
                     }
                 });
             }

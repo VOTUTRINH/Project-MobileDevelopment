@@ -3,53 +3,60 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:id="@+id/view">
 
     <androidx.cardview.widget.CardView
-        xmlns:card_view="http://schemas.android.com/apk/res-auto"
         android:id="@+id/nt_card_notice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"
+        android:layout_margin="3dp"
         android:background="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        card_view:cardElevation="3dp"
-        card_view:cardCornerRadius="5dp"
-        card_view:cardUseCompatPadding="true">
-
+        app:cardElevation="3dp"
+        app:cardCornerRadius="10dp"
+        app:cardUseCompatPadding="true"
+        >
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="5dp">
 
-            <ImageView
-                android:id="@+id/nt_img_notice"
+            <de.hdodenhof.circleimageview.CircleImageView
+
+                android:id="@+id/avt_user"
                 android:layout_width="80dp"
                 android:layout_height="80dp"
+                android:layout_centerHorizontal="true"
+
+                android:src="@drawable/avt2"
+                app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                tools:srcCompat="@tools:sample/avatars" />
+                app:layout_constraintTop_toTopOf="parent" />
+
 
             <TextView
                 android:id="@+id/nt_txt_label_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="40dp"
+                android:layout_marginTop="12dp"
+                android:fontFamily="@font/quicksand_bold"
                 android:text="TextView"
-                android:textStyle="bold"
                 android:textSize="16sp"
-                app:layout_constraintStart_toEndOf="@+id/nt_img_notice"
-                app:layout_constraintTop_toTopOf="parent"
-                android:fontFamily="@font/quicksand_bold"/>
+                android:textStyle="bold"
+                app:layout_constraintStart_toEndOf="@+id/avt_user"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/nt_txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="41dp"
+                android:layout_marginLeft="80dp"
                 android:text="TextView"
                 android:textSize="10sp"
                 android:textStyle="italic"
@@ -70,14 +77,13 @@
                 android:id="@+id/nt_txt_content_notice"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginTop="10dp"
+                android:layout_marginStart="40dp"
                 android:maxWidth="230dp"
                 android:text="TextView"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/nt_img_notice"
+                app:layout_constraintStart_toEndOf="@+id/avt_user"
                 app:layout_constraintTop_toBottomOf="@+id/nt_txt_label_notice"
-                app:layout_constraintVertical_bias="0.0" />
+                app:layout_constraintVertical_bias="0.4" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

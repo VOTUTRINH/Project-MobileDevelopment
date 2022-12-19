@@ -107,6 +107,8 @@ public class ProfileUserActivity extends AppCompatActivity {
             }
         });
 
+        progress_bar.setVisibility(View.INVISIBLE);
+
         btn_editinfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -177,7 +179,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                 lv_danhsachluong.setVisibility(View.VISIBLE);
 
                 group_button_edit.setVisibility(View.INVISIBLE);
-                progress_bar.setVisibility(View.INVISIBLE);
+
             }
         });
 

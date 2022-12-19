@@ -22,7 +22,6 @@
                 android:layout_width="110dp"
                 android:layout_height="110dp"
                 android:layout_centerHorizontal="true"
-
                 android:src="@drawable/avt2" />
             <TextView
                 android:id="@+id/nav_txt_name"
@@ -49,23 +48,11 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:layout_margin="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginTop="90dp"
             >
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnprofile"
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Thông tin tài khoản"
-                android:textColor="@color/black"
-                android:fontFamily="@font/quicksand_bold"
-                android:textSize="17sp"
-                android:textAllCaps="false"
-                app:icon="@drawable/ic_baseline_account_circle_24"
-                app:iconGravity="textStart"
-                app:cornerRadius="20dp"
-                android:backgroundTint="#ff9298"
-                />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_res_infor"
                 android:layout_marginTop="20dp"
@@ -97,20 +84,7 @@
                 app:icon="@drawable/ic_baseline_edit_note_24"
                 app:iconGravity="textStart"
                 />
-            <com.google.android.material.button.MaterialButton
-                android:layout_marginTop="20dp"
-                android:layout_width="match_parent"
-                android:layout_height="60dp"
-                android:text="Lịch sử"
-                android:textColor="@color/black"
-                android:fontFamily="@font/quicksand_bold"
-                android:textSize="17sp"
-                android:textAllCaps="false"
-                app:cornerRadius="20dp"
-                android:backgroundTint="#ff9298"
-                app:icon="@drawable/ic_baseline_history_24"
-                app:iconGravity="textStart"
-                />
+
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_out"
