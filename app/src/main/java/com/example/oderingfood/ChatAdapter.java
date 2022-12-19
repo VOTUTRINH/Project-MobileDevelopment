@@ -72,7 +72,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public boolean onLongClick(View view) {
                         String id = ((messageFromOther) listMessagesObject.get(fromOtherViewHolder.getAbsoluteAdapterPosition())).id;
                         ShowDialogDeleteMessage(id);
-                        return false;
+                        return true;
                     }
                 });
                 break;
@@ -86,7 +86,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                     public boolean onLongClick(View view) {
                         String id = ((messageToOther) listMessagesObject.get(toOtherViewHolder.getAbsoluteAdapterPosition())).id;
                         ShowDialogDeleteMessage(id);
-                        return false;
+                        return true;
                     }
                 });
                 break;
@@ -160,12 +160,14 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         dbRefListMessage.setValue(null);
     }
 }
-
-class messageFromOther{
+class Message{
     public String id;
-    public String name;
     public String message;
     public String img;
+}
+
+class messageFromOther extends  Message{
+    public String name;
     messageFromOther(String id, String name, String msg, String img){
         this.name = name;
         this.message = msg;
@@ -185,10 +187,7 @@ class messageFromOther{
 
 }
 
-class messageToOther{
-    public String id;
-    public String message;
-    public String img;
+class messageToOther extends  Message{
 
     messageToOther(String id, String msg, String img){
         this.message = msg;

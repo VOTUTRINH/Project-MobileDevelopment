@@ -162,8 +162,8 @@ public class ProfileUserActivity extends AppCompatActivity {
                 img_avatar.getLayoutParams().height = 0;
                 img_avatar.setVisibility(View.INVISIBLE);
 
-                img_add_avatar.getLayoutParams().width = 130;
-                img_add_avatar.getLayoutParams().height = 130;
+                img_add_avatar.getLayoutParams().width = 260;
+                img_add_avatar.getLayoutParams().height = 260;
                 img_add_avatar.setVisibility(View.VISIBLE);
 
                 // Edit another info
@@ -198,8 +198,8 @@ public class ProfileUserActivity extends AppCompatActivity {
                 isEditing = false;
 
                 // Edit avatar
-                img_avatar.getLayoutParams().width = 130;
-                img_avatar.getLayoutParams().height = 130;
+                img_avatar.getLayoutParams().width = 260;
+                img_avatar.getLayoutParams().height = 260;
                 img_avatar.setVisibility(View.VISIBLE);
 
                 img_add_avatar.getLayoutParams().width = 0;
