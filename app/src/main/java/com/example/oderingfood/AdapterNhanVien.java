@@ -49,8 +49,8 @@ public class AdapterNhanVien extends BaseAdapter {
             LayoutInflater inflater= (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             view=inflater.inflate(layout,null);
             viewHolder=new ViewHolder();
-            viewHolder.tvTen=(TextView) view.findViewById(R.id.tvTen);
-            viewHolder.imgAvt=(ImageView) view.findViewById(R.id.avt);
+//            viewHolder.tvTen=(TextView) view.findViewById(R.id.tvTen);
+//            viewHolder.imgAvt=(ImageView) view.findViewById(R.id.avt);
             view.setTag(viewHolder);
         }else {
             viewHolder=(ViewHolder) view.getTag();
