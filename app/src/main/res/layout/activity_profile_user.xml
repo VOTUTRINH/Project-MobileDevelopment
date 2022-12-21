@@ -208,7 +208,24 @@
                     android:text="Xác nhận"
                     android:backgroundTint="@color/color_main"/>
             </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_out"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/logout"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_bold"
+                android:textSize="18sp"
+                android:textAllCaps="false"
+                app:cornerRadius="20dp"
+                android:backgroundTint="@color/color_main"
+                android:layout_gravity="center"
+                app:icon="@drawable/ic_baseline_logout_24"
+                />
         </LinearLayout>
+
 
 
     </ScrollView>

@@ -8,4 +8,5 @@
     <string name="themmonthanhcong">Thêm món mới thành công.</string>
     <string name="waiting_state">IsWaiting</string>
     <string name="booking_state">IsBooking</string>
+    <string name="logout">Đăng xuất</string>
 </resources>
