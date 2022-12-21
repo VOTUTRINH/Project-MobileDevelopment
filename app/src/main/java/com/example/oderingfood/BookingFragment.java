@@ -9,6 +9,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.type.DateTime;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -20,7 +21,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,12 +33,15 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 public class BookingFragment extends Fragment {
     int currentIndex = -1;
     List<Booking> dataList = new ArrayList<>();
     TableAdapter adapter;
+    Calendar timeStart;
 //    String[]froms={"07:30","09:00","11:00","17:00","19:00"};
 //    String[]tos={"09:00","11:00","12:30","19:00","21:00"};
 //    String[]tables={"Bàn 1", "Bàn 2", "Bàn 3", "Bàn 4", "Bàn 5"};
@@ -142,6 +149,13 @@ public class BookingFragment extends Fragment {
         final EditText edFrom = view.findViewById(R.id.df_from);
         final EditText edTo = view.findViewById(R.id.df_to);
         final EditText edGuest = view.findViewById(R.id.df_guest);
+        final Button setDay = view.findViewById(R.id.btn_set_day);
+        setDay.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                showDaytimeDialog();
+            }
+        });
         if(currentIndex >= 0) {
             edDate.setText(dataList.get(currentIndex).getDate());
             edTable.setText(dataList.get(currentIndex).getId());
@@ -236,4 +250,34 @@ public class BookingFragment extends Fragment {
 
         builder.show();
     }
+
+    private void showDaytimeDialog() {
+        LayoutInflater inflater = getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.dialog_pick_day_time, null);
+        final AlertDialog alertDialog = new AlertDialog.Builder(getContext()).create();
+        final Calendar time = null;
+        dialogView.findViewById(R.id.date_time_set).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                DatePicker datePicker = (DatePicker) dialogView.findViewById(R.id.date_picker);
+                TimePicker timePicker = (TimePicker) dialogView.findViewById(R.id.time_picker);
+
+                Calendar calendar = new GregorianCalendar(datePicker.getYear(),
+                        datePicker.getMonth(),
+                        datePicker.getDayOfMonth(),
+                        timePicker.getCurrentHour(),
+                        timePicker.getCurrentMinute());
+
+//                Toast.makeText(view.getContext(), Long.toString(calendar.getTimeInMillis()), Toast.LENGTH_SHORT).show();
+                alertDialog.dismiss();
+
+            }
+        });
+        alertDialog.setView(dialogView);
+        alertDialog.show();
+
+    }
 }
+
+

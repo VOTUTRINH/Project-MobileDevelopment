@@ -40,4 +40,10 @@
         android:ems="10"
         android:inputType="textShortMessage"
         android:text="Ngày đặt"/>
+
+    <Button
+        android:id="@+id/btn_set_day"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SETDAY" />
 </LinearLayout>
