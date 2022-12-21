@@ -27,6 +27,7 @@ import android.widget.Toast;
 
 
 import com.example.oderingfood.models.Employee;
+import com.example.oderingfood.models.NotificationItem;
 import com.example.oderingfood.models.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
@@ -71,7 +72,7 @@ public class EmployeeManageActivity extends Fragment {
 
     EmployeeManageActivity employeeManageActivity;
 
-    Bottomnavigation bottomnavigation ;
+    Bottomnavigation bottomnavigation;
     String user;
     String idRestaurent;
 
@@ -96,6 +97,7 @@ public class EmployeeManageActivity extends Fragment {
     public EmployeeManageActivity() {
         // Required empty public constructor
     }
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -109,12 +111,11 @@ public class EmployeeManageActivity extends Fragment {
             // tablesActivity = (TablesActivity) getActivity();
 
             employeeManageActivity = new EmployeeManageActivity();
-        }catch (Exception e)
-        {
+        } catch (Exception e) {
         }
 
         bottomnavigation = (Bottomnavigation) getActivity();
-        user= bottomnavigation.getUser();
+        user = bottomnavigation.getUser();
         idRestaurent = bottomnavigation.getIdRes();
 
         adapterListEmployees = new EmployeesManagerAdapter(getActivity(), employees, idRestaurent);
@@ -132,7 +133,7 @@ public class EmployeeManageActivity extends Fragment {
                 employees.clear();
                 employeesWorking.clear();
                 // Duyet danh sach nhan vien
-                for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
+                for (DataSnapshot postSnapshotNhanVien : snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
                     String trangThai = postSnapshotNhanVien.child("TrangThai").getValue(String.class);
 
@@ -144,14 +145,15 @@ public class EmployeeManageActivity extends Fragment {
                             String avt = snapshot.child(id).child("avatar").getValue(String.class);
                             String name = snapshot.child(id).child("hoTen").getValue(String.class);
 
-                            Employee employee = new Employee(id,name,avt);
+                            Employee employee = new Employee(id, name, avt);
                             employees.add(employee);
-                            if(trangThai.equals("DangLamViec"))
+                            if (trangThai.equals("DangLamViec"))
                                 employeesWorking.add(employee);
 
-                            if(employees.size() == 0)txtNoEmployee.setVisibility(View.VISIBLE);
+                            if (employees.size() == 0) txtNoEmployee.setVisibility(View.VISIBLE);
                             else txtNoEmployee.setVisibility(View.GONE);
-                            if(employeesWorking.size() == 0) txtNoEmployeeWorking.setVisibility(View.VISIBLE);
+                            if (employeesWorking.size() == 0)
+                                txtNoEmployeeWorking.setVisibility(View.VISIBLE);
                             else txtNoEmployeeWorking.setVisibility(View.GONE);
 
                             txtTotalEmployees.setText("Số lượng nhân viên: " + employees.size());
@@ -160,6 +162,7 @@ public class EmployeeManageActivity extends Fragment {
                             adapterListEmployees.notifyDataSetChanged();
                             adapterListEmployeesWorking.notifyDataSetChanged();
                         }
+
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
 
@@ -175,7 +178,6 @@ public class EmployeeManageActivity extends Fragment {
             }
         });
     }
-
 
 
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -198,7 +200,7 @@ public class EmployeeManageActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ListNhanVien.class);
-                intent.putExtra("idRes",idRestaurent);
+                intent.putExtra("idRes", idRestaurent);
                 startActivity(intent);
             }
         });
@@ -207,7 +209,7 @@ public class EmployeeManageActivity extends Fragment {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ListNhanVienDangLamViec.class);
-                intent.putExtra("idRes",idRestaurent);
+                intent.putExtra("idRes", idRestaurent);
                 startActivity(intent);
             }
         });
@@ -219,40 +221,37 @@ public class EmployeeManageActivity extends Fragment {
             }
         });
 
-        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
-        txtDateChosen.setText(simpleDateFormat.format( Calendar.getInstance().getTime()));
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+        txtDateChosen.setText(simpleDateFormat.format(Calendar.getInstance().getTime()));
         txtDateChosen.setOnClickListener(new View.OnClickListener() {
             @RequiresApi(api = Build.VERSION_CODES.N)
             @Override
             public void onClick(View view) {
-                Calendar calender =Calendar.getInstance();
-                int year= calender.get(calender.YEAR);
-                int month= calender.get(calender.MONTH);
-                int day=calender.get(calender.DATE);
+                Calendar calender = Calendar.getInstance();
+                int year = calender.get(calender.YEAR);
+                int month = calender.get(calender.MONTH);
+                int day = calender.get(calender.DATE);
                 String previousDate = txtDateChosen.getText().toString();
 
                 DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        calender.set(i,i1,i2);
-                        SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
+                        calender.set(i, i1, i2);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
                         String newDate = simpleDateFormat.format(calender.getTime());
 
                         // Nếu ngày chọn mới khác với ngày cũ, thì thực hiện lấy danh sách nhân viên đang làm việc của ngày mới
-                        if(!newDate.equals(previousDate))
-                        {
-                            newDate = newDate.replaceAll("/","-");
+                        if (!newDate.equals(previousDate)) {
+                            newDate = newDate.replaceAll("/", "-");
                             getListEmployeesAreWorking(newDate);
                         }
 
                         txtDateChosen.setText(newDate);
                     }
-                },year, month,day);
+                }, year, month, day);
                 datePickerDialog.show();
             }
         });
-
-
 
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());
@@ -261,7 +260,7 @@ public class EmployeeManageActivity extends Fragment {
         listEmployees.setItemAnimator(new DefaultItemAnimator());
         listEmployees.setAdapter(adapterListEmployees);
 
-        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL,false);
+        LinearLayoutManager layoutManager2 = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         listEmployeesWorking.setLayoutManager(layoutManager2);
         listEmployeesWorking.setItemAnimator(new DefaultItemAnimator());
         listEmployeesWorking.setAdapter(adapterListEmployeesWorking);
@@ -269,8 +268,7 @@ public class EmployeeManageActivity extends Fragment {
         return employeeManagerFragment;
     }
 
-    private void getListEmployeesAreWorking(String date)
-    {
+    private void getListEmployeesAreWorking(String date) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseNhanVien = database.getReference("/restaurant/" + idRestaurent + "/NhanVien");
 
@@ -278,11 +276,10 @@ public class EmployeeManageActivity extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 employeesWorking.clear();
-                for(DataSnapshot postSnapShot: snapshot.getChildren())
-                {
-                    if(postSnapShot.child("LamViec") == null) continue;
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    if (postSnapShot.child("LamViec") == null) continue;
 
-                    if(postSnapShot.child("LamViec").hasChild(date)){
+                    if (postSnapShot.child("LamViec").hasChild(date)) {
                         String id = postSnapShot.getKey();
 
                         DatabaseReference dbRefUser = database.getReference("user");
@@ -292,7 +289,7 @@ public class EmployeeManageActivity extends Fragment {
                                 String avt = snapshot.child(id).child("avatar").getValue(String.class);
                                 String name = snapshot.child(id).child("hoTen").getValue(String.class);
 
-                                Employee employee = new Employee(id,name,avt);
+                                Employee employee = new Employee(id, name, avt);
                                 employeesWorking.add(employee);
                             }
 
@@ -315,8 +312,7 @@ public class EmployeeManageActivity extends Fragment {
     }
 
     // Show dialog to add table
-    private void ShowDialogAddTable()
-    {
+    private void ShowDialogAddTable() {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.add_employee_layout);
         dialog.show();
@@ -338,22 +334,16 @@ public class EmployeeManageActivity extends Fragment {
             public void onClick(View view) {
                 String strSdt = String.valueOf(edtEmployeeName.getText()).trim();
                 String strLuong = String.valueOf(edtLuong.getText()).trim();
-                if(strSdt.isEmpty())
-                {
-                    Toast.makeText(context, "Vui lòng nhập số điện thoại",Toast.LENGTH_SHORT).show();
-                }
-                else if(strLuong.isEmpty())
-                {
-                    Toast.makeText(context, "Vui lòng nhập lương ban đầu cho nhân viên",Toast.LENGTH_SHORT).show();
-                }
-                else
-                {
+                if (strSdt.isEmpty()) {
+                    Toast.makeText(context, "Vui lòng nhập số điện thoại", Toast.LENGTH_SHORT).show();
+                } else if (strLuong.isEmpty()) {
+                    Toast.makeText(context, "Vui lòng nhập lương ban đầu cho nhân viên", Toast.LENGTH_SHORT).show();
+                } else {
                     Long sdt = Long.parseLong(strSdt);
                     Long luong = Long.parseLong(strLuong);
 
-                    if(luong <= 0)
-                    {
-                        Toast.makeText(context, "Lương phải lớn hơn 0",Toast.LENGTH_SHORT).show();
+                    if (luong <= 0) {
+                        Toast.makeText(context, "Lương phải lớn hơn 0", Toast.LENGTH_SHORT).show();
 
                     }
 
@@ -364,39 +354,34 @@ public class EmployeeManageActivity extends Fragment {
         });
     }
 
-    private void AddEmployeeToRestaurant(String employeeSdt, String luong)
-    {
+    private void AddEmployeeToRestaurant(String employeeSdt, String luong) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
 
         DatabaseReference mDatabaseNhanVien = database.getReference("/restaurant/" + idRestaurent + "/NhanVien");
         mDatabaseNhanVien.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                for(DataSnapshot postSnapShot: snapshot.getChildren())
-                {
-                    if(postSnapShot.child("Sdt").getValue(String.class).equals(employeeSdt))
-                    {
-                        Toast.makeText(getActivity(),"Nhân viên đã tồn tại",Toast.LENGTH_SHORT).show();
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    if (postSnapShot.child("Sdt").getValue(String.class).equals(employeeSdt)) {
+                        Toast.makeText(getActivity(), "Nhân viên đã tồn tại", Toast.LENGTH_SHORT).show();
                         return;
                     }
                 }
 
                 DatabaseReference dbRefUser = database.getReference("user");
-                dbRefUser.addListenerForSingleValueEvent(new ValueEventListener(){
+                dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
                     boolean canAdd = false;
+
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String idUser = "";
-                        for(DataSnapshot postSnapshotUser: snapshot.getChildren())
-                        {
-                            if(postSnapshotUser.child("dienThoai").getValue(String.class).equals(employeeSdt))
-                            {
+                        for (DataSnapshot postSnapshotUser : snapshot.getChildren()) {
+                            if (postSnapshotUser.child("dienThoai").getValue(String.class).equals(employeeSdt)) {
                                 idUser = postSnapshotUser.getKey();
                                 canAdd = true;
                             }
                         }
-                        if(canAdd == true)
-                        {
+                        if (canAdd == true) {
                             Map<String, Object> map = new HashMap<String, Object>();
                             map.put("Sdt", employeeSdt);
                             map.put("Luong", luong);
@@ -404,12 +389,52 @@ public class EmployeeManageActivity extends Fragment {
                             map.put("TrangThai", "KhongLamViec");
 
                             mDatabaseNhanVien.child(idUser).setValue(map);
-                            Toast.makeText(context, "Thêm nhân viên thành công",Toast.LENGTH_SHORT).show();
 
-                        }
-                        else
-                        {
-                            Toast.makeText(context, "Số điện thoại chưa được đăng kí tài khoản",Toast.LENGTH_SHORT).show();
+                            //idAddedStaff(idUser);
+
+
+                            //------------notify
+                            database.getReference("user/" + idUser + "/hoTen").addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    String str = snapshot.getValue(String.class).toString();
+                                    String label = "<b> Thêm nhân viên <b>";
+                                    String content = "Chủ quán vừa thêm nhân viên:" + "<b>" + str + "</b> ";
+                                    String img = "abcd";
+                                    Calendar calendar = Calendar.getInstance();
+                                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                    String currentDate = format.format(calendar.getTime());
+                                    NotificationItem notificationItem = new NotificationItem(img, label, content, currentDate);
+
+                                    database.getReference("user/" + user + "/avatar").addListenerForSingleValueEvent(new ValueEventListener() {
+                                        @Override
+                                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                            String avt = snapshot.getValue(String.class).toString();
+                                            notificationItem.setNoticeImg(avt);
+                                        }
+
+                                        @Override
+                                        public void onCancelled(@NonNull DatabaseError error) {
+
+                                        }
+                                    });
+                                    database.getReference("restaurant/" + idRestaurent).child("notification").push().setValue(notificationItem);
+
+
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            //--------
+                            Toast.makeText(context, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();
+
+                        } else {
+                            Toast.makeText(context, "Số điện thoại chưa được đăng kí tài khoản", Toast.LENGTH_SHORT).show();
                         }
                     }
 
@@ -427,3 +452,4 @@ public class EmployeeManageActivity extends Fragment {
         });
     }
 }
+

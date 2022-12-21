@@ -1,19 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:gravity="center">
-    <ImageView
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:id="@+id/avt"
-        android:src="@drawable/avt2"/>
+    android:padding="20dp">
+
     <TextView
-        android:id="@+id/tvTen"
-        android:layout_width="wrap_content"
+        android:id="@+id/resSalary"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Họ và tên"
-        android:textColor="#000"
-        android:textSize="20dp"/>
+        android:text="Tên nhà hàng: "
+        android:textStyle="bold"/>
+
+    <TextView
+        android:id="@+id/employeeSalary"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Lương: "
+        android:textStyle="bold" />
+
+
 </LinearLayout>

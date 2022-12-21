@@ -11,17 +11,19 @@
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="190dp"
+            android:layout_height="200dp"
             android:orientation="vertical"
             android:background="#ff9298"
-            android:padding="20dp"
+            android:padding="10dp"
             android:gravity="center_horizontal">
-            <ImageView
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:src="@drawable/user"
+            <de.hdodenhof.circleimageview.CircleImageView
 
-                />
+                android:id="@+id/avt_user"
+                android:layout_width="110dp"
+                android:layout_height="110dp"
+                android:layout_centerHorizontal="true"
+
+                android:src="@drawable/avt2" />
             <TextView
                 android:id="@+id/nav_txt_name"
                 android:layout_width="wrap_content"
@@ -31,9 +33,10 @@
                 android:textSize="25dp"
                 android:layout_marginTop="8dp"/>
             <TextView
+
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:id="@+id/nav_txt_id"
+                android:id="@+id/nav_txt_sdt"
                 android:text="1334875380"
                 android:textSize="18sp"
                 android:fontFamily="@font/quicksand_bold"
@@ -62,9 +65,9 @@
                 app:iconGravity="textStart"
                 app:cornerRadius="20dp"
                 android:backgroundTint="#ff9298"
-
                 />
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_res_infor"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
@@ -80,10 +83,11 @@
 
                 />
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_voucher"
                 android:layout_marginTop="20dp"
                 android:layout_width="match_parent"
                 android:layout_height="60dp"
-                android:text="Tích điểm"
+                android:text="Voucher"
                 android:textColor="@color/black"
                 android:fontFamily="@font/quicksand_bold"
                 android:textSize="17sp"
@@ -109,10 +113,11 @@
                 />
 
             <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_out"
                 android:layout_marginTop="50dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Đăng xuất"
+                android:text="Rời quán"
                 android:textColor="@color/black"
                 android:fontFamily="@font/quicksand_bold"
                 android:textSize="17sp"

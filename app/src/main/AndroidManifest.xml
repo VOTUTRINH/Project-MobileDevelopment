@@ -19,6 +19,27 @@
         android:theme="@style/Theme.OderingFood"
         tools:targetApi="31">
         <activity
+            android:name=".ProfileUserActivity"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Res_infor"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
+            android:name=".Voucher"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+        <activity
             android:name=".ListNhanVienDangLamViec"
             android:exported="false">
             <meta-data
@@ -57,6 +78,9 @@
         </activity>
         <activity
             android:name=".ChatActivity"
+            android:exported="false" />
+        <activity
+            android:name=".FullScreenActivity"
             android:exported="false" />
         <activity
             android:name=".TablesActivity"

@@ -3,24 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
     android:padding="20dp"
     >
 
-    <!--    <TextView-->
-    <!--        android:id="@+id/menu_txt_count"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:fontFamily="@font/quicksand_bold"-->
-    <!--        android:text="Họ và tên:" />-->
 
-    <!--    <EditText-->
-    <!--        android:id="@+id/df_name"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="textPersonName"-->
-    <!--        android:text="" />-->
 
     <TextView
         android:layout_width="match_parent"
@@ -59,99 +46,10 @@
                 />
         </com.google.android.material.textfield.TextInputLayout>
     </LinearLayout>
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView2"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:fontFamily="@font/quicksand_bold"-->
-    <!--        android:text="ID:" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/df_id"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="number"-->
-    <!--        android:text="" />-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView3"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:fontFamily="@font/quicksand_bold"-->
-    <!--        android:text="SĐT:" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/df_phone"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="number"-->
-    <!--        android:text=""/>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView4"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:fontFamily="@font/quicksand_bold"-->
-    <!--        android:text="Giới tính:" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/df_email"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="text"-->
-    <!--        android:text=""/>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView5"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:fontFamily="@font/quicksand_bold"-->
-    <!--        android:text="Địa chỉ" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/df_address"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="text"-->
-    <!--        android:text=""/>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView6"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:fontFamily="@font/quicksand_bold"-->
-    <!--        android:text="Ngày sinh" />-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/df_salary"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="text"-->
-    <!--        android:text=""/>-->
-
-    <!--    <TextView-->
-    <!--        android:id="@+id/textView7"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:text="Tổng tiền lương còn nợ"-->
-    <!--        android:fontFamily="@font/quicksand_bold"/>-->
-
-    <!--    <EditText-->
-    <!--        android:id="@+id/df_debt"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:ems="10"-->
-    <!--        android:inputType="text"-->
-    <!--        android:text=""/>-->
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center_horizontal">
 
