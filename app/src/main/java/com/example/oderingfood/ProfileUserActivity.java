@@ -28,6 +28,7 @@ import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.EmployeeSalary;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -281,6 +282,20 @@ public class ProfileUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+            }
+        });
+
+
+        btn_out.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                SessionManagement sessionManagement = new SessionManagement(ProfileUserActivity.this);
+                sessionManagement.removeSession();
+                FirebaseAuth.getInstance().signOut();
+                Intent intent = new Intent(ProfileUserActivity.this, MainActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
             }
         });
     }
