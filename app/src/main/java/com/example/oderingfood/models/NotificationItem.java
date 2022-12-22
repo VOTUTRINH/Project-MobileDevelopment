@@ -34,7 +34,6 @@ public class NotificationItem {
         return noticeContent;
     }
 
-
     public String getTimeString(){
         //todo tinh thoi gian tu time den hien tai
         return timeNotice;
