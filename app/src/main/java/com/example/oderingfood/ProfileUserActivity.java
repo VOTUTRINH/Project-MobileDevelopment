@@ -263,8 +263,10 @@ public class ProfileUserActivity extends AppCompatActivity {
 
                     }
                 });
+                if(uri!=null){
+                    load_image_avt(uri);
+                }
 
-                load_image_avt(uri);
                 // Edit another info
                 edt_name.setEnabled(false);
                 edt_phone.setEnabled(false);
