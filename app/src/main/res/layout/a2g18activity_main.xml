@@ -56,17 +56,7 @@
         android:layout_marginTop="20dp"
         android:fontFamily="@font/quicksand_bold"/>
 
-    <TextView
-        android:id="@+id/afo_txtId"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:text="ID: "
-        android:textSize="20dp"
 
-        android:textColor="@color/black"
-        android:fontFamily="@font/quicksand_bold"
-        android:layout_marginTop="10dp"/>
 
     <TextView
         android:id="@+id/afo_txtPhone"

@@ -107,7 +107,7 @@ public class CustomDialog extends Dialog {
 ////            Toast.makeText(this.context, "Please enter id", Toast.LENGTH_LONG).show();
 ////            return;
 ////        }
-//        this.dismiss(); // Close Dialog
+//         // Close Dialog
 //
 //        String phone = this.editTextPhone.getText().toString();
 //
@@ -140,31 +140,17 @@ public class CustomDialog extends Dialog {
 //            return;
 //        }
         String salaryPerHour = this.editTextSalaryPerHour.getText().toString();
-
-
-
-        if(salaryPerHour== null || salaryPerHour.isEmpty())  {
-            Toast.makeText(this.context, "Please enter salary", Toast.LENGTH_LONG).show();
-            return;
-        }
-        if(isNumeric(salaryPerHour))
-        {
-            if (Double.parseDouble(salaryPerHour) < 0){
-                Toast.makeText(this.context, "Không được điền số âm", Toast.LENGTH_LONG).show();
-
-            }
-            else {
-                if(this.listener!= null)  {
-                    mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                        @Override
-                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+        if(this.listener!= null)  {
+            mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
 
 //                    mDatabase.child("HoTen").setValue(fullName);
 ////                    mDatabase.child("id").setValue(id);
 //                    mDatabase.child("Sdt").setValue(Long.parseLong(phone));
 //                    mDatabase.child("GioiTinh").setValue(email);
 //                    mDatabase.child("DiaChi").setValue(address);
-                            mDatabase.child("Luong").setValue(salaryPerHour);
+                    mDatabase.child("Luong").setValue(salaryPerHour);
 
                             // Update count table
 
@@ -180,17 +166,16 @@ public class CustomDialog extends Dialog {
 //            this.listener.phoneEntered(phone);
 //            this.listener.emailEntered(email);
 //            this.listener.addressEntered(address);
-                    this.listener.salaryEntered(salaryPerHour);
+            this.listener.salaryEntered(salaryPerHour);
 //            this.listener.debtEntered(debt);
                 }
+        this.dismiss();
             }
-        }
 
-        else {
-            Toast.makeText(this.context, "Không được điền ký tự khác số", Toast.LENGTH_LONG).show();
 
-        }
-    }
+
+
+
 
 
     // User click "Cancel" button.
