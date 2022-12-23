@@ -169,7 +169,6 @@ public class ChatActivity extends AppCompatActivity {
                                             loadMessageLayout.setVisibility(View.GONE);
                                             chatList.setVisibility(View.VISIBLE);
                                             isCompletedLoadMessage = true;
-
                                         }
                                     }
 
@@ -208,10 +207,10 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onChildChanged(@NonNull DataSnapshot snapshot, @Nullable String previousChildName) {
-                if(snapshot.exists())
-                {
-                    displayMessage(snapshot);
-                }
+//                if(snapshot.exists())
+//                {
+//                    displayMessage(snapshot);
+//                }
             }
 
             @Override
