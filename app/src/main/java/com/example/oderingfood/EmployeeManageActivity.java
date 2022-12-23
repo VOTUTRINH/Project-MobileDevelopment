@@ -120,7 +120,6 @@ public class EmployeeManageActivity extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRefEmployee = database.getReference("restaurant/" + idRestaurent + "/NhanVien");
         dbRefEmployee.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 employees.clear();
@@ -177,7 +176,6 @@ public class EmployeeManageActivity extends Fragment {
                              Bundle savedInstanceState) {
         View employeeManagerFragment = inflater.inflate(R.layout.activity_employee_manage, container, false);
 
-
         txtDateChosen = (TextInputEditText) employeeManagerFragment.findViewById(R.id.txt_date_chosen);
         listEmployees = (RecyclerView) employeeManagerFragment.findViewById(R.id.list_employees);
         listEmployeesWorking = (RecyclerView) employeeManagerFragment.findViewById(R.id.employee_working);
@@ -210,7 +208,7 @@ public class EmployeeManageActivity extends Fragment {
         btnAddEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowDialogAddTable();
+                ShowDialogAddEmployee();
             }
         });
 
@@ -269,6 +267,7 @@ public class EmployeeManageActivity extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 employeesWorking.clear();
+                adapterListEmployeesWorking.notifyDataSetChanged();
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                     if (postSnapShot.child("LamViec") == null) continue;
 
@@ -294,6 +293,10 @@ public class EmployeeManageActivity extends Fragment {
                     }
                 }
 
+                if (employeesWorking.size() == 0)
+                    txtNoEmployeeWorking.setVisibility(View.VISIBLE);
+                else txtNoEmployeeWorking.setVisibility(View.GONE);
+
                 adapterListEmployeesWorking.notifyDataSetChanged();
             }
 
@@ -305,7 +308,7 @@ public class EmployeeManageActivity extends Fragment {
     }
 
     // Show dialog to add table
-    private void ShowDialogAddTable() {
+    private void ShowDialogAddEmployee() {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.add_employee_layout);
         dialog.show();

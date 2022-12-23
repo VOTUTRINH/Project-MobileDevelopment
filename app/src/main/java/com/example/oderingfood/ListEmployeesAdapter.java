@@ -77,9 +77,11 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
                         break;
 
                     case "ListNVLamViec":
+                        String dateChosen = ((ListNhanVienDangLamViec) context).GetDate();
                         Intent intent2 = new Intent(view.getContext(), DetailWorkTimeActivity.class);
                         intent2.putExtra("idUser", employee.getId());
                         intent2.putExtra("idRes", idRes);
+                        intent2.putExtra("dateChosen", dateChosen);
                         view.getContext().startActivity(intent2);
                         break;
 

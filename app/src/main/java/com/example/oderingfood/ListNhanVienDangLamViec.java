@@ -47,6 +47,8 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
 
     TextInputEditText txtDateChosen;
 
+    String dateChosen;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -93,7 +95,6 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
                             }
                             @Override
                             public void onCancelled(@NonNull DatabaseError error) {
-
                             }
                         });
                     }
@@ -147,13 +148,13 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
                         SimpleDateFormat simpleDateFormat= new SimpleDateFormat("dd/MM/yyyy");
                         String newDate = simpleDateFormat.format(calender.getTime());
 
+                        txtDateChosen.setText(newDate);
+
                         // Nếu ngày chọn mới khác với ngày cũ, thì thực hiện lấy danh sách nhân viên đang làm việc của ngày mới
                         if(!newDate.equals(previousDate))
                         {
                             searchAllEmployeesWorking();
                         }
-
-                        txtDateChosen.setText(newDate);
                     }
                 },year, month,day);
                 datePickerDialog.show();
@@ -162,17 +163,17 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
     }
 
     private void searchAllEmployeesWorking(){
+        dateChosen = txtDateChosen.getText().toString();
+        dateChosen = dateChosen.replaceAll("/","-");
         DatabaseReference dbRefEmployee = database.getReference("restaurant/" + idRes + "/NhanVien");
         dbRefEmployee.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 employees.clear();
+                adapterListEmployees.notifyDataSetChanged();
                 // Duyet danh sach nhan vien
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
-
-                    String dateChosen = txtDateChosen.getText().toString();
-                    dateChosen = dateChosen.replaceAll("/","-");
                     if(postSnapshotNhanVien.hasChild("LamViec") && postSnapshotNhanVien.child("LamViec").hasChild(dateChosen)){
                         // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
                         DatabaseReference dbRefUser = database.getReference("user/" + id);
@@ -187,7 +188,6 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
                                 if(!checkDup(employees, employee)) {
                                     employees.add(employee);
                                 }
-                                Toast.makeText(ListNhanVienDangLamViec.this, String.valueOf(employees.size()), Toast.LENGTH_SHORT).show();
                                 adapterListEmployees.notifyDataSetChanged();
                             }
                             @Override
@@ -224,6 +224,7 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 employees.clear();
+                adapterListEmployees.notifyDataSetChanged();
                 // Duyet danh sach nhan vien
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
@@ -262,5 +263,12 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
 
             }
         });
+    }
+
+    public String GetDate()
+    {
+        String dateChosen = txtDateChosen.getText().toString();
+        dateChosen = dateChosen.replaceAll("/","-");
+        return dateChosen;
     }
 }
