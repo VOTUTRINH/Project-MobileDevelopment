@@ -92,7 +92,7 @@ public class ProfileUserActivity extends AppCompatActivity {
         btn_cancel_edit = (Button) findViewById(R.id.btn_cancel);
         btn_confirm_edit = (Button) findViewById(R.id.btn_submit);
         btn_out =(Button) findViewById(R.id.btn_out);
-        adapter = new EmployeeSalaryAdapter(getApplicationContext(),R.layout.item_nhanvien, dataList);
+        adapter = new EmployeeSalaryAdapter(this,R.layout.item_nhanvien, dataList);
         lv_danhsachluong.setAdapter(adapter);
 
         database = FirebaseDatabase.getInstance();

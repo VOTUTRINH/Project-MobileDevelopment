@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Booking;
@@ -31,7 +32,7 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<EmployeeSalary> {
     Context context;
     List<EmployeeSalary> dataList;
     public EmployeeSalaryAdapter(Context context,int resource, List<EmployeeSalary> dataList){
-        super(context,resource,dataList);
+        super(context,R.layout.item_nhanvien,dataList);
         this.context=context;
         this.dataList = dataList;
     }
@@ -49,6 +50,4 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<EmployeeSalary> {
 
         return (row);
     }
-
-
 }
