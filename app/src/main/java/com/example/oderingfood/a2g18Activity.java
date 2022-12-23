@@ -109,6 +109,7 @@ public class a2g18Activity extends Activity {
         });
 
 
+
         mDatabaseUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

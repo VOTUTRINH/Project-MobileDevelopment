@@ -34,7 +34,6 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<String> {
         super(context,R.layout.item_nhanvien);
         this.context=context;
         this.dataList = dataList;
-
     }
 
 

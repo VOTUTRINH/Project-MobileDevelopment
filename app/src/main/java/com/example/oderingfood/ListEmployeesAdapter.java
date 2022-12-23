@@ -30,13 +30,15 @@ import java.util.List;
 public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
     private  Context context;
     List<Employee> employeeList;
-    String idRes;
+    String idRes = "";
+    String typeList = "";
 
-    public ListEmployeesAdapter(@NonNull Context context, int resource, List<Employee> employeeList, String idRes) {
+    public ListEmployeesAdapter(@NonNull Context context, int resource, List<Employee> employeeList, String idRes, String typeList) {
         super(context, resource, employeeList);
         this.context = context;
         this.employeeList = employeeList;
         this.idRes = idRes;
+        this.typeList = typeList;
     }
 
     @Override
@@ -47,7 +49,11 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
         item.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View view) {
-                ShowDialogDeleteEmployee(employeeList.get(position).getId(), employeeList.get(position).getName());
+                if(typeList.equals("ListNV"))
+                {
+                    ShowDialogDeleteEmployee(employeeList.get(position).getId(), employeeList.get(position).getName());
+                    return true;
+                }
                 return false;
             }
         });
@@ -63,9 +69,23 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
         item.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(view.getContext(),a2g18Activity.class);
-                intent.putExtra("idUser",employee.getId());
-                view.getContext().startActivity(intent);
+                switch (typeList){
+                    case "ListNV":
+                        Intent intent1 = new Intent(view.getContext(),a2g18Activity.class);
+                        intent1.putExtra("idUser",employee.getId());
+                        view.getContext().startActivity(intent1);
+                        break;
+
+                    case "ListNVLamViec":
+                        Intent intent2 = new Intent(view.getContext(), DetailWorkTimeActivity.class);
+                        intent2.putExtra("idUser", employee.getId());
+                        intent2.putExtra("idRes", idRes);
+                        view.getContext().startActivity(intent2);
+                        break;
+
+                    default:
+                        break;
+                }
             }
         });
         return (item);

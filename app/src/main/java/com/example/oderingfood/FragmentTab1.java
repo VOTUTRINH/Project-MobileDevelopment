@@ -136,8 +136,8 @@ public class FragmentTab1 extends Fragment {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 Restaurants.clear();
                 for (DataSnapshot postSnapshot: snapshot.getChildren()) {
-                    String name =  postSnapshot.child("TenQuan").getValue(String.class).toString();
-                    String diaChi = postSnapshot.child("DiaChi").getValue(String.class).toString();
+                    String name =  postSnapshot.child("TenQuan").getValue(String.class);
+                    String diaChi = postSnapshot.child("DiaChi").getValue(String.class);
                     String urlImage;
                     try {
                         urlImage = postSnapshot.child("HinhAnh").child("1").getValue(String.class).toString();

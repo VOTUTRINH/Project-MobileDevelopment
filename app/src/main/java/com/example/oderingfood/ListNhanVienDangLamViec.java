@@ -60,7 +60,7 @@ public class ListNhanVienDangLamViec extends AppCompatActivity {
 
         edtSearchEmployee = (EditText) findViewById(R.id.edt_search_employee);
         txtDateChosen = (TextInputEditText) findViewById(R.id.txt_date_chosen);
-        adapterListEmployees = new ListEmployeesAdapter(this, R.layout.custom_item_employee, employees, idRes);
+        adapterListEmployees = new ListEmployeesAdapter(this, R.layout.custom_item_employee, employees, idRes, "ListNVLamViec");
         gv = (GridView) findViewById(R.id.gvNhanvien);
         gv.setAdapter(adapterListEmployees);
 
