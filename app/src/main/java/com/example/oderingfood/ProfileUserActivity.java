@@ -2,10 +2,10 @@ package com.example.oderingfood;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
-import android.app.AlertDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -280,24 +280,40 @@ public class ProfileUserActivity extends AppCompatActivity {
                 group_button_edit.setVisibility(View.INVISIBLE);
             }
         });
-        btn_out.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
 
-            }
-        });
 
 
         btn_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
-                SessionManagement sessionManagement = new SessionManagement(ProfileUserActivity.this);
-                sessionManagement.removeSession();
-                FirebaseAuth.getInstance().signOut();
-                Intent intent = new Intent(ProfileUserActivity.this, MainActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
+                androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(ProfileUserActivity.this);
+                builder.setCancelable(false);
+                builder.setMessage("Bạn có muốn đăng xuất ?");
+                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if user pressed "yes", then he is allowed to exit from application
+                        SessionManagement sessionManagement = new SessionManagement(ProfileUserActivity.this);
+                        sessionManagement.removeSession();
+                        FirebaseAuth.getInstance().signOut();
+                        Intent intent = new Intent(ProfileUserActivity.this, MainActivity.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                        startActivity(intent);
+                    }
+                });
+                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        //if user select "No", just cancel this dialog and continue with app
+                        finish();
+                    }
+                });
+
+                AlertDialog alert = builder.create();
+                alert.show();
+
+
             }
         });
     }

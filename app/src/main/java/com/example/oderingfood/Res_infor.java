@@ -92,7 +92,7 @@ public class Res_infor extends AppCompatActivity {
         progress_bar =(ProgressBar) findViewById(R.id.progress_bar);
         add_image1.setVisibility(View.INVISIBLE);
         btn_add_image.setVisibility(View.INVISIBLE);
-        if(role.equals(("ChuQuan"))) {
+        if(!role.equals(("ChuQuan"))) {
             btn_edit.setVisibility(View.INVISIBLE);
             btn_submit.setVisibility(View.INVISIBLE);
         }
