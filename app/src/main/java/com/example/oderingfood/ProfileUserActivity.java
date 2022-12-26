@@ -138,13 +138,15 @@ public class ProfileUserActivity extends AppCompatActivity {
                     {
                         if(postSnapShot.child("NhanVien").hasChild(user)){
                             String name = postSnapShot.child("TenQuan").getValue(String.class);
-                            String salary = postSnapShot.child("Luong").getValue(String.class);
-                            EmployeeSalary employeeSalary = new EmployeeSalary(name, salary);
+                            String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
+                            Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
+
+                            EmployeeSalary employeeSalary = new EmployeeSalary(name, salary, tgLamViec);
+                            dataList.add(employeeSalary);
                             dataList.add(employeeSalary);
                         }
                     }
                 }
-                Toast.makeText(ProfileUserActivity.this,String.valueOf(dataList.size()),Toast.LENGTH_SHORT).show();
                 if(dataList.size() > 0){
                     txt_danhsachluong.setVisibility(View.VISIBLE);
                     lv_danhsachluong.setVisibility(View.VISIBLE);
