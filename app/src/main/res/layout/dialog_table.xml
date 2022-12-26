@@ -1,49 +1,151 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:layout_height="match_parent">
-    <EditText
-        android:id="@+id/df_from"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textShortMessage"
-        android:text="Giờ bắt đầu" />
 
-    <EditText
-        android:id="@+id/df_to"
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/booking_tab"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textShortMessage"
-        android:text="Giờ kết thúc"/>
+        android:background="#ff9298"
 
-    <EditText
-        android:id="@+id/df_guest"
+        app:tabIndicatorColor="@color/black"
+        app:tabIndicatorFullWidth="false"
+        app:tabSelectedTextColor="@color/black"
+        app:tabTextColor="#ffffff"></com.google.android.material.tabs.TabLayout>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textShortMessage"
-        android:text="Tên khách hàng"/>
-    <EditText
-        android:id="@+id/df_table"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textShortMessage"
-        android:text="Tên Bàn"/>
-    <EditText
-        android:id="@+id/df_date"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:ems="10"
-        android:inputType="textShortMessage"
-        android:text="Ngày đặt"/>
+        android:hint="Tên gợi nhớ"
+        app:startIconDrawable="@drawable/ic_person"
+        app:helperText="Required*"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft = "10dp"
+        android:layout_marginRight = "10dp"
+        app:endIconMode="clear_text"
+        app:helperTextEnabled="false"
+        app:helperTextTextColor="@android:color/holo_red_dark">
 
-    <Button
-        android:id="@+id/btn_set_day"
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/booking_edt_name"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textEmailAddress"
+            android:maxLength="25"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="SETDAY" />
+        android:hint="Số điện thoại"
+        app:startIconDrawable="@drawable/ic_phone"
+        app:helperText="Required*"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft = "10dp"
+        android:layout_marginRight = "10dp"
+        app:endIconMode="clear_text"
+        app:helperTextEnabled="false"
+        app:helperTextTextColor="@android:color/holo_red_dark">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/booking_edt_phone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="25"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Ngày đặt"
+        app:startIconDrawable="@drawable/ic_date"
+        app:helperText="Required*"
+        android:layout_marginTop="10dp"
+        android:layout_marginLeft = "10dp"
+        android:layout_marginRight = "10dp"
+        app:endIconMode="clear_text"
+        app:helperTextEnabled="false"
+        app:helperTextTextColor="@android:color/holo_red_dark">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/booking_edt_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:maxLength="25"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Thời gian bắt đầu"
+            app:startIconDrawable="@drawable/ic_baseline_edit_note_24"
+            app:helperText="Required*"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft = "10dp"
+            android:layout_marginRight = "10dp"
+            app:endIconMode="clear_text"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="@android:color/holo_red_dark">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/booking_edt_timeStart"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="25"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Thời gian kết thúc"
+            app:startIconDrawable="@drawable/ic_baseline_edit_note_24"
+            app:helperText="Required*"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft = "10dp"
+            android:layout_marginRight = "10dp"
+            android:layout_marginBottom="50dp"
+
+            app:endIconMode="clear_text"
+            app:helperTextEnabled="false"
+            app:helperTextTextColor="@android:color/holo_red_dark">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/booking_edt_timeEnd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:maxLength="25"
+                />
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+    <android.widget.Button
+        android:id="@+id/booking_btn_book"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/round_button"
+        android:text="Đặt bàn"
+        android:textColor="@color/white"
+        android:layout_marginTop="20dp"
+        android:layout_marginLeft = "10dp"
+        android:layout_marginRight = "10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+
 </LinearLayout>
