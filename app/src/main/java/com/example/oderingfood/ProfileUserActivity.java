@@ -50,7 +50,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class ProfileUserActivity extends AppCompatActivity {
 
     String user;
-    List<EmployeeSalary> dataList = new ArrayList<>();
+    List<EmployeeSalary> dataList = new ArrayList<EmployeeSalary>();
     EmployeeSalaryAdapter adapter;
     CircleImageView img_avatar, img_add_avatar;
     EditText edt_name, edt_phone, edt_sex, edt_address, edt_birthday;
@@ -147,6 +147,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                         }
                     }
                 }
+                Toast.makeText(ProfileUserActivity.this, String.valueOf(dataList.size()), Toast.LENGTH_SHORT).show();
                 if(dataList.size() > 0){
                     txt_danhsachluong.setVisibility(View.VISIBLE);
                     lv_danhsachluong.setVisibility(View.VISIBLE);
