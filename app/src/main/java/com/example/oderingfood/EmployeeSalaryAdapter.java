@@ -49,11 +49,11 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<EmployeeSalary> {
         TextView txttongLuong = (TextView) row.findViewById(R.id.tongLuong);
         LinearLayout itemLayout = (LinearLayout) row.findViewById(R.id.item_layout);
 
-//        if(position % 2 == 1){
-//            itemLayout.setBackgroundColor(Color.parseColor("#F85F6A"));
-//        }else{
-//            itemLayout.setBackgroundColor(Color.parseColor("#ff8992"));
-//        }
+        if(position % 2 == 1){
+            itemLayout.setBackgroundColor(Color.parseColor("#F85F6A"));
+        }else{
+            itemLayout.setBackgroundColor(Color.parseColor("#ff8992"));
+        }
 
         txttenCuaHang.setText("Tên nhà hàng: " + dataList.get(position).GetResName());
         txtluongCoBan.setText("Lương: " + dataList.get(position).GetBaseSalary());

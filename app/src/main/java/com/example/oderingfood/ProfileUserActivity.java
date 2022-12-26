@@ -13,6 +13,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.text.InputType;
 import android.view.View;
+import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
@@ -94,6 +95,7 @@ public class ProfileUserActivity extends AppCompatActivity {
         btn_out =(Button) findViewById(R.id.btn_out);
         adapter = new EmployeeSalaryAdapter(this,R.layout.item_nhanvien, dataList);
         lv_danhsachluong.setAdapter(adapter);
+        lv_danhsachluong.setScrollContainer(false);
 
         database = FirebaseDatabase.getInstance();
         refRes = database.getReference("restaurant/");
@@ -144,11 +146,17 @@ public class ProfileUserActivity extends AppCompatActivity {
                             EmployeeSalary employeeSalary = new EmployeeSalary(name, salary, tgLamViec);
                             dataList.add(employeeSalary);
                             dataList.add(employeeSalary);
+                            dataList.add(employeeSalary);
+
+                            dataList.add(employeeSalary);
+                            dataList.add(employeeSalary);
+
                         }
                     }
                 }
                 Toast.makeText(ProfileUserActivity.this, String.valueOf(dataList.size()), Toast.LENGTH_SHORT).show();
                 if(dataList.size() > 0){
+                    justifyListViewHeightBasedOnChildren(lv_danhsachluong);
                     txt_danhsachluong.setVisibility(View.VISIBLE);
                     lv_danhsachluong.setVisibility(View.VISIBLE);
                 }
@@ -377,5 +385,24 @@ public class ProfileUserActivity extends AppCompatActivity {
         return mime.getExtensionFromMimeType(cr.getType(mUri));
     }
 
+    public static void justifyListViewHeightBasedOnChildren (ListView listView) {
 
+        ListAdapter adapter = listView.getAdapter();
+
+        if (adapter == null) {
+            return;
+        }
+        ViewGroup vg = listView;
+        int totalHeight = 0;
+        for (int i = 0; i < adapter.getCount(); i++) {
+            View listItem = adapter.getView(i, null, vg);
+            listItem.measure(0, 0);
+            totalHeight += listItem.getMeasuredHeight();
+        }
+
+        ViewGroup.LayoutParams par = listView.getLayoutParams();
+        par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
+        listView.setLayoutParams(par);
+        listView.requestLayout();
+    }
 }
