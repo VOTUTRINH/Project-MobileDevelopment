@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Booking;
@@ -27,14 +28,13 @@ import com.example.oderingfood.models.EmployeeSalary;
 import java.util.List;
 
 
-public class EmployeeSalaryAdapter extends ArrayAdapter<String> {
+public class EmployeeSalaryAdapter extends ArrayAdapter<EmployeeSalary> {
     Context context;
     List<EmployeeSalary> dataList;
-    public EmployeeSalaryAdapter(Context context, List<EmployeeSalary> dataList){
-        super(context,R.layout.item_nhanvien);
+    public EmployeeSalaryAdapter(Context context,int resource, List<EmployeeSalary> dataList){
+        super(context,R.layout.item_nhanvien,dataList);
         this.context=context;
         this.dataList = dataList;
-
     }
 
 
@@ -50,6 +50,4 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<String> {
 
         return (row);
     }
-
-
 }

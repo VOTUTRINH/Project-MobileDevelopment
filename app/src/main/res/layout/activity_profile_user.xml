@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".a2g18Activity"
@@ -47,7 +47,6 @@
             android:layout_gravity="right"/>
 
         <de.hdodenhof.circleimageview.CircleImageView
-
             android:layout_gravity="center_horizontal"
             android:id="@+id/afo_avatar"
             android:layout_width="130dp"
@@ -57,11 +56,11 @@
         <de.hdodenhof.circleimageview.CircleImageView
             android:layout_gravity="center_horizontal"
             android:id="@+id/afo_add_avatar"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
+            android:layout_width="130dp"
+            android:layout_height="130dp"
             android:src="@drawable/addimageround"
             tools:ignore="MissingClass"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
 
         <TextView
@@ -173,11 +172,13 @@
             android:text="Danh sách lương"
             android:textSize="20sp"
             android:padding="15dp"
-            android:textColor="@color/color_main"/>
+            android:textColor="@color/color_main"
+            android:visibility="gone"/>
         <ListView
             android:id="@+id/lv_danh_sach_luong"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
 
             <ProgressBar
                 android:id="@+id/progress_bar"

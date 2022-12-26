@@ -15,8 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -28,7 +26,6 @@ import android.widget.Toast;
 
 import com.example.oderingfood.models.Employee;
 import com.example.oderingfood.models.NotificationItem;
-import com.example.oderingfood.models.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
@@ -37,12 +34,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -108,7 +102,6 @@ public class EmployeeManageActivity extends Fragment {
 
         try {
             context = getActivity();
-            // tablesActivity = (TablesActivity) getActivity();
 
             employeeManageActivity = new EmployeeManageActivity();
         } catch (Exception e) {
@@ -127,7 +120,6 @@ public class EmployeeManageActivity extends Fragment {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRefEmployee = database.getReference("restaurant/" + idRestaurent + "/NhanVien");
         dbRefEmployee.addValueEventListener(new ValueEventListener() {
-
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 employees.clear();
@@ -184,7 +176,6 @@ public class EmployeeManageActivity extends Fragment {
                              Bundle savedInstanceState) {
         View employeeManagerFragment = inflater.inflate(R.layout.activity_employee_manage, container, false);
 
-
         txtDateChosen = (TextInputEditText) employeeManagerFragment.findViewById(R.id.txt_date_chosen);
         listEmployees = (RecyclerView) employeeManagerFragment.findViewById(R.id.list_employees);
         listEmployeesWorking = (RecyclerView) employeeManagerFragment.findViewById(R.id.employee_working);
@@ -217,7 +208,7 @@ public class EmployeeManageActivity extends Fragment {
         btnAddEmployee.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                ShowDialogAddTable();
+                ShowDialogAddEmployee();
             }
         });
 
@@ -243,7 +234,7 @@ public class EmployeeManageActivity extends Fragment {
                         // Nếu ngày chọn mới khác với ngày cũ, thì thực hiện lấy danh sách nhân viên đang làm việc của ngày mới
                         if (!newDate.equals(previousDate)) {
                             newDate = newDate.replaceAll("/", "-");
-                            getListEmployeesAreWorking(newDate);
+                            getListEmployeesAreWorkingWithDate(newDate);
                         }
 
                         txtDateChosen.setText(newDate);
@@ -268,7 +259,7 @@ public class EmployeeManageActivity extends Fragment {
         return employeeManagerFragment;
     }
 
-    private void getListEmployeesAreWorking(String date) {
+    private void getListEmployeesAreWorkingWithDate(String date) {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabaseNhanVien = database.getReference("/restaurant/" + idRestaurent + "/NhanVien");
 
@@ -276,6 +267,7 @@ public class EmployeeManageActivity extends Fragment {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 employeesWorking.clear();
+                adapterListEmployeesWorking.notifyDataSetChanged();
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                     if (postSnapShot.child("LamViec") == null) continue;
 
@@ -301,6 +293,10 @@ public class EmployeeManageActivity extends Fragment {
                     }
                 }
 
+                if (employeesWorking.size() == 0)
+                    txtNoEmployeeWorking.setVisibility(View.VISIBLE);
+                else txtNoEmployeeWorking.setVisibility(View.GONE);
+
                 adapterListEmployeesWorking.notifyDataSetChanged();
             }
 
@@ -312,7 +308,7 @@ public class EmployeeManageActivity extends Fragment {
     }
 
     // Show dialog to add table
-    private void ShowDialogAddTable() {
+    private void ShowDialogAddEmployee() {
         Dialog dialog = new Dialog(getContext());
         dialog.setContentView(R.layout.add_employee_layout);
         dialog.show();
@@ -344,7 +340,6 @@ public class EmployeeManageActivity extends Fragment {
 
                     if (luong <= 0) {
                         Toast.makeText(context, "Lương phải lớn hơn 0", Toast.LENGTH_SHORT).show();
-
                     }
 
                     AddEmployeeToRestaurant(strSdt, strLuong);
@@ -371,7 +366,6 @@ public class EmployeeManageActivity extends Fragment {
                 DatabaseReference dbRefUser = database.getReference("user");
                 dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
                     boolean canAdd = false;
-
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         String idUser = "";
@@ -389,7 +383,6 @@ public class EmployeeManageActivity extends Fragment {
                             map.put("TrangThai", "KhongLamViec");
 
                             mDatabaseNhanVien.child(idUser).setValue(map);
-
 
 
 
@@ -450,7 +443,6 @@ public class EmployeeManageActivity extends Fragment {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
     }

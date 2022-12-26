@@ -24,18 +24,24 @@
             android:textStyle="bold"/>
     </androidx.cardview.widget.CardView>
 
-    <EditText
-        android:id="@+id/ac_input_chat"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:ems="10"
-        android:hint="Type your message.."
-        android:inputType="textPersonName"
+        android:hint="Nhập tin nhắn"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/ac_btn_send"
-        app:layout_constraintStart_toStartOf="parent" />
+        app:layout_constraintStart_toStartOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/ac_input_chat"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:maxLength="150"/>
+    </com.google.android.material.textfield.TextInputLayout>
 
     <android.widget.Button
         android:id="@+id/ac_btn_send"
@@ -57,7 +63,8 @@
         app:layout_constraintHorizontal_bias="0.58"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/cardView"
-        android:background="@color/color_main">
+        android:background="@color/color_main"
+        >
 
         <ProgressBar
             android:id="@+id/progress_bar"
@@ -75,14 +82,13 @@
         android:id="@+id/ac_list_chat"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="16dp"
         android:background="#CDEC808D"
-        app:layout_constraintBottom_toTopOf="@+id/ac_input_chat"
+        android:visibility="invisible"
+        android:paddingBottom="5dp"
+        app:layout_constraintBottom_toTopOf="@+id/textInputLayout"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/cardView"
-        android:visibility="invisible"
-        />
+        app:layout_constraintTop_toBottomOf="@+id/cardView" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

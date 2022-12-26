@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".DetailWorkTimeActivity"
+    android:orientation="vertical"
+    >
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Chi tiết ca làm"
+        android:padding="15dp"
+        android:textSize="30sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:background="@color/color_main"
+        android:textColor="@color/white"
+        android:layout_marginBottom="5dp"/>
+    >
+    <TextView
+        android:id="@+id/txt_tong_so_ca_lam"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Tổng số ca làm: "
+        android:padding="15dp"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/color_main"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <ListView
+            android:id="@+id/detail_working_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
