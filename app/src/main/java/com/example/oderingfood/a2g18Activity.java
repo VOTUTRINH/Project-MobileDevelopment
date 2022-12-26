@@ -83,7 +83,7 @@ public class a2g18Activity extends Activity {
 
                 double salary = Double.parseDouble(salaryTemp) - Double.parseDouble(edtSalaryPerHour.getText().toString());
 
-                txtTotalSalary.setText("Tổng lương: " + String.valueOf(salary));
+                txtTotalSalary.setText(String.valueOf(salary));
                 mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
@@ -130,11 +130,11 @@ public class a2g18Activity extends Activity {
                 }
                 Glide.with(getApplicationContext()).load(urlImage).into(txtAvatar);
 
-                txtName.setText("Họ và tên: " + name);
-                txtPhone.setText("Số điện thoại: " + phone);
-                txtEmail.setText("Giới tính: " + email);
-                txtAddress.setText("Địa chỉ: " + address);
-                txtSalary.setText("Ngày sinh: " + salary);
+                txtName.setText(name);
+                txtPhone.setText(phone);
+                txtEmail.setText(email);
+                txtAddress.setText(address);
+                txtSalary.setText(salary);
 
 
             }
@@ -155,8 +155,8 @@ public class a2g18Activity extends Activity {
 
 
 
-                txtSalaryPerHour.setText("Lương trên giờ: " + String.valueOf(salaryPerHour));
-                txtTotalSalary.setText("Tổng lương: " + String.valueOf(totalSalary));
+                txtSalaryPerHour.setText(String.valueOf(salaryPerHour));
+                txtTotalSalary.setText(String.valueOf(totalSalary));
                 salaryTemp = totalSalary;
             }
 
@@ -215,7 +215,7 @@ public class a2g18Activity extends Activity {
 //                debt1.setText("Tổng tiền lương còn nợ: " + debt);
 //            }
             public void salaryEntered(String salary) {
-                txtSalaryPerHour.setText("Lương trên giờ: " + salary);
+                txtSalaryPerHour.setText(salary);
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference mDatabase;
                 mDatabase = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
