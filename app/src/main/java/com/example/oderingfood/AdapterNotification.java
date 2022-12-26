@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.Typeface;
 import android.graphics.drawable.Drawable;
+import android.text.Html;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,12 +15,19 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.cardview.widget.CardView;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.NotificationItem;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.sql.Time;
 import java.util.ArrayList;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class AdapterNotification extends RecyclerView.Adapter<AdapterNotification.ViewHolder> {
     ArrayList<NotificationItem> items;
@@ -48,12 +56,26 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
     public void onBindViewHolder(@NonNull AdapterNotification.ViewHolder holder, int position) {
         // TypeCast Object to int type
         //holder.images.setImageResource(this.items.get(position).getNoticeImg());
-        holder.txt_label.setText(this.items.get(position).getNoticeLabel());
-        holder.txt_content.setText(this.items.get(position).getNoticeContent());
+
+        Glide.with(context).load(this.items.get(position).getNoticeImg()).into(holder.images);
+        holder.txt_label.setText(Html.fromHtml(this.items.get(position).getNoticeLabel()));
+        holder.txt_content.setText(Html.fromHtml(this.items.get(position).getNoticeContent()));
         holder.txt_time.setText(this.items.get(position).getTimeString());
         if(this.items.get(position).isRead == true){
             Seen(holder.CView, holder.txt_label, holder.status);
         }
+        String id = this.items.get(position).getId();
+        holder.viewItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FirebaseDatabase database ;
+                DatabaseReference myRef ;
+                database = FirebaseDatabase.getInstance();
+                myRef = database.getReference("restaurant/"+ GlobalVariables.pathRestaurentID);
+                myRef.child("notification").child(id).child("isRead").setValue(true);
+
+            }
+        });
 
     }
 
@@ -66,21 +88,23 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
 
     // Initializing the Views
     public class ViewHolder extends RecyclerView.ViewHolder {
-        ImageView images, status;
+        ImageView  status;
+        CircleImageView images;
         TextView txt_label, txt_content, txt_time;
         CardView CView;
+        ConstraintLayout viewItem;
         public ViewHolder(View view) {
             super(view);
             CView = (CardView) view.findViewById(R.id.nt_card_notice);
-            images = (ImageView) view.findViewById(R.id.nt_img_notice);
+            images = (CircleImageView) view.findViewById(R.id.avt_user);
             txt_label = (TextView) view.findViewById(R.id.nt_txt_label_notice);
             txt_content = (TextView) view.findViewById(R.id.nt_txt_content_notice);
             txt_time = (TextView) view.findViewById(R.id.nt_txt_time);
             status = (ImageView) view.findViewById(R.id.nt_img_not_read);
+            viewItem = (ConstraintLayout) view.findViewById(R.id.view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-
                     Seen(CView,txt_label,status);
                 }
             });

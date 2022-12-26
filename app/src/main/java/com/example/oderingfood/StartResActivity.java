@@ -71,8 +71,6 @@ public class StartResActivity extends AppCompatActivity {
 
                 }
             }
-
-
         }).start();
     }
     private void changeRole(String role){
@@ -100,7 +98,6 @@ public class StartResActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
-
             }
         });
 

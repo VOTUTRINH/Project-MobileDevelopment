@@ -147,6 +147,10 @@ public class TableListPage3 extends Fragment {
 
                     Intent intent = new Intent(context, MonAnActivity.class);
                     Bundle b = new Bundle();
+
+                    b.putString("idRes", idRes);
+                    b.putString("idUser", user);
+
                     b.putString("key", listTable.get(i).getName()); //Your id
                     intent.putExtras(b); //Put your id to your next Intent
                     context.startActivity(intent);

@@ -1,6 +1,7 @@
 package com.example.oderingfood;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -42,6 +43,14 @@ public class AdapterImage extends RecyclerView.Adapter<AdapterImage.ViewHolder> 
         // TypeCast Object to int type
         String res = Img.get(position).toString();
         Glide.with(context).load(res).into(holder.images);
+        holder.images.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, FullScreenActivity.class);
+                intent.putExtra("id", res);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override

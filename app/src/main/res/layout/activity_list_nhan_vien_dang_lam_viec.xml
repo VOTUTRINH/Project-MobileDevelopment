@@ -16,7 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="10dp"
-            android:text="Danh sách nhân viên làm việc"
+            android:text="Nhân viên làm việc trong ngày"
             android:backgroundTint="@color/color_main"
             android:background="@color/color_main"
             android:textSize="26sp"

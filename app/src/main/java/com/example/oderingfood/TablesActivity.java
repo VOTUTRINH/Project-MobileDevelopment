@@ -15,6 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.viewpager2.widget.ViewPager2;
 
+import com.example.oderingfood.models.NotificationItem;
 import com.example.oderingfood.models.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.tabs.TabLayout;
@@ -26,6 +27,9 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class TablesActivity extends Fragment {
     TabLayout tabLayout;
@@ -154,6 +158,31 @@ public class TablesActivity extends Fragment {
                 DatabaseReference mDatabaseSoBanAn = mDatabase.child("SoBanAn");
                 mDatabaseSoBanAn.setValue(snapshot.getChildrenCount() + 1);
                 Toast.makeText(getActivity(),"Thêm bàn thành công",Toast.LENGTH_SHORT).show();
+
+                database.getReference("user/" + user ).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                        String avt = snapshot.child("avatar").getValue(String.class).toString();
+                        String ad = snapshot.child("hoTen").getValue(String.class).toString();
+                        String label = "<b> Thêm bàn mới <b>";
+                        String content = ad + " vừa thêm bàn "+ tableName;
+                        Calendar calendar = Calendar.getInstance();
+                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                        String currentDate = format.format(calendar.getTime());
+
+                        String _id = database.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                        NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
+
+                        database.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+
+                    }
+                });
 
             }
 

@@ -45,7 +45,7 @@ public class ListNhanVien extends AppCompatActivity {
 
         edtSearchEmployee = (EditText) findViewById(R.id.edt_search_employee);
 
-        adapterListEmployees = new ListEmployeesAdapter(this, R.layout.custom_item_employee, employees, idRes);
+        adapterListEmployees = new ListEmployeesAdapter(this, R.layout.custom_item_employee, employees, idRes, "ListNV");
         gv = (GridView) findViewById(R.id.gvNhanvien);
         gv.setAdapter(adapterListEmployees);
 

@@ -16,18 +16,19 @@ import com.bumptech.glide.Glide;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.sql.Wrapper;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
 public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
     private Context mContext;
-    private List<Object> listMessagesObject;
+    private List<Message> listMessagesObject;
     private String idRes;
     public static final int FROM_OTHER = 0;
     public static final int TO_OTHER = 1;
 
-    public ChatAdapter(Context context, List<Object> objects, String idRes) {
+    public ChatAdapter(Context context, List<Message> objects, String idRes) {
         mContext = context;
         listMessagesObject = objects;
         this.idRes = idRes;
@@ -67,12 +68,19 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 fromOtherViewHolder.message.setText(user.getMessage());
                 Glide.with(mContext).load(((messageFromOther) listMessagesObject.get(position)).getImg()).into(fromOtherViewHolder.img);
                 fromOtherViewHolder.name.setText(user.name);
-                fromOtherViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+                fromOtherViewHolder.time.setText(user.getDateTime());
+
+                fromOtherViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public boolean onLongClick(View view) {
-                        String id = ((messageFromOther) listMessagesObject.get(fromOtherViewHolder.getAbsoluteAdapterPosition())).id;
-                        ShowDialogDeleteMessage(id);
-                        return false;
+                    public void onClick(View view) {
+                        if(fromOtherViewHolder.time.getVisibility() == View.VISIBLE)
+                        {
+                            fromOtherViewHolder.time.setVisibility(View.INVISIBLE);
+                        }
+                        else
+                        {
+                            fromOtherViewHolder.time.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
                 break;
@@ -81,12 +89,28 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 ToOtherViewHolder toOtherViewHolder= (ToOtherViewHolder) holder;
                 toOtherViewHolder.message.setText(you.getMessage());
                 Glide.with(mContext).load(((messageToOther) listMessagesObject.get(position)).getImg()).into(toOtherViewHolder.img);
+                toOtherViewHolder.time.setText(you.getDateTime());
                 toOtherViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override
                     public boolean onLongClick(View view) {
+
                         String id = ((messageToOther) listMessagesObject.get(toOtherViewHolder.getAbsoluteAdapterPosition())).id;
                         ShowDialogDeleteMessage(id);
-                        return false;
+                        return true;
+                    }
+                });
+
+                toOtherViewHolder.itemView.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        if(toOtherViewHolder.time.getVisibility() == View.VISIBLE)
+                        {
+                            toOtherViewHolder.time.setVisibility(View.INVISIBLE);
+                        }
+                        else
+                        {
+                            toOtherViewHolder.time.setVisibility(View.VISIBLE);
+                        }
                     }
                 });
                 break;
@@ -102,25 +126,27 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
         private TextView message;
         private CircleImageView img;
         private TextView name;
+        private TextView time;
 
         public FromOtherViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.ac_txt_from_other);
             img = (CircleImageView) itemView.findViewById(R.id.ac_img_from_other);
             name = (TextView) itemView.findViewById(R.id.ac_txt_name);
-
-
+            time = (TextView) itemView.findViewById(R.id.time_msg);
         }
     }
 
     public class ToOtherViewHolder extends RecyclerView.ViewHolder {
         private TextView message;
         private CircleImageView img;
+        private TextView time;
 
         public ToOtherViewHolder(View itemView) {
             super(itemView);
             message = (TextView) itemView.findViewById(R.id.ac_txt_to_other);
             img = (CircleImageView) itemView.findViewById(R.id.ac_img_to_other);
+            time = (TextView) itemView.findViewById(R.id.time_msg);
         }
     }
 
@@ -132,6 +158,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
         Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
         Button btn_accept = (Button) dialog.findViewById(R.id.btn_accept);
+
 
         btn_cancel.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -157,51 +184,53 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
             return;
         }
 
+
+
         dbRefListMessage.setValue(null);
     }
 }
+class Message{
+    protected String id;
+    protected String message;
+    protected String img;
+    protected String time;
+    protected String date;
 
-class messageFromOther{
-    public String id;
+    public String getId(){return id;}
+    public String getDateTime()
+    {
+        return date + " " + time;
+    }
+    public String getDate(){return date;}
+    public String getTime() {return time;}
+    public String getMessage()
+    {
+        return message;
+    }
+    public String getImg()
+    {
+        return img;
+    }
+}
+
+class messageFromOther extends  Message{
     public String name;
-    public String message;
-    public String img;
-    messageFromOther(String id, String name, String msg, String img){
+    messageFromOther(String id, String name, String msg, String img,String date, String time){
         this.name = name;
         this.message = msg;
         this.img = img;
         this.id = id;
+        this.date =date;
+        this.time = time;
     }
-
-    public String getMessage()
-    {
-        return message;
-    }
-
-    public String getImg()
-    {
-        return img;
-    }
-
 }
 
-class messageToOther{
-    public String id;
-    public String message;
-    public String img;
-
-    messageToOther(String id, String msg, String img){
+class messageToOther extends  Message{
+    messageToOther(String id, String msg, String img,String date, String time){
         this.message = msg;
         this.img = img;
         this.id = id;
-    }
-    public String getMessage()
-    {
-        return message;
-    }
-
-    public String getImg()
-    {
-        return img;
+        this.date = date;
+        this.time = time;
     }
 }

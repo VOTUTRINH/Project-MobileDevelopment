@@ -92,7 +92,7 @@ public class Res_infor extends AppCompatActivity {
         progress_bar =(ProgressBar) findViewById(R.id.progress_bar);
         add_image1.setVisibility(View.INVISIBLE);
         btn_add_image.setVisibility(View.INVISIBLE);
-        if(role.equals(("KhachHang"))) {
+        if(!role.equals(("ChuQuan"))) {
             btn_edit.setVisibility(View.INVISIBLE);
             btn_submit.setVisibility(View.INVISIBLE);
         }
@@ -254,7 +254,7 @@ public class Res_infor extends AppCompatActivity {
                 public void onClick(DialogInterface dialog, int which) {
                     //if user pressed "yes", then he is allowed to exit from application
                     save();
-                    finish();
+                   // finish();
                 }
             });
             builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
@@ -291,11 +291,13 @@ public class Res_infor extends AppCompatActivity {
         return super.onContextItemSelected(item);
 
     }
-    public void save(){
+    private void save(){
         String name = edt_name.getText().toString();
         String address = edt_address.getText().toString();
         String description = edt_description.getText().toString();
-        load_image_avt(avt);
+        if(avt!=null){
+            load_image_avt(avt);
+        }
 
         if (name.isEmpty()) {
             Toast.makeText(Res_infor.this, "Tên quán không dược để trống", Toast.LENGTH_SHORT).show();

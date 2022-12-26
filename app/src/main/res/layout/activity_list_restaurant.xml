@@ -8,19 +8,39 @@
     android:fitsSystemWindows="true"
     android:orientation="vertical"
     >
-    <LinearLayout
-        android:background="@color/color_main"
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-        <de.hdodenhof.circleimageview.CircleImageView
-            android:id="@+id/profile"
-            android:layout_margin="10dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            app:civ_border_color="@color/white"/>
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@color/color_main"
+        >
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/bna_toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+            <TextView
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/quicksand_bold"
+                android:text="Ordering Food"
+                android:textSize="20sp"
+                android:textColor="@color/white"
+                />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile"
+                android:layout_margin="5dp"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                app:civ_border_color="@color/white"
+                android:layout_gravity="right"/>
+
+        </androidx.appcompat.widget.Toolbar>
+
+    </com.google.android.material.appbar.AppBarLayout>
 
 
-    </LinearLayout>
     <com.google.android.material.tabs.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"

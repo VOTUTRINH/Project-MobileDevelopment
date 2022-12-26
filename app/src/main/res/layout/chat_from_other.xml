@@ -17,6 +17,17 @@
         tools:srcCompat="@tools:sample/avatars" />
 
     <TextView
+        android:id="@+id/time_msg"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="15:34 20/07/2002"
+        android:textSize="10sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:visibility="invisible"/>
+
+    <TextView
         android:id="@+id/ac_txt_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

@@ -18,6 +18,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.oderingfood.models.NotificationItem;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -25,6 +26,8 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 
 public class ListTablesAdapter extends ArrayAdapter<Table> {
@@ -149,14 +152,42 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
                         for(DataSnapshot postSnapShot: snapshot.getChildren())
                         {
-                            if(postSnapShot.getKey().equals(name))
-                            {
-                                if(postSnapShot.child("TrangThai").getValue(String.class).equals("IsUsing"))
-                                {
-                                    Toast.makeText(context,"Không thể xóa bàn đang hoạt động",Toast.LENGTH_SHORT).show();
+                            if(postSnapShot.getKey().equals(name)) {
+                                if (postSnapShot.child("TrangThai").getValue(String.class).equals("IsUsing")) {
+                                    Toast.makeText(context, "Không thể xóa bàn đang hoạt động", Toast.LENGTH_SHORT).show();
                                     return;
                                 }
                                 mDatabase.child(name).removeValue();
+
+                                //------------notify
+
+                                database.getReference("user/" + user ).addListenerForSingleValueEvent(new ValueEventListener() {
+                                    @Override
+                                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                        String avt = snapshot.child("avatar").getValue(String.class).toString();
+                                        String ad = snapshot.child("hoTen").getValue(String.class).toString();
+                                        String label = "<b> Xoá bàn <b>";
+                                        String content = ad + " vừa xóa bàn "+ name;
+                                        Calendar calendar = Calendar.getInstance();
+                                        SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                        String currentDate = format.format(calendar.getTime());
+
+                                        String _id =database.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                                        NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
+
+                                        database.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
+                                    }
+
+                                    @Override
+                                    public void onCancelled(@NonNull DatabaseError error) {
+
+
+                                    }
+                                });
+
+
+
                             }
                         }
                     }
@@ -172,5 +203,4 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         });
 
     }
-
 }

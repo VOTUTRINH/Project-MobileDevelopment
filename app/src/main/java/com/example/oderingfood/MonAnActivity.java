@@ -40,6 +40,8 @@ public class MonAnActivity extends AppCompatActivity {
     Button btnOrder;
     FloatingActionButton addFood;
     String tablePath;
+    String user;
+    String idRes;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -49,14 +51,16 @@ public class MonAnActivity extends AppCompatActivity {
         addFood = (FloatingActionButton)findViewById(R.id.am_button_add_food);
 
         Bottomnavigation bottomnavigation = new Bottomnavigation();
-        String user= bottomnavigation.getUser();
-        String idRes = bottomnavigation.getIdRes();
+
 
         Bundle b = getIntent().getExtras();
 
-        if(b != null) {
+        if(b !=null){
+            user = b.getString("idUser");
+            idRes = b.getString("idRes");
             tablePath = b.getString("key");
         }
+
 
         adapter = new AdapterMonAn(this, GlobalVariables.menu);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
@@ -82,7 +86,6 @@ public class MonAnActivity extends AppCompatActivity {
                             Food food = postSnapShot.getValue(Food.class);
 
                             // Add food ordered to table
-
 
                     String urlImage;
                     try {
@@ -147,6 +150,10 @@ public class MonAnActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(MonAnActivity.this,AddFoodToMenu.class);
+                Bundle b = new Bundle();
+                b.putString("idRes", idRes);
+                b.putString("idUser", user);
+                intent.putExtras(b);
                 startActivity(intent);
             }
         });

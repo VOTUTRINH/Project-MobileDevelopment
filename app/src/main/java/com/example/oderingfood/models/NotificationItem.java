@@ -7,12 +7,14 @@ public class NotificationItem {
     String noticeLabel;
     String noticeContent;
     String timeNotice;
+    String id;
     public boolean isRead;
-    public NotificationItem(String img, String label, String content,String time){
+    public NotificationItem(String _id,String img, String label, String content,String time){
+        id =_id;
         noticeImg = img;
         noticeLabel = label;
         noticeContent = content;
-       timeNotice = time;
+        timeNotice = time;
         isRead = false;
     }
 
@@ -32,7 +34,6 @@ public class NotificationItem {
         return noticeContent;
     }
 
-
     public String getTimeString(){
         //todo tinh thoi gian tu time den hien tai
         return timeNotice;
@@ -48,5 +49,17 @@ public class NotificationItem {
 
     public void setTimeNotice(String timeNotice) {
         this.timeNotice = timeNotice;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setRead(boolean read) {
+        isRead = read;
     }
 }
