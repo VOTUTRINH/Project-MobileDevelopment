@@ -51,6 +51,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
+// Scan Qrcode
 
 public class ScanQRCode extends AppCompatActivity {
 
