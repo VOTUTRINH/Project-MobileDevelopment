@@ -80,22 +80,6 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<EmployeeSalary> {
 
         txttongLuong.setText("Tổng lương: " + tongLuong + " VNĐ");
 
-//        refNhanVien.addValueEventListener(new ValueEventListener() {
-//            @Override
-//            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                row.setOnClickListener(new View.OnClickListener() {
-//                    @Override
-//                    public void onClick(View view) {
-//
-//                    }
-//                });
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError error) {
-//
-//            }
-//        });
 
         row.setOnClickListener(new View.OnClickListener() {
             @Override
