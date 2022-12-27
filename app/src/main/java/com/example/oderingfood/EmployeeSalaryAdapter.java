@@ -26,6 +26,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Booking;
@@ -65,7 +66,7 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<EmployeeSalary> {
         TextView txttenCuaHang = (TextView) row.findViewById(R.id.tenNhaHang);
         TextView txtluongCoBan = (TextView) row.findViewById(R.id.luongCoBan);
         TextView txttongLuong = (TextView) row.findViewById(R.id.tongLuong);
-        LinearLayout itemLayout = (LinearLayout) row.findViewById(R.id.item_layout);
+        CardView itemLayout = (CardView) row.findViewById(R.id.item_layout);
 
 //        if(position % 2 == 1){
 //            itemLayout.setBackgroundColor(Color.parseColor("#F85F6A"));

@@ -292,12 +292,9 @@ public class ProfileUserActivity extends AppCompatActivity {
             }
         });
 
-
-
         btn_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(ProfileUserActivity.this);
                 builder.setCancelable(false);
                 builder.setMessage("Bạn có muốn đăng xuất ?");
