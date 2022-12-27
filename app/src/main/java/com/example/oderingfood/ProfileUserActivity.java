@@ -93,7 +93,7 @@ public class ProfileUserActivity extends AppCompatActivity {
         btn_cancel_edit = (Button) findViewById(R.id.btn_cancel);
         btn_confirm_edit = (Button) findViewById(R.id.btn_submit);
         btn_out =(Button) findViewById(R.id.btn_out);
-        adapter = new EmployeeSalaryAdapter(this,R.layout.item_nhanvien, dataList);
+        adapter = new EmployeeSalaryAdapter(this,R.layout.item_nhanvien, dataList, user);
         lv_danhsachluong.setAdapter(adapter);
         lv_danhsachluong.setScrollContainer(false);
 
@@ -139,22 +139,16 @@ public class ProfileUserActivity extends AppCompatActivity {
                     if(postSnapShot.child("NhanVien") != null)
                     {
                         if(postSnapShot.child("NhanVien").hasChild(user)){
+                            String idRes = postSnapShot.getKey();
                             String name = postSnapShot.child("TenQuan").getValue(String.class);
                             String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
                             Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
 
-                            EmployeeSalary employeeSalary = new EmployeeSalary(name, salary, tgLamViec);
+                            EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
                             dataList.add(employeeSalary);
-                            dataList.add(employeeSalary);
-                            dataList.add(employeeSalary);
-
-                            dataList.add(employeeSalary);
-                            dataList.add(employeeSalary);
-
                         }
                     }
                 }
-                Toast.makeText(ProfileUserActivity.this, String.valueOf(dataList.size()), Toast.LENGTH_SHORT).show();
                 if(dataList.size() > 0){
                     justifyListViewHeightBasedOnChildren(lv_danhsachluong);
                     txt_danhsachluong.setVisibility(View.VISIBLE);
