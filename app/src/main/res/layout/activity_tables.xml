@@ -30,7 +30,6 @@
         </androidx.viewpager2.widget.ViewPager2>
 
 
-
     </LinearLayout>
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/add_table_button"

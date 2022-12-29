@@ -13,6 +13,8 @@ public class Table implements Serializable {
     private String state;
     private int priority = 1000;
     private List<Food> order; // Su dung Pair: String la ten mon an, Interger la so luong ordered
+    private Boolean isbooked = false;
+    private List<Booking> bookings;
 
 
 
@@ -54,6 +56,7 @@ public class Table implements Serializable {
         this.name = name;
         state = "Empty";
         order = new ArrayList<Food>();
+        isbooked = false;
     }
     public Table(String name, int pri)
     {
@@ -68,5 +71,14 @@ public class Table implements Serializable {
         order.add(food);
     }
 
+    public Boolean getIsbooked() {
+        return isbooked;
+    }
 
+    public void Book() {
+        this.isbooked = true;
+    }
+    public void unBooked(){
+        this.isbooked = false;
+    }
 }

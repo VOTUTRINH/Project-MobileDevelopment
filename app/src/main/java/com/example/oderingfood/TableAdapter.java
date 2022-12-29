@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.graphics.Color;
+import android.provider.ContactsContract;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -13,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -21,6 +24,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Booking;
+import com.example.oderingfood.models.Food;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 
 import java.util.List;
 
@@ -29,9 +34,10 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 
 {
     List<Booking> dataList;
+    String role;
 
-    public TableAdapter(List<Booking> dataList){
-
+    public TableAdapter(List<Booking> dataList, String r){
+        role = r;
         this.dataList = dataList;
     }
 
@@ -61,13 +67,37 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
     public void onBindViewHolder(@NonNull TableAdapter.ViewHolder holder, int position) {
 
         holder.name.setText(dataList.get(position).getName());
-        holder.from.setText(dataList.get(position).getStartTime());
-        holder.to.setText(dataList.get(position).getEndTime());
-        holder.table.setText(dataList.get(position).getId());
+        holder.from.setText(dataList.get(position).getTimeStart());
+        holder.to.setText(dataList.get(position).getTimeEnd());
+        holder.table.setText("Bàn: " + dataList.get(position).getTableBook().first);
         holder.date.setText(dataList.get(position).getDate());
+        holder.phone.setText(dataList.get(position).getPhone());
+        if(dataList.get(position).isConfirm()){
+            holder.confirm.setText("Trạng thái: Đã nhận đặt bàn");
+            holder.confirm.setTextColor(Color.parseColor("#04b711"));
+
+        }
+        else{
+            holder.confirm.setText("Trạng thái: Chờ xác nhận.");
+            holder.confirm.setTextColor(Color.parseColor("#ff0000"));
+
+        }
+        List<Food> foods = dataList.get(position).getTableBook().second;
+        String foodLabel = "Món: ";
+        for(int i =0 ; i< foods.size(); i++){
+            if (i==0) {
+                foodLabel = foodLabel + foods.get(i).getName();
+
+            }
+            else { foodLabel = foodLabel + ", "+ foods.get(i).getName();}
+        }
+        holder.txtfood.setText(foodLabel);
         holder.calender.setImageResource(R.drawable.calender);
         holder.location.setImageResource(R.drawable.location);
         holder.user.setImageResource(R.drawable.user);
+        if(role.equals("KhachHang")){
+            holder.btnConfirm.setVisibility(View.GONE);
+        }
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {
@@ -86,8 +116,9 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 
     public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
 
-        TextView name,from,to,table,date;
+        TextView name,from,to,table,date ,phone, confirm, txtfood;
         ImageView calender,location,user;
+        Button btnConfirm;
         public ViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.txtName);
@@ -95,9 +126,14 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
             to = (TextView) view.findViewById(R.id.txtTo);
             table = (TextView) view.findViewById(R.id.txtTable);
             date = (TextView) view.findViewById(R.id.txtDate);
+            phone = (TextView) view.findViewById(R.id.txtPhone);
+            confirm = (TextView) view.findViewById(R.id.txt_confirm);
+            txtfood = (TextView) view.findViewById(R.id.txt_food);
+
             calender = (ImageView) view.findViewById(R.id.imgCalender);
             location = (ImageView) view.findViewById(R.id.imgLocation);
             user = (ImageView) view.findViewById(R.id.imgUser);
+            btnConfirm = (Button) view.findViewById(R.id.booking_btn_confirm);
             view.setOnCreateContextMenuListener(this);
 
         }

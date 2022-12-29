@@ -5,6 +5,7 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.NotificationItem;
 import com.example.oderingfood.models.Table;
 import com.google.firebase.database.DataSnapshot;
@@ -34,7 +36,6 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
     private  Context context;
     private List<Table> listTables;
 
-    Bottomnavigation bottomnavigation ;
     String user;
     String idRes;
 
@@ -43,9 +44,15 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         this.context = context;
         this.listTables = listTables;
 
-        bottomnavigation = (Bottomnavigation) context;
-        user= bottomnavigation.getUser();
-        idRes = bottomnavigation.getIdRes();
+
+        user= GlobalVariables.IDUser;
+        idRes = GlobalVariables.pathRestaurentID;
+    }
+
+    public void setItem(List<Table> ltb){
+        this.listTables.clear();
+        this.listTables.addAll(ltb);
+        this.notifyDataSetChanged();
     }
 
 
@@ -120,6 +127,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         });
         return (row);
     }
+
     private void ShowDialogAddTable(String name)
     {
         Dialog dialog = new Dialog(getContext());
@@ -202,5 +210,15 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
             }
         });
 
+    }
+
+    public void updateAdapter(List<Table> mDataList) {
+        this.listTables.clear();
+
+        this.listTables.addAll(mDataList);
+        Log.i("Size1", String.valueOf(mDataList.size()));
+        Log.i("Size2", String.valueOf(listTables.size()));
+
+        notifyDataSetChanged();
     }
 }

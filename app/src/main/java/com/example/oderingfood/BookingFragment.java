@@ -46,6 +46,10 @@ public class BookingFragment extends Fragment {
     TableAdapter adapter;
     Calendar timeStart = null;
     Calendar timeEnd = null;
+    String user;
+    String IDres;
+    String role;
+    Bundle b;
 //    String[]froms={"07:30","09:00","11:00","17:00","19:00"};
 //    String[]tos={"09:00","11:00","12:30","19:00","21:00"};
 //    String[]tables={"Bàn 1", "Bàn 2", "Bàn 3", "Bàn 4", "Bàn 5"};
@@ -58,7 +62,12 @@ public class BookingFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-
+        b=this.getArguments();
+        if (b!=null){
+            user = b.getString("user");
+            IDres = b.getString("restaurant");
+            role = b.getString("role");
+        }
         View bookingFragment = inflater.inflate(R.layout.fragment_tab2, container, false);
 
         // Getting reference of recyclerView
@@ -76,31 +85,59 @@ public class BookingFragment extends Fragment {
 //            Booking booking = new Booking(froms[i], tos[i], tables[i], dates[i], names[i]);
 //            dataList.add(booking);
 //        }
-        adapter = new TableAdapter(dataList);
+        adapter = new TableAdapter(dataList, role);
 
         // Setting Adapter to RecyclerView
         recyclerView1.setAdapter(adapter);
-
+        String pathR = "/restaurant/" + GlobalVariables.pathRestaurentID;
+        String pathU = "/user/" + user;
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference mDatabase;
+        DatabaseReference bookingDatabase = null;
+        switch (role)
+        {
+            case "KhachHang":
+                bookingDatabase = database.getReference(pathU + "/Bookings/" + IDres + "/");
+                break;
+            default:
+                bookingDatabase = database.getReference(pathR + "/Bookings/");
+                break;
+        }
 
-        mDatabase = database.getReference("/restaurant/xzxHmkiUMHVjqNu67Ewzsv2TQjr2/Booking");
-        mDatabase.addValueEventListener(new ValueEventListener() {
+        bookingDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                 dataList.clear();
-                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
-                    // Get data
-                    String StartTime = postSnapShot.child("StartTime").getValue(String.class);
-                    String EndTime = postSnapShot.child("EndTime").getValue(String.class);
-                    String ID = postSnapShot.child("ID").getValue(String.class);
-                    String Name = postSnapShot.child("Name").getValue(String.class);
-                    String Date = postSnapShot.child("Date").getValue(String.class);
+                for (DataSnapshot dateSnapShot : snapshot.getChildren()) {
+                    for (DataSnapshot postSnapShot : dateSnapShot.getChildren()) {
+                        // Get data
 
-                    Booking booking = new Booking(StartTime, EndTime, ID, Date, Name);
+                        String StartTime = postSnapShot.child("TimeS").getValue(String.class);
+                        String EndTime = postSnapShot.child("TimeE").getValue(String.class);
+                        String ID = postSnapShot.child("id").getValue(String.class);
+                        String Name = postSnapShot.child("Ten").getValue(String.class);
+                        String Date = postSnapShot.child("Date").getValue(String.class);
+                        String IdUser = postSnapShot.child("IdUser").getValue(String.class);
+                        String Phone = postSnapShot.child("Phone").getValue(String.class);
+                        Boolean isConfirm = postSnapShot.child("isConfirmed").getValue(Boolean.class);
+                        String table ="";
+                        Booking booking = new Booking(StartTime, EndTime, ID, Date, Name, Phone, IdUser, isConfirm);
 
-                    dataList.add(booking);
+                        for (DataSnapshot tableSnapShot : postSnapShot.child("order").getChildren()) {
+
+                            table = tableSnapShot.getKey();
+                            List<Food> foods = new ArrayList<>();
+                            for (DataSnapshot foodSnapShot : tableSnapShot.getChildren()) {
+                                Food food = foodSnapShot.getValue(Food.class);
+                                foods.add(food);
+                            }
+                            booking.addTableBook(table, foods);
+                        }
+
+
+
+                        dataList.add(booking);
+                    }
                 }
                 adapter.notifyDataSetChanged();
             }
