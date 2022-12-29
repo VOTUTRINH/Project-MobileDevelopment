@@ -33,7 +33,7 @@ public class TuyChon_Fragment extends Fragment {
     String role;
     CircleImageView avt_user;
     TextView nav_txt_name,nav_txt_sdt;
-    Button btn_res_infor,btn_voucher,btn_out;
+    Button btn_res_infor,btn_voucher,btn_out,menu;
 
     FirebaseDatabase database ;
     DatabaseReference myRef ;
@@ -54,6 +54,7 @@ public class TuyChon_Fragment extends Fragment {
         btn_res_infor =(Button) view.findViewById(R.id.btn_res_infor);
         btn_voucher =(Button) view.findViewById(R.id.btn_voucher);
         btn_out = (Button)  view.findViewById(R.id.btn_out);
+        menu = (Button)  view.findViewById(R.id.menu);
 
         database = FirebaseDatabase.getInstance();
         myRef = database.getReference("user/"+user);
@@ -83,7 +84,13 @@ public class TuyChon_Fragment extends Fragment {
                 startActivity(intent);
             }
         });
-
+        menu.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getContext(), TuyChon_Menu.class);
+                startActivity(intent);
+            }
+        });
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {

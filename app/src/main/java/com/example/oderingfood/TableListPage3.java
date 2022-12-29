@@ -53,6 +53,7 @@ public class TableListPage3 extends Fragment {
     String idRes;
 
     ListTablesAdapter tablesAdapter;
+
     public TableListPage3() {
         // Required empty public constructor
     }
@@ -90,6 +91,7 @@ public class TableListPage3 extends Fragment {
             tablesActivity = new TablesActivity();
         }catch (Exception e)
         {
+
         }
         bottomnavigation = (Bottomnavigation) getActivity();
         user= bottomnavigation.getUser();
@@ -108,6 +110,7 @@ public class TableListPage3 extends Fragment {
                 {
                     listTable.clear();
                 }
+
                 for(DataSnapshot postSnapShot: snapshot.getChildren())
                 {
                     String tenBan = postSnapShot.getKey();
