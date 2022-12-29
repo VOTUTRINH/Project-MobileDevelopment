@@ -1,190 +1,358 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="wrap_content"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".a2g18Activity"
-
+    android:layout_marginBottom="25dp"
     >
 
-    <TextView
-        android:id="@+id/afo_txtTitle"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_gravity="center"
-        android:gravity="center"
-        android:text="Chi tiết nhân viên"
-        android:textSize="23dp"
-        android:textStyle="bold"
-        android:textColor="@color/color_main"
-        android:layout_marginLeft="1dp"
-        android:layout_marginRight="1dp"
-        android:layout_marginTop="1dp"
-
-        android:fontFamily="@font/quicksand_bold"/>
-
-    <Button
-        android:id="@+id/afo_txtEdit"
-        android:layout_width="60dp"
-        android:layout_height="wrap_content"
-        android:textSize="10dp"
-        android:layout_marginRight="5dp"
-        android:text="Edit"
-        android:textColor="@color/white"
-        android:backgroundTint="@color/black"
-        android:layout_gravity="right"/>
-
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/afo_avatar"
-        android:layout_width="wrap_content"
-        android:layout_height="130dp"
-        android:src="@drawable/food"
-        tools:ignore="MissingClass" />
-
-
-
-    <TextView
-        android:id="@+id/afo_txtName"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Họ và tên: "
-        android:textSize="20dp"
-        android:layout_marginLeft="30dp"
-        android:textColor="@color/black"
-        android:layout_marginTop="20dp"
-        android:fontFamily="@font/quicksand_bold"/>
-
-
-
-    <TextView
-        android:id="@+id/afo_txtPhone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:fontFamily="@font/quicksand_bold"
-        android:layout_marginTop="10dp"
-        android:text="Số điện thoại: " />
-
-    <TextView
-        android:id="@+id/afo_txtEmail"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Giới tính: "
-        android:textSize="20dp"
-        android:fontFamily="@font/quicksand_bold"
-        android:textColor="@color/black"
-        />
-
-    <TextView
-        android:id="@+id/afo_txtAddress"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:textColor="@color/black"
-        android:textSize="20dp"
-        android:fontFamily="@font/quicksand_bold"
-        android:layout_marginTop="10dp"
-        android:text="Địa chỉ: " />
-
-    <TextView
-        android:id="@+id/afo_txtSalary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Ngày sinh: "
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/quicksand_bold"
-        />
-
-    <TextView
-        android:id="@+id/afo_txtSalaryPerHour"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Lương trên giờ: "
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/quicksand_bold"
-        />
-
-    <TextView
-        android:id="@+id/afo_txtTotalSalary"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="30dp"
-        android:layout_marginTop="10dp"
-        android:text="Tổng lương: "
-        android:textSize="20dp"
-        android:textColor="@color/black"
-        android:fontFamily="@font/quicksand_bold"
-        />
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_margin="15dp"
-        android:layout_marginTop="0dp">
-        <com.google.android.material.textfield.TextInputLayout
-            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:hint="Nhập số tiền muốn thanh toán"
+        android:layout_height="match_parent"
 
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/afo_txtTitle"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginLeft="1dp"
+            android:layout_marginTop="1dp"
+            android:layout_marginRight="1dp"
+            android:fontFamily="@font/quicksand_bold"
+            android:gravity="center"
+            android:text="Chi tiết nhân viên"
+            android:textColor="@color/color_main"
+            android:textSize="23dp"
+
+            android:textStyle="bold" />
+
+        <Button
+            android:id="@+id/afo_txtEdit"
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:layout_marginRight="5dp"
+            android:backgroundTint="@color/black"
+            android:text="Edit"
+            android:textColor="@color/white"
+            android:textSize="10dp" />
+
+        <LinearLayout
+            android:id="@+id/imgUser"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/grad"
+            android:layout_centerHorizontal="true"
             android:layout_marginTop="10dp"
-            app:endIconMode="clear_text"
-            app:helperTextEnabled="false"
-            app:helperTextTextColor="@android:color/holo_red_dark">
-            <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/df_salaryPerHour"
+            android:gravity="center_horizontal"
+            >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/afo_avatar"
+                android:layout_marginTop="35dp"
+                android:layout_width="130dp"
+                android:layout_height="130dp"
+                android:src="@drawable/food"
+                tools:ignore="MissingClass" />
+
+        </LinearLayout>
+
+
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="20dp"
+            android:layout_marginRight="30dp"
+            android:orientation="vertical">
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="25"
-                android:inputType="number"
-                />
-        </com.google.android.material.textfield.TextInputLayout>
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Họ và tên"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/afo_txtName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Kinh Thanh"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Số điện thoại"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/afo_txtPhone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="0123456789"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Giới tính"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/afo_txtEmail"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Nam"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Địa chỉ"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/afo_txtAddress"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="Thủ Đức, TPHCM, Việt Nam"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Ngày sinh"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/afo_txtSalary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="20/04/2002"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lương trên giờ"
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/afo_txtSalaryPerHour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text="25000"
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Tổng lương: "
+                    android:textColor="@color/headings"
+                    android:textSize="13sp" />
+
+                <TextView
+                    android:id="@+id/afo_txtTotalSalary"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="sans-serif-light"
+                    android:text=""
+                    android:textColor="#000000"
+                    android:textSize="18sp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="15dp"
+                    android:background="@color/grey" />
+
+            </LinearLayout>
+
+
+<!--            <TextView-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginLeft="30dp"-->
+<!--                android:layout_marginTop="10dp"-->
+<!--                android:fontFamily="@font/quicksand_bold"-->
+<!--                android:textColor="@color/black"-->
+<!--                android:textSize="20dp" />-->
+
+<!--            <LinearLayout-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_margin="15dp"-->
+<!--                android:layout_marginTop="0dp"-->
+<!--                android:orientation="horizontal">-->
+
+<!--                <com.google.android.material.textfield.TextInputLayout-->
+<!--                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_marginTop="10dp"-->
+
+<!--                    android:hint="Nhập số tiền muốn thanh toán"-->
+<!--                    app:endIconMode="clear_text"-->
+<!--                    app:helperTextEnabled="false"-->
+<!--                    app:helperTextTextColor="@android:color/holo_red_dark">-->
+
+<!--                    <com.google.android.material.textfield.TextInputEditText-->
+<!--                        android:id="@+id/edt_soTienThanhToan"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:inputType="number"-->
+<!--                        android:maxLength="25" />-->
+<!--                </com.google.android.material.textfield.TextInputLayout>-->
+<!--            </LinearLayout>-->
+
+            <android.widget.Button
+                android:id="@+id/afo_btnThanhToan"
+                android:layout_width="match_parent"
+                android:layout_height="43dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="15dp"
+                android:layout_marginRight="15dp"
+                android:background="@drawable/round_button"
+                android:padding="5dp"
+                android:text="Thanh toán tiền lương"
+                android:textColor="@color/white" />
+            <!--    <TextView-->
+            <!--        android:id="@+id/afo_txtDebt"-->
+            <!--        android:layout_width="match_parent"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:layout_marginLeft="70dp"-->
+            <!--        android:layout_marginTop="10dp"-->
+            <!--        android:fontFamily="@font/quicksand_bold"-->
+            <!--        android:text="Tổng tiền lương: "-->
+            <!--        android:textColor="#f50057"-->
+            <!--        android:textSize="25dp" />-->
+
+            <!--    <Button-->
+            <!--        android:id="@+id/button2"-->
+            <!--        android:layout_width="wrap_content"-->
+            <!--        android:layout_height="wrap_content"-->
+            <!--        android:layout_gravity="center"-->
+            <!--        android:layout_marginTop="10dp"-->
+            <!--        android:textColor="@color/black"-->
+
+            <!--        android:backgroundTint="#f48fb1"-->
+            <!--        android:text="Thanh toán"-->
+            <!--        android:fontFamily="@font/quicksand_bold"/>-->
+        </LinearLayout>
     </LinearLayout>
-    <android.widget.Button
-        android:id="@+id/afo_btnThanhToan"
-        android:layout_width="match_parent"
-        android:layout_height="43dp"
-        android:layout_gravity="center"
-        android:background="@drawable/round_button"
-        android:padding="5dp"
-        android:layout_marginRight="15dp"
-        android:layout_marginLeft="15dp"
-        android:layout_marginTop="10dp"
-        android:text="Thanh toán"
-
-        android:textColor="@color/white" />
-    <!--    <TextView-->
-    <!--        android:id="@+id/afo_txtDebt"-->
-    <!--        android:layout_width="match_parent"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_marginLeft="70dp"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:fontFamily="@font/quicksand_bold"-->
-    <!--        android:text="Tổng tiền lương: "-->
-    <!--        android:textColor="#f50057"-->
-    <!--        android:textSize="25dp" />-->
-
-    <!--    <Button-->
-    <!--        android:id="@+id/button2"-->
-    <!--        android:layout_width="wrap_content"-->
-    <!--        android:layout_height="wrap_content"-->
-    <!--        android:layout_gravity="center"-->
-    <!--        android:layout_marginTop="10dp"-->
-    <!--        android:textColor="@color/black"-->
-
-    <!--        android:backgroundTint="#f48fb1"-->
-    <!--        android:text="Thanh toán"-->
-    <!--        android:fontFamily="@font/quicksand_bold"/>-->
-</LinearLayout>
+</ScrollView>
