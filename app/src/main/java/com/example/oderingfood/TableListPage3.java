@@ -137,6 +137,9 @@ public class TableListPage3 extends Fragment {
                         String tenBan = postSnapShot.getKey();
                         String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
                         Log.i("Date", date);
+                        if(isBooking){
+                            trangThai = "Empty";
+                        }
                         if (trangThai.equals("Empty")) {
                             boolean canBook = true;
                             if (postSnapShot.hasChild("Bookings")) {
@@ -215,6 +218,7 @@ public class TableListPage3 extends Fragment {
                     b.putString("key", listTable.get(i).getName()); //Your id
                     intent.putExtras(b); //Put your id to your next Intent
                     context.startActivity(intent);
+
                 }
             });
 
@@ -228,9 +232,4 @@ public class TableListPage3 extends Fragment {
         this.date = date;
     }
 
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-
-    }
 }

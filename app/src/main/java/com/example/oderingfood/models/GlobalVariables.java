@@ -32,6 +32,7 @@ public class GlobalVariables {
         LocalTime t1 = LocalTime.parse(s1);
         LocalTime t2 = LocalTime.parse(s2);
         LocalTime v1 = LocalTime.parse(x1);
+        v1 = v1.minusMinutes(30);
         LocalTime v2 = LocalTime.parse(x2);
         Log.i("Time", t1.toString());
         Log.i("Time", t2.toString());

@@ -1,11 +1,14 @@
 package com.example.oderingfood;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.graphics.Color;
 import android.provider.ContactsContract;
+import android.text.Editable;
 import android.view.ContextMenu;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -19,6 +22,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -27,6 +31,7 @@ import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.common.util.concurrent.AbstractScheduledService;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -40,11 +45,18 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 {
     List<Booking> dataList;
     String role;
+    Context context;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
+    String idRes;
+    String user;
 
 
-    public TableAdapter(List<Booking> dataList, String r){
-        role = r;
+    public TableAdapter(Context ct,List<Booking> dataList, String r, String idRes, String user){
+        this.role = r;
         this.dataList = dataList;
+        this.context = ct;
+        this.idRes = idRes;
+        this.user = user;
     }
 
     private int position;
@@ -70,7 +82,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
     }
 
     @Override
-    public void onBindViewHolder(@NonNull TableAdapter.ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull TableAdapter.ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         setPosition(position);
         holder.name.setText("Tên: " + dataList.get(position).getName());
         holder.from.setText(dataList.get(position).getTimeStart());
@@ -81,6 +93,9 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
         if(dataList.get(position).isConfirm()){
             holder.confirm.setText("Trạng thái: Đã nhận đặt bàn");
             holder.confirm.setTextColor(Color.parseColor("#04b711"));
+            holder.btnConfirm.setText("Đã duyệt");
+            holder.btnConfirm.setBackgroundColor(Color.parseColor("#af0076"));
+            holder.btnConfirm.setClickable(false);
 
         }
         else{
@@ -92,10 +107,10 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
         String foodLabel = "Món: ";
         for(int i =0 ; i< foods.size(); i++){
             if (i==0) {
-                foodLabel = foodLabel + foods.get(i).getName();
+                foodLabel = foodLabel + foods.get(i).getName()+ " x" +foods.get(i).getQuantity();
 
             }
-            else { foodLabel = foodLabel + ", "+ foods.get(i).getName();}
+            else { foodLabel = foodLabel + ", "+ foods.get(i).getName() + " x" +foods.get(i).getQuantity();}
         }
         holder.txtfood.setText(foodLabel);
         holder.calender.setImageResource(R.drawable.calender);
@@ -140,17 +155,19 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
                 holder.btnConfirm.setText("Đã duyệt");
                 holder.btnConfirm.setBackgroundColor(Color.parseColor("#af0076"));
                 holder.btnConfirm.setClickable(false);
+                // thong bao chu quan da duyet booking abc ...
+                //todo
+                //
             }
         });
 
-
-        holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
+        holder.btnCancel.setOnClickListener(new View.OnClickListener() {
             @Override
-            public boolean onLongClick(View v) {
-                setPosition(holder.getPosition());
-                return false;
+            public void onClick(View v) {
+                ShowDialogConfirm(position);
             }
         });
+
 
     }
 
@@ -160,11 +177,12 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnCreateContextMenuListener{
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
-        TextView name,from,to,table,date ,phone, confirm, txtfood;
-        ImageView calender,location,user;
-        Button btnConfirm;
+        TextView name, from, to, table, date, phone, confirm, txtfood;
+        ImageView calender, location, user;
+        Button btnConfirm, btnCancel;
+
         public ViewHolder(View view) {
             super(view);
             name = (TextView) view.findViewById(R.id.txtName);
@@ -180,18 +198,78 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
             location = (ImageView) view.findViewById(R.id.imgLocation);
             user = (ImageView) view.findViewById(R.id.imgUser);
             btnConfirm = (Button) view.findViewById(R.id.booking_btn_confirm);
-            view.setOnCreateContextMenuListener(this);
+            btnCancel = (Button) view.findViewById(R.id.booking_btn_cancel);
+
 
         }
 
 
-        @Override
-        public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-            menu.add(getAdapterPosition(), R.id.menu_edit_item, 0, "Sửa/ Thêm");
-            menu.add(getAdapterPosition(), R.id.menu_delete_item, 1, "Xóa");
+    }
 
+    public void ShowDialogConfirm(int position) {
+        Dialog dialog = new Dialog(context);
+        dialog.setContentView(R.layout.confirm_delete_booking);
+        dialog.show();
+
+        TextView txt_confirm = (TextView) dialog.findViewById(R.id.txt_confirm);
+        Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        Button btn_accept = (Button) dialog.findViewById(R.id.btn_accept);
+        EditText reason = (EditText) dialog.findViewById(R.id.booking_txt_reason_cancel);
+
+
+        if (dataList.get(position).isConfirm()){
+            txt_confirm.setText("Đơn đặt này đã được nhà hàng xác nhận, bạn có muốn hủy đơn hàng.");
         }
+        else{
+            txt_confirm.setVisibility(View.GONE);
+        }
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String re = reason.getText().toString();
+                if(re.matches("") ){
+                    Toast.makeText(TableAdapter.this.getContext(), "Không để trống lý do.", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    deleteBooking(position, re);
+                    dialog.dismiss();
+                }
+            }
+        });
+
+    }
+    public void deleteBooking(int pos, String reason){
+        String pathR = "/restaurant/" + idRes;
+        // bien user la nguoi thuc hien xoa, co the la khach hang hoac chu
+        String table = dataList.get(pos).getTableBook().first;
+        String date = dataList.get(pos).getDate();
+        String ID = dataList.get(pos).getId();
+        String idUser = dataList.get(pos).getIdUser();
+        DatabaseReference res = database.getReference(pathR);
+        String pathU ="/user/" + idUser;
+
+        DatabaseReference bookingDatabase = database.getReference(pathR + "/Bookings");
+        bookingDatabase.child(date).child(ID).setValue(null);
+        DatabaseReference tableDatabase = database.getReference(pathR + "/BanAn");
+        tableDatabase.child(table).child("Bookings").child(date).child(ID).setValue(null);
+        DatabaseReference userBookingDatabase = database.getReference(pathU + "Bookings");
+        userBookingDatabase.child(idRes).child(date).child(ID).setValue(null);
+        // thong bao ly do. User (hoac chu quan) da huy booking vi ly do .....
+        //todo
+
+        //
 
 
+    }
+
+    public Context getContext() {
+        return context;
     }
 }

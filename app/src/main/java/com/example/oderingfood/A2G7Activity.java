@@ -20,12 +20,12 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
 public class A2G7Activity extends Activity {
     ListView listView;
-    Button btnFinish;
     List<Food> dataList = new ArrayList<>();
     FoodAdapter foodAdapter;
     Button thanhtoan;
@@ -34,7 +34,8 @@ public class A2G7Activity extends Activity {
     String tablePath;
     FirebaseDatabase database;
     double total1 = 0;
-    int currentIndex = -1;
+    double doanhThu = 0;
+    boolean capNhapDoanhThu = true;
 
 
 
@@ -165,7 +166,7 @@ public class A2G7Activity extends Activity {
 
     public void thanhToan(){
         String pathR = "/restaurant/" + GlobalVariables.pathRestaurentID;
-
+        DatabaseReference resDatabase = database.getReference(pathR);
         DatabaseReference menuDatabase = database.getReference(pathR + "/Menu");
         DatabaseReference tableDatabase = database.getReference(pathR + "/BanAn");
         menuDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -227,6 +228,23 @@ public class A2G7Activity extends Activity {
             }
         });
 
+        resDatabase.addValueEventListener(new ValueEventListener() {
+                                                       @Override
+                                                       public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                                               doanhThu = snapshot.child("DoanhThu").getValue(Double.class);
+                                                               doanhThu = doanhThu + total1;
+                                                               if(capNhapDoanhThu) {
+                                                                   snapshot.getRef().child("DoanhThu").setValue(doanhThu);
+                                                                   capNhapDoanhThu = false;
+                                                               }
+                                                       }
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+                                                   });
+
         mDatabase.child("Priority").setValue(null);
         mDatabase.child("Order").setValue(null);
         mDatabase.child("TrangThai").setValue("Empty", new DatabaseReference.CompletionListener() {
@@ -238,104 +256,5 @@ public class A2G7Activity extends Activity {
         });
     }
 
-//
-//    @Override
-//    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu_content, menu);
-//
-//        super.onCreateContextMenu(menu, v, menuInfo);
-//    }
-//
-//    @Override
-//    public boolean onContextItemSelected(MenuItem item) {
-//        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
-//        int index = info.position;
-//
-//        if (item.getItemId() == R.id.menu_edit_item) {
-//            this.currentIndex = index;
-//            showDialogAdd();
-//            return true;
-//        }
-//        if (item.getItemId() == R.id.menu_delete_item) {
-//            dataList.remove(index);
-//            foodAdapter.notifyDataSetChanged();
-//
-//            return true;
-//        }
-//
-//        return super.onContextItemSelected(item);
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        MenuInflater inflater = getMenuInflater();
-//        inflater.inflate(R.menu.menu, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onOptionsItemSelected(MenuItem item) {
-//        // Handle item selection
-//        if (item.getItemId() == R.id.menu_add_new_food) {
-//
-//            showDialogAdd();
-//            return true;
-//        }
-//        if (item.getItemId() == R.id.menu_exit) {
-//
-//            finish();
-//            return true;
-//        }
-//
-//        return super.onOptionsItemSelected(item);
-//
-//    }
-//
-//
-//    private void showDialogAdd() {
-//        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-//
-//        LayoutInflater inflater = getLayoutInflater();
-//        View view = inflater.inflate(R.layout.dialog_food, null);
-//
-//        final EditText edName = view.findViewById(R.id.df_name);
-//        final EditText edPrice = view.findViewById(R.id.df_price);
-//        final EditText edQuantity = view.findViewById(R.id.df_quantity);
-//        if(currentIndex >= 0) {
-//            edName.setText(dataList.get(currentIndex).getName());
-//            edPrice.setText(String.valueOf(dataList.get(currentIndex).getPrice()));
-//            edQuantity.setText(String.valueOf(dataList.get(currentIndex).getQuantity()));
-//        }
-//
-//        builder.setView(view);
-//        builder.setTitle("Add/Update Item")
-//                .setPositiveButton("Save Item", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//                        String name = edName.getText().toString();
-//                        float price = Float.parseFloat(edPrice.getText().toString());
-//                        int quantity = Integer.parseInt(edQuantity.getText().toString());
-//
-//                        if(currentIndex >= 0) {
-//                            dataList.get(currentIndex).setName(name);
-//                            dataList.get(currentIndex).setPrice(price);
-//                            dataList.get(currentIndex).setQuantity(quantity);
-//                            currentIndex = -1;
-//                        } else {
-//                            Food food = new Food(R.drawable.food01, name, price, quantity, 2);
-//                            dataList.add(food);
-//                        }
-//
-//                        foodAdapter.notifyDataSetChanged();
-//                    }
-//                }).setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-//                    @Override
-//                    public void onClick(DialogInterface dialogInterface, int i) {
-//
-//                    }
-//                });
-//
-//        builder.show();
-//    }
+
 }

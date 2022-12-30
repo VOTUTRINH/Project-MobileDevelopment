@@ -170,9 +170,12 @@ public class MonAnActivity extends AppCompatActivity {
                         userBookingDatabase.child(id).child("order").child(tablePath).setValue(data, new DatabaseReference.CompletionListener() {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                                Toast.makeText(MonAnActivity.this, getString(R.string.datmonthanhcong), Toast.LENGTH_SHORT).show();
+                                Toast.makeText(MonAnActivity.this, "Booking thành công.", Toast.LENGTH_SHORT).show();
                             }
                         });
+                        // notice user đã đặt bàn lúc ...
+                        //TODO
+                        //
                         finish();
 
                     } else {

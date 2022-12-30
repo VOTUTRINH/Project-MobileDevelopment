@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="320dp"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@color/white"
+    android:padding="15dp">
+
+    <TextView
+        android:id="@+id/txt_booking_cancel_title"
+        android:layout_width = "match_parent"
+        android:layout_height="wrap_content"
+        android:text="Hủy đặt bàn"
+        android:gravity="center"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#FF0000"/>
+    <com.google.android.material.textfield.TextInputLayout
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Lý do hủy"
+        app:startIconDrawable="@drawable/ic_baseline_edit_note_24"
+        app:helperText="Required*"
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft = "10dp"
+        android:layout_marginRight = "10dp"
+        android:layout_marginBottom="10dp"
+
+        app:endIconMode="clear_text"
+        app:helperTextEnabled="false"
+        app:helperTextTextColor="@android:color/holo_red_dark">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/booking_txt_reason_cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:maxLength="25"
+
+            />
+    </com.google.android.material.textfield.TextInputLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_margin="15dp">
+        <TextView
+            android:id="@+id/txt_confirm"
+            android:layout_width = "match_parent"
+            android:layout_height="wrap_content"
+            android:text="Nhà hàng đã xác nhận đơn này, bạn thực sự muốn hủy?"
+            android:gravity="center"
+            android:textSize="15sp"
+            android:textStyle="bold"
+            android:textColor="#FF0000"/>
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:orientation="horizontal"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center">
+        <android.widget.Button
+            android:id="@+id/btn_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hủy"
+            android:background = "@drawable/round_button"
+            android:backgroundTint = "#50dbcf"
+            android:textColor = "#ffffff"
+            android:layout_marginRight="30dp"/>
+
+        <android.widget.Button
+            android:id="@+id/btn_accept"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Đồng ý"
+            android:background = "@drawable/round_button"
+            android:textColor = "#ffffff"
+            android:layout_marginLeft="30dp"/>
+    </LinearLayout>
+
+
+</LinearLayout>

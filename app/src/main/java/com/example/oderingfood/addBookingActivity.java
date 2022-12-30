@@ -26,7 +26,9 @@ import com.google.android.material.textfield.TextInputEditText;
 import java.sql.Time;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -76,19 +78,29 @@ public class addBookingActivity extends AppCompatActivity {
                 String date = edt_date.getText().toString();
                 String timeStart = edt_timeStart.getText().toString();
                 String timeEnd = edt_timeEnd.getText().toString();
+                DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
+                LocalDate d1 = LocalDate.parse(date, formatter);
+
+                LocalTime t1 = LocalTime.parse(timeStart);
+                LocalTime t2 = LocalTime.parse(timeEnd);
+                t2 = t2.minusMinutes(30);
                 if (ten.matches("") || phone.matches("")) {
                     Toast.makeText(addBookingActivity.this, "Không để trống các trường thông tin.", Toast.LENGTH_SHORT).show();
-                    try {
-                        Date d1 = new SimpleDateFormat("dd/MM/yyyy").parse(date);
-                        LocalTime t1 = LocalTime.parse(timeStart);
-                        LocalTime t2 = LocalTime.parse(timeEnd);
 
-                    } catch (ParseException e) {
-                        Log.e("===============================", "err: " + e);
+                }
+                    else if (d1.compareTo(LocalDate.now()) < 0) {
+                        Toast.makeText(addBookingActivity.this, "Ngày đặt phải từ hôm nay.", Toast.LENGTH_SHORT).show();
+                    } else if (d1.compareTo(LocalDate.now()) == 0 && t1.minusMinutes(120).compareTo(LocalTime.now()) <= 0) {
+                            Toast.makeText(addBookingActivity.this, "Thời gian bắt đầu phải sau 2 tiếng từ khi đặt bàn.", Toast.LENGTH_SHORT).show();
+
                     }
+                    else if (t1.compareTo(t2) >= 0) {
+                    Toast.makeText(addBookingActivity.this, "Thời gian kết thức phải lớn hơn thời gian bắt đầu ít nhất 30 phút.", Toast.LENGTH_SHORT).show();
 
-                } else {
+
+                }
+                else {
                     Intent intent = new Intent(addBookingActivity.this, activityBookingChooseTable.class);
                     Bundle b = new Bundle();
                     b.putBoolean("isBooking", true);
