@@ -172,6 +172,7 @@ public class EmployeeManageActivity extends Fragment {
     }
 
 
+
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View employeeManagerFragment = inflater.inflate(R.layout.activity_employee_manage, container, false);

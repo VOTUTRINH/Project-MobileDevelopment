@@ -22,6 +22,14 @@
             android:name=".activityBookingChooseTable"
             android:exported="false" />
         <activity
+            android:name=".TuyChon_Menu"
+            android:exported="false">
+            <meta-data
+                android:name="android.app.lib_name"
+                android:value="" />
+        </activity>
+
+        <activity
             android:name=".DetailWorkTimeActivity"
             android:exported="false">
             <meta-data

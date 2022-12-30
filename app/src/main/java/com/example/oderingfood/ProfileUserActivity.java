@@ -2,20 +2,25 @@ package com.example.oderingfood;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ActionBar;
+import android.app.DatePickerDialog;
 import android.content.ContentResolver;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -43,7 +48,9 @@ import com.google.firebase.storage.UploadTask;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -93,7 +100,7 @@ public class ProfileUserActivity extends AppCompatActivity {
         btn_cancel_edit = (Button) findViewById(R.id.btn_cancel);
         btn_confirm_edit = (Button) findViewById(R.id.btn_submit);
         btn_out =(Button) findViewById(R.id.btn_out);
-        adapter = new EmployeeSalaryAdapter(this,R.layout.item_nhanvien, dataList);
+        adapter = new EmployeeSalaryAdapter(this,R.layout.item_nhanvien, dataList, user);
         lv_danhsachluong.setAdapter(adapter);
         lv_danhsachluong.setScrollContainer(false);
 
@@ -109,6 +116,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                 String sex = snapshot.child("gioiTinh").getValue(String.class);
                 String address = snapshot.child("diaChi").getValue(String.class);
                 String birthday = snapshot.child("ngaySinh").getValue(String.class);
+                birthday = birthday.replaceAll("/","-");
                 if(!oldAvatar.equals(avatar)){
                     oldAvatar = avatar;
                     Glide.with(ProfileUserActivity.this).load(avatar).into(img_avatar);
@@ -118,7 +126,6 @@ public class ProfileUserActivity extends AppCompatActivity {
                 edt_sex.setText(sex);
                 edt_address.setText(address);
                 edt_birthday.setText(birthday);
-
             }
 
             @Override
@@ -139,22 +146,17 @@ public class ProfileUserActivity extends AppCompatActivity {
                     if(postSnapShot.child("NhanVien") != null)
                     {
                         if(postSnapShot.child("NhanVien").hasChild(user)){
+                            String idRes = postSnapShot.getKey();
                             String name = postSnapShot.child("TenQuan").getValue(String.class);
                             String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
                             Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
 
-                            EmployeeSalary employeeSalary = new EmployeeSalary(name, salary, tgLamViec);
+                            EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
                             dataList.add(employeeSalary);
                             dataList.add(employeeSalary);
-                            dataList.add(employeeSalary);
-
-                            dataList.add(employeeSalary);
-                            dataList.add(employeeSalary);
-
                         }
                     }
                 }
-                Toast.makeText(ProfileUserActivity.this, String.valueOf(dataList.size()), Toast.LENGTH_SHORT).show();
                 if(dataList.size() > 0){
                     justifyListViewHeightBasedOnChildren(lv_danhsachluong);
                     txt_danhsachluong.setVisibility(View.VISIBLE);
@@ -191,7 +193,6 @@ public class ProfileUserActivity extends AppCompatActivity {
                 edt_phone.setInputType(InputType.TYPE_CLASS_TEXT);
                 edt_sex.setInputType(InputType.TYPE_CLASS_TEXT);
                 edt_address.setInputType(InputType.TYPE_CLASS_TEXT);
-                edt_birthday.setInputType(InputType.TYPE_CLASS_TEXT);
 
                 lv_danhsachluong.setVisibility(View.INVISIBLE);
 
@@ -298,12 +299,9 @@ public class ProfileUserActivity extends AppCompatActivity {
             }
         });
 
-
-
         btn_out.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(ProfileUserActivity.this);
                 builder.setCancelable(false);
                 builder.setMessage("Bạn có muốn đăng xuất ?");
@@ -331,6 +329,31 @@ public class ProfileUserActivity extends AppCompatActivity {
                 alert.show();
 
 
+            }
+        });
+
+        edt_birthday.setOnClickListener(new View.OnClickListener() {
+            @RequiresApi(api = Build.VERSION_CODES.N)
+            @Override
+            public void onClick(View view) {
+                if(!isEditing)
+                    return;
+                Calendar calender = Calendar.getInstance();
+                int year = calender.get(calender.YEAR);
+                int month = calender.get(calender.MONTH);
+                int day = calender.get(calender.DATE);
+
+                DatePickerDialog datePickerDialog = new DatePickerDialog(ProfileUserActivity.this, new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
+                        calender.set(i, i1, i2);
+                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
+                        String newDate = simpleDateFormat.format(calender.getTime());
+
+                        edt_birthday.setText(newDate);
+                    }
+                }, year, month, day);
+                datePickerDialog.show();
             }
         });
     }

@@ -1,31 +1,36 @@
 package com.example.oderingfood;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
-import com.example.oderingfood.models.Booking;
-import com.example.oderingfood.models.DetailEmployee;
+import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import de.hdodenhof.circleimageview.CircleImageView;
 
 
 public class a2g18Activity extends Activity {
-    Activity activity;
-    Context context;
     private Button buttonOpenDialog;
     private TextView txtName;
     private TextView txtID;
@@ -36,19 +41,18 @@ public class a2g18Activity extends Activity {
     private TextView txtSalaryPerHour;
     private TextView txtTotalSalary;
     private CircleImageView txtAvatar;
-    private EditText edtSalaryPerHour;
+    private TextView txtSotienThanhtoan;
     private Button btnThanhToan;
-    private String salaryTemp;
-    private TextView txtDebt;
-    //    private EditText editTextFullName;
-//    private EditText editTextID;
-//    private EditText editTextPhone;
-//    private EditText editTextEmail;
-//    private EditText editTextAddress;
-//    private EditText editTextSalary;
+    TextView txt_countdowntime;
     String idUser;
     String idRes;
 
+    int maxTimeWaiting = 60;
+    int countDownTime;
+
+    Long soTienThanhToan = Long.valueOf(0);
+    FirebaseDatabase database;
+    private FirebaseAuth auth;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,9 +74,9 @@ public class a2g18Activity extends Activity {
         txtAvatar = this.findViewById(R.id.afo_avatar);
         txtSalaryPerHour = this.findViewById(R.id.afo_txtSalaryPerHour);
         txtTotalSalary = this.findViewById(R.id.afo_txtTotalSalary);
-        edtSalaryPerHour = this.findViewById(R.id.df_salaryPerHour);
         btnThanhToan = this.findViewById(R.id.afo_btnThanhToan);
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
+
+        database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
         DatabaseReference mDatabaseUser;
         mDatabaseUser = database.getReference("/user/" + idUser);
@@ -80,30 +84,19 @@ public class a2g18Activity extends Activity {
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                if(soTienThanhToan <=0){
+                    ToastWithMessage("Không nợ tiền nhân viên");
+                    return;
+                }
 
-                double salary = Double.parseDouble(salaryTemp) - Double.parseDouble(edtSalaryPerHour.getText().toString());
+                Map<String, Object> objThanhToan = new HashMap<String, Object>();
+                objThanhToan.put("ChuXacNhan", true);
+                objThanhToan.put("NhanVienXacNhan", false);
+                objThanhToan.put("SoTienThanhToan",String.valueOf(soTienThanhToan));
 
-                txtTotalSalary.setText(String.valueOf(salary));
-                mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mDatabase.child("ThanhToan").setValue(objThanhToan);
 
-//                    mDatabase.child("HoTen").setValue(fullName);
-////                    mDatabase.child("id").setValue(id);
-//                    mDatabase.child("Sdt").setValue(Long.parseLong(phone));
-//                    mDatabase.child("GioiTinh").setValue(email);
-//                    mDatabase.child("DiaChi").setValue(address);
-                        mDatabase.child("TongLuong").setValue(String.valueOf(salary));
-
-                        // Update count table
-
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
-
-                    }
-                });
+                ShowDialogWaitEmployeeConfirm(soTienThanhToan);
             }
         });
 
@@ -120,8 +113,7 @@ public class a2g18Activity extends Activity {
                 String email = snapshot.child("gioiTinh").getValue(String.class);
                 String address = snapshot.child("diaChi").getValue(String.class);
                 String salary = snapshot.child("ngaySinh").getValue(String.class);
-//                String salaryPerHour = snapshot.child("luongTheoGio").getValue(String.class);
-//                String totalSalary = snapshot.child("tongLuong").getValue(String.class);
+
                 String urlImage;
                 try {
                     urlImage = snapshot.child("avatar").getValue(String.class).toString();
@@ -135,8 +127,6 @@ public class a2g18Activity extends Activity {
                 txtEmail.setText(email);
                 txtAddress.setText(address);
                 txtSalary.setText(salary);
-
-
             }
 
             @Override
@@ -147,17 +137,14 @@ public class a2g18Activity extends Activity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 // Get data
-
                 String salaryPerHour = snapshot.child("Luong").getValue(String.class);
-                String totalSalary = snapshot.child("TongLuong").getValue(String.class);
+                Long tgLamViec = snapshot.child("ThoiGianLamViec").getValue(Long.class);
+                Long totalSalary = tgLamViec * Long.parseLong(salaryPerHour);
 
-
-
-                txtSalaryPerHour.setText(String.valueOf(salaryPerHour));
-                txtTotalSalary.setText(String.valueOf(totalSalary));
-                salaryTemp = totalSalary;
+                soTienThanhToan = totalSalary;
+                txtSalaryPerHour.setText(salaryPerHour + " VNĐ/h");
+                txtTotalSalary.setText(String.valueOf(totalSalary) + " VNĐ");
             }
 
             @Override
@@ -176,44 +163,91 @@ public class a2g18Activity extends Activity {
         });
     }
 
+    // Show dialog to add table
+    private void ShowDialogWaitEmployeeConfirm(Long sotien)
+    {
+        Dialog dialog = new Dialog(this);
+        dialog.setContentView(R.layout.cho_nhanvien_xacnhan_layout);
+        dialog.show();
+
+        Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        txt_countdowntime = (TextView) dialog.findViewById(R.id.txt_countdowntime);
+        txtSotienThanhtoan = (TextView) dialog.findViewById(R.id.sotien);
+        txtSotienThanhtoan.setText("Số tiền: " + String.valueOf(sotien) + " VNĐ");
+
+        DatabaseReference mDatabase;
+        mDatabase = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
+        new Thread(new Runnable() {
+            public void run() {
+                try {
+                    countDownTime = maxTimeWaiting;
+                    ValueEventListener thanhtoanEvent;
+                    thanhtoanEvent = mDatabase.addValueEventListener(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            if(snapshot.hasChild("ThanhToan")){
+                                boolean chuXacNhan = snapshot.child("ThanhToan").child("ChuXacNhan").getValue(Boolean.class);
+                                boolean nvXacNhan = snapshot.child("ThanhToan").child("NhanVienXacNhan").getValue(Boolean.class);
+                                if(!chuXacNhan){
+                                    ToastWithMessage("Nhân viên không chấp nhận thanh toán");
+                                    countDownTime = 0;
+                                    return;
+                                }
+                                else if(nvXacNhan){
+                                    // Thuc hien tru tien
+                                    subtractTotalSalary();
+                                    countDownTime = 0;
+                                    return;
+                                }
+                            }
+                            else {
+                                countDownTime = 0;
+                                return;
+                            }
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+                        }
+                    });
+                    while (countDownTime > 0) {
+                        updateUI();
+                        countDownTime -= 1;
+                        Thread.sleep(1000);
+                    }
+
+                    cancelPayment();
+                    dialog.dismiss();
+                    return;
+                }catch (InterruptedException e)
+                {
+                }
+            }
+        }).start();
+
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                cancelPayment();
+                dialog.dismiss();
+            }
+        });
+    }
+
+    void ToastWithMessage(String msg){
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                Toast.makeText(a2g18Activity.this,msg,Toast.LENGTH_SHORT).show();
+            }
+        });
+
+    }
     private void buttonOpenDialogClicked() {
 
-//        TextView name = this.findViewById(R.id.afo_txtName);
-//        TextView id = this.findViewById(R.id.afo_txtId);
-//        TextView phone1 = this.findViewById(R.id.afo_txtPhone);
-//        TextView email1 = this.findViewById(R.id.afo_txtEmail);
-//        TextView address1 = this.findViewById(R.id.afo_txtAddress);
-//        TextView salary1 = this.findViewById(R.id.afo_txtSalary);
-//        TextView debt1 = this.findViewById(R.id.afo_txtDebt);
         CustomDialog.EmployeeListener listener = new CustomDialog.EmployeeListener() {
             @Override
-//            public void fullNameEntered(String fullName) {
-//                txtName.setText("Họ và tên: " + fullName);
-//            }
-//
-////            public void IDEntered(String ID) {
-////                txtID.setText("ID: " + ID);
-////            }
-//
-//            public void phoneEntered(String phone) {
-//                txtPhone.setText("Số điện thoại: " + phone);
-//            }
-//
-//            public void emailEntered(String email) {
-//                txtEmail.setText("Giới tính: " + email);
-//            }
-//
-//            public void addressEntered(String address) {
-//                txtAddress.setText("Địa chỉ: " + address);
-//            }
-//
-//            public void salaryEntered(String salary) {
-//                txtSalary.setText("Ngày sinh: " + salary);
-//            }
-
-//            public void debtEntered(String debt) {
-//                debt1.setText("Tổng tiền lương còn nợ: " + debt);
-//            }
             public void salaryEntered(String salary) {
                 txtSalaryPerHour.setText(salary);
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -224,9 +258,6 @@ public class a2g18Activity extends Activity {
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
 
                         mDatabase.child("Luong").setValue(String.valueOf(salary));
-
-                        // Update count table
-
                     }
 
                     @Override
@@ -240,5 +271,44 @@ public class a2g18Activity extends Activity {
         final CustomDialog dialog = new CustomDialog(this, listener, idUser, idRes);
 
         dialog.show();
+    }
+
+    public void updateUI(){
+        Handler handler = new Handler(Looper.getMainLooper());
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                txt_countdowntime.setText(String.valueOf(countDownTime));
+            }
+        });
+    }
+
+    public void cancelPayment(){
+        DatabaseReference mDatabase;
+        mDatabase = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
+
+        mDatabase.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                mDatabase.child("ThanhToan").setValue(null);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+    }
+
+    public void subtractTotalSalary(){
+        DatabaseReference refNhanVien;
+        refNhanVien = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
+        refNhanVien.child("ThoiGianLamViec").setValue(0);
+        ToastWithMessage("Thanh toán thành công");
+    };
+    @Override
+    protected void onStop() {
+        super.onStop();
+        cancelPayment();
     }
 }

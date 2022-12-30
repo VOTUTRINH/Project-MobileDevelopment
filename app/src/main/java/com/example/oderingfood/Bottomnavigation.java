@@ -53,7 +53,6 @@ public class Bottomnavigation extends AppCompatActivity {
         switch (role)
         {
             case "KhachHang":
-//                bottomNavigationView.setVisibility(View.INVISIBLE);
                 menu.getItem(2).setVisible(false);
                 menu.getItem(3).setVisible(false);
                 break;
@@ -125,7 +124,8 @@ public class Bottomnavigation extends AppCompatActivity {
                 getSupportFragmentManager().beginTransaction().replace(R.id.container, noticeFragment).commit();
                 break;
             }
-            case R.id.message: {
+            case R.id.message:
+            {
                 Intent intent = new Intent(bottomNavigationView.getContext(), ChatActivity.class);
                 intent.putExtra("idRes", idRes);
                 intent.putExtra("user", user);

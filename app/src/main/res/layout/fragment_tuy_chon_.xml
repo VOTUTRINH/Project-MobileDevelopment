@@ -50,7 +50,7 @@
             android:orientation="vertical"
             android:layout_marginRight="20dp"
             android:layout_marginLeft="20dp"
-            android:layout_marginTop="90dp"
+            android:layout_marginTop="50dp"
             >
 
             <com.google.android.material.button.MaterialButton
@@ -69,6 +69,23 @@
                 android:backgroundTint="#ff9298"
 
                 />
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/menu"
+                android:layout_marginTop="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:text="Menu"
+                android:textColor="@color/black"
+                android:fontFamily="@font/quicksand_bold"
+                android:textSize="17sp"
+                android:textAllCaps="false"
+                app:cornerRadius="20dp"
+                android:backgroundTint="#ff9298"
+                app:icon="@drawable/ic_baseline_menu_24"
+                app:iconGravity="textStart"
+                />
+
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btn_voucher"
                 android:layout_marginTop="20dp"
