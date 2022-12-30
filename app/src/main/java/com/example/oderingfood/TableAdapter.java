@@ -25,9 +25,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 
 public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
@@ -35,6 +40,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 {
     List<Booking> dataList;
     String role;
+
 
     public TableAdapter(List<Booking> dataList, String r){
         role = r;
@@ -65,13 +71,13 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 
     @Override
     public void onBindViewHolder(@NonNull TableAdapter.ViewHolder holder, int position) {
-
-        holder.name.setText(dataList.get(position).getName());
+        setPosition(position);
+        holder.name.setText("Tên: " + dataList.get(position).getName());
         holder.from.setText(dataList.get(position).getTimeStart());
         holder.to.setText(dataList.get(position).getTimeEnd());
         holder.table.setText("Bàn: " + dataList.get(position).getTableBook().first);
-        holder.date.setText(dataList.get(position).getDate());
-        holder.phone.setText(dataList.get(position).getPhone());
+        holder.date.setText("Ngày: " + dataList.get(position).getDate());
+        holder.phone.setText("SĐT: " + dataList.get(position).getPhone());
         if(dataList.get(position).isConfirm()){
             holder.confirm.setText("Trạng thái: Đã nhận đặt bàn");
             holder.confirm.setTextColor(Color.parseColor("#04b711"));
@@ -98,6 +104,46 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
         if(role.equals("KhachHang")){
             holder.btnConfirm.setVisibility(View.GONE);
         }
+
+        holder.btnConfirm.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String pathR = "/restaurant/" + GlobalVariables.pathRestaurentID;
+                String pathU = "/user/" + dataList.get(position).getIdUser();
+                String table = dataList.get(position).getTableBook().first;
+                String date = dataList.get(position).getDate();
+                String id = dataList.get(position).getId();
+                FirebaseDatabase database = FirebaseDatabase.getInstance();
+                DatabaseReference resDatabase = database.getReference().child(pathR);
+
+                DatabaseReference tableDatabase = resDatabase.child("BanAn").child(table).child("Bookings");
+                Map<String, String> temp = new HashMap<>();
+                temp.put("timeS", dataList.get(position).getTimeStart());
+                temp.put("timeE", dataList.get(position).getTimeEnd());
+                temp.put("id", id);
+                temp.put("idUser", dataList.get(position).getIdUser());
+
+                tableDatabase.child(date).child(id).setValue(temp);
+
+
+                Map<String, Food> foodOrder = new HashMap<>();
+                List<Food> tempFoods = dataList.get(position).getTableBook().second;
+                for(int i=0; i< tempFoods.size(); i++){
+                    foodOrder.put(tempFoods.get(i).getId(), tempFoods.get(i));
+                }
+                tableDatabase.child(date).child(id).child("orders").setValue(tempFoods);
+
+                DatabaseReference bookingResDatabase = resDatabase.child("Bookings").child(date).child(id);
+                bookingResDatabase.child("isConfirmed").setValue(true);
+                DatabaseReference bookingUserDatabase = database.getReference().child(pathU).child("Bookings").child(GlobalVariables.pathRestaurentID).child(date).child(id);
+                bookingUserDatabase.child("isConfirmed").setValue(true);
+                holder.btnConfirm.setText("Đã duyệt");
+                holder.btnConfirm.setBackgroundColor(Color.parseColor("#af0076"));
+                holder.btnConfirm.setClickable(false);
+            }
+        });
+
+
         holder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
             @Override
             public boolean onLongClick(View v) {

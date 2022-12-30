@@ -1,11 +1,14 @@
 package com.example.oderingfood;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
+import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import android.util.Log;
@@ -14,8 +17,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.GridView;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.oderingfood.models.Food;
@@ -31,7 +36,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -48,6 +55,13 @@ public class TableListPage1 extends Fragment {
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
+    private Boolean isBooking = false;
+    private String name = "";
+    private String phone ="";
+    private String date = "05-20-2003";
+    private String timeS;
+    private String timeE;
+    boolean getdata = false;
 
     TablesActivity tablesActivity;
     Context context;
@@ -58,6 +72,7 @@ public class TableListPage1 extends Fragment {
     Bottomnavigation bottomnavigation ;
     String user;
     String idRes;
+    FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     public TableListPage1() {
         // Required empty public constructor
@@ -85,8 +100,13 @@ public class TableListPage1 extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
+            isBooking = getArguments().getBoolean("isBooking");
+            name = getArguments().getString("ten");
+            phone = getArguments().getString("phone");
+            date = getArguments().getString("date");
+            timeS = getArguments().getString("timeS");
+            timeE = getArguments().getString("timeE");
+            getdata = true;
         }
 
         try {
@@ -121,7 +141,7 @@ public class TableListPage1 extends Fragment {
                     String tenBan = postSnapShot.getKey();
                     int pri;
                     String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
-                    if (trangThai.equals(getString(R.string.waiting_state))) {
+                    if (trangThai.equals(getContext().getString(R.string.waiting_state))) {
                         GlobalVariables.priority++;
                     }
                     try {
@@ -132,6 +152,33 @@ public class TableListPage1 extends Fragment {
                     // add table
                     Table table = new Table(tenBan, pri);
                     table.setState(trangThai);
+                    if (trangThai.equals("Empty")) {
+                        if (postSnapShot.hasChild("Bookings")) {
+                            if (postSnapShot.child("Bookings").hasChild(date)) {
+                                DataSnapshot bookingDate = postSnapShot.child("Bookings").child(date);
+                                for (DataSnapshot BookingDetail : bookingDate.getChildren()) {
+                                    String id = BookingDetail.getKey();
+                                    String timeBookedStart = BookingDetail.child("timeS").getValue(String.class);
+                                    String timeBookedEnd = BookingDetail.child("timeE").getValue(String.class);
+                                    String idUser = BookingDetail.child("idUser").getValue(String.class);
+                                    if (GlobalVariables.isDuplicateTime(timeS, timeE, timeBookedStart, timeBookedEnd)) {
+                                        List<Food> foods = new ArrayList<>();
+                                        for (DataSnapshot tableSnapShot : BookingDetail.child("orders").getChildren()) {
+
+                                                Food food = tableSnapShot.getValue(Food.class);
+                                                foods.add(food);
+
+
+                                        }
+                                        table.Book();
+                                        table.setPriority(500);
+                                        table.setBooking(timeBookedStart, timeBookedEnd, id, idUser, foods);
+                                    }
+                                }
+
+                            }
+                        }
+                    }
                     // Get foods was ordered for table
                     DataSnapshot menuSnapShot = postSnapShot.child("Order");
                     for (DataSnapshot foodSnapShot: menuSnapShot.getChildren())
@@ -179,13 +226,18 @@ public class TableListPage1 extends Fragment {
 
                 GlobalVariables.pathTable = tableList.get(i).getName();
                 if(tableList.get(i).getState().equals("Empty")){
-                    Intent intent=new Intent(context,MonAnActivity.class);
-                    Bundle b = new Bundle();
-                    b.putString("key", tableList.get(i).getName()); //Your id
-                    b.putString("idRes", idRes);
-                    b.putString("idUser", user);
-                    intent.putExtras(b);
-                    context.startActivity(intent);
+                    if(tableList.get(i).getIsbooked()){
+                        ShowDialogConfirm(i);
+                    }
+                    else {
+                        Intent intent = new Intent(context, MonAnActivity.class);
+                        Bundle b = new Bundle();
+                        b.putString("key", tableList.get(i).getName()); //Your id
+                        b.putString("idRes", idRes);
+                        b.putString("idUser", user);
+                        intent.putExtras(b);
+                        context.startActivity(intent);
+                    }
                 }else
                 {
                     Intent intdn = new Intent(context, A2G7Activity.class); // Your nxt activity name instead of List_Activity
@@ -200,5 +252,58 @@ public class TableListPage1 extends Fragment {
         });
 
         return layout_page1;
+    }
+    public void ShowDialogConfirm(int position)
+    {
+        Dialog dialog = new Dialog(getContext());
+        dialog.setContentView(R.layout.confirm_delete_table);
+        dialog.show();
+
+        TextView txt_confirm = (TextView) dialog.findViewById(R.id.txt_confirm);
+        Button btn_cancel = (Button) dialog.findViewById(R.id.btn_cancel);
+        Button btn_accept = (Button) dialog.findViewById(R.id.btn_accept);
+
+        txt_confirm.setText("Bàn ăn đã được đặt, bạn có muốn thực hiện đơn đã đặt.");
+        btn_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                dialog.dismiss();
+            }
+        });
+
+        btn_accept.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+                GiaoBanAn(position);
+                dialog.dismiss();
+            }
+        });
+
+    }
+    public void GiaoBanAn( int pos){
+        DatabaseReference tableDatabase;
+        String pathR = "/restaurant/" + idRes;
+        tableDatabase = database.getReference(pathR + "/BanAn/"+ tableList.get(pos).getName());
+        List<Food> temp = tableList.get(pos).getBooking().getTableBook().second;
+        Map<String, Food> data = new HashMap<>();
+        for(int i=0; i< temp.size(); i++){
+            if (temp.get(i).getQuantity() != 0){
+                data.put(temp.get(i).getId(), temp.get(i));
+            }
+        }
+        //check co bao nhieu bang dang doi
+        //set priority
+        GlobalVariables.priority++;
+        tableDatabase.child("Priority").setValue(GlobalVariables.priority);
+        tableDatabase.child("TrangThai").setValue(getString(R.string.waiting_state));
+        tableDatabase.child("Order").setValue(data, new DatabaseReference.CompletionListener() {
+            @Override
+            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                Toast.makeText(TableListPage1.this.getContext(), "Bắt đầu phục vụ bàn " + tableList.get(pos).getName(), Toast.LENGTH_SHORT).show();
+            }
+        });
+        tableDatabase.child("Bookings").child(date).child(tableList.get(pos).getBooking().getId()).setValue(null);
     }
 }

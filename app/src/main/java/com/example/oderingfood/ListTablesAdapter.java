@@ -19,6 +19,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.NotificationItem;
 import com.example.oderingfood.models.Table;
@@ -68,6 +69,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         TextView txtState = (TextView) row.findViewById(R.id.table_state);
         Table tb = listTables.get(position);
         String state;
+        Booking booking;
         if(tb.getState().equals("IsUsing")){
             state = "Đang sử dụng";
         }
@@ -77,6 +79,11 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         else{
             state = "Còn trống";
         }
+        if(listTables.get(position).getIsbooked()){
+            booking = listTables.get(position).getBooking();
+
+            state = "Đã đặt từ "+booking.getTimeStart()+" đến " + booking.getTimeEnd();
+        }
 
         txtState.setText(state);
         if(tb.getState().equals("IsUsing")) {
@@ -84,6 +91,9 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         }
         else if(tb.getState().equals("IsWaiting")){
             table.setBackgroundResource(R.drawable.table_wait_food_bg);
+        }
+        else if(tb.getIsbooked()){
+            table.setBackgroundResource(R.drawable.table_booked);
         }
 
         TextView btnMoreAction = (TextView) row.findViewById(R.id.btn_moremenu);
@@ -216,8 +226,6 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
         this.listTables.clear();
 
         this.listTables.addAll(mDataList);
-        Log.i("Size1", String.valueOf(mDataList.size()));
-        Log.i("Size2", String.valueOf(listTables.size()));
 
         notifyDataSetChanged();
     }

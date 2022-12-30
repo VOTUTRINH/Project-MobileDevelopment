@@ -157,7 +157,6 @@ public class TableListPage3 extends Fragment {
                             if (canBook) {
                                 Table table = new Table(tenBan);
                                 table.setState(trangThai);
-                                table.Book();
                                 temp.add(table);
                             }
 

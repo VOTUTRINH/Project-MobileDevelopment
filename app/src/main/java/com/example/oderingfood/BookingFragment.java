@@ -119,7 +119,10 @@ public class BookingFragment extends Fragment {
                         String Date = postSnapShot.child("Date").getValue(String.class);
                         String IdUser = postSnapShot.child("IdUser").getValue(String.class);
                         String Phone = postSnapShot.child("Phone").getValue(String.class);
-                        Boolean isConfirm = postSnapShot.child("isConfirmed").getValue(Boolean.class);
+                        boolean isConfirm = false;
+                        if(postSnapShot.hasChild("isConfirmed")) {
+                            isConfirm = postSnapShot.child("isConfirmed").getValue(Boolean.class);
+                        }
                         String table ="";
                         Booking booking = new Booking(StartTime, EndTime, ID, Date, Name, Phone, IdUser, isConfirm);
 

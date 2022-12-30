@@ -29,6 +29,13 @@ public class Booking {
         this.IdUser = idu;
         this.isConfirm = cf;
     }
+    public Booking(String timeStart, String timeEnd, String id, String idu, List<Food> listOrder) {
+        this.timeStart = timeStart;
+        this.timeEnd = timeEnd;
+        this.id = id;
+        this.IdUser = idu;
+        this.tableBook = new Pair<>("oder", listOrder);
+    }
 
     public String getTimeStart() {
         return timeStart;

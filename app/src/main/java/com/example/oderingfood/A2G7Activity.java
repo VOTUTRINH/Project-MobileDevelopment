@@ -80,12 +80,7 @@ public class A2G7Activity extends Activity {
 //
 
 
-        thanhtoan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
 
-            }
-        });
 
 
         mDatabase.addValueEventListener(new ValueEventListener() {

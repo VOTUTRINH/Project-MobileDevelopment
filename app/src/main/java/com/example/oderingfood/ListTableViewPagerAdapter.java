@@ -38,11 +38,14 @@ public class ListTableViewPagerAdapter extends FragmentStateAdapter {
         b.putString("timeE", timeEnd);
 
         TableListPage3 tbl3 = new TableListPage3();
+        TableListPage1 tbl1 = new TableListPage1();
         tbl3.setArguments(b);
+        tbl1.setArguments(b);
+
 
 
         switch (position){
-            case 0: return new TableListPage1();
+            case 0: return tbl1;
             case 1: return new TableListPage2();
 
             case 2: return tbl3;
