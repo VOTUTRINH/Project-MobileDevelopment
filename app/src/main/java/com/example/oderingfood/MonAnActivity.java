@@ -189,7 +189,7 @@ public class MonAnActivity extends AppCompatActivity {
                                 String avt = snapshot.child("avatar").getValue(String.class).toString();
                                 String ad = snapshot.child("hoTen").getValue(String.class).toString();
                                 String label = "<b> Đặt bàn  <b>";
-                                String content = ad +"vừa đặt bàn ăn  ";
+                                String content = ad +"đã đặt bàn ăn lúc "+timeS;
                                 Calendar calendar = Calendar.getInstance();
                                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
                                 String currentDate = format.format(calendar.getTime());
