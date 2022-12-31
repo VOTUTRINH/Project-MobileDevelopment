@@ -53,8 +53,12 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TypeCast Object to int type
         Restaurant restaurant = list.get(position);
+        try{
+            Glide.with(context).load(restaurant.getUrlImage()).into(holder.images);
+        }catch(Exception e){
+            holder.images.setImageResource(R.drawable.abc);
+        }
 
-        Glide.with(context).load(restaurant.getUrlImage()).into(holder.images);
         holder.text.setText((String)restaurant.getName());
         holder.txt_address.setText((String) restaurant.getAddress());
 
