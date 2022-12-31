@@ -159,8 +159,7 @@ public class Register_Store extends Activity {
                 mapTables.put(String.valueOf(i), mapTableValue);
             }
             dbTables.setValue(mapTables);
-            Intent intent = new Intent(this,ListRestaurant.class);
-            startActivity(intent);
+
             finish();
 
         }
