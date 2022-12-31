@@ -40,6 +40,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
@@ -55,6 +56,8 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
     FirebaseDatabase database = FirebaseDatabase.getInstance();
     String idRes;
     String user;
+    boolean checkTime = false;
+
 
 
     public TableAdapter(Context ct,List<Booking> dataList, String r, String idRes, String user){
@@ -134,77 +137,110 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
                 String table = dataList.get(position).getTableBook().first;
                 String date = dataList.get(position).getDate();
                 String id = dataList.get(position).getId();
+                String timeS = dataList.get(position).getTimeStart();
+                String timeE = dataList.get(position).getTimeEnd();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
                 DatabaseReference resDatabase = database.getReference().child(pathR);
 
-                DatabaseReference tableDatabase = resDatabase.child("BanAn").child(table).child("Bookings");
-                Map<String, String> temp = new HashMap<>();
-                temp.put("timeS", dataList.get(position).getTimeStart());
-                temp.put("timeE", dataList.get(position).getTimeEnd());
-                temp.put("id", id);
-                temp.put("idUser", dataList.get(position).getIdUser());
+                DatabaseReference tableDatabase = resDatabase.child("BanAn").child(table);
 
-                tableDatabase.child(date).child(id).setValue(temp);
-
-
-                Map<String, Food> foodOrder = new HashMap<>();
-                List<Food> tempFoods = dataList.get(position).getTableBook().second;
-                for(int i=0; i< tempFoods.size(); i++){
-                    foodOrder.put(tempFoods.get(i).getId(), tempFoods.get(i));
-                }
-                tableDatabase.child(date).child(id).child("orders").setValue(tempFoods);
-
-                DatabaseReference bookingResDatabase = resDatabase.child("Bookings").child(date).child(id);
-                bookingResDatabase.child("isConfirmed").setValue(true);
-                DatabaseReference bookingUserDatabase = database.getReference().child(pathU).child("Bookings").child(GlobalVariables.pathRestaurentID).child(date).child(id);
-                bookingUserDatabase.child("isConfirmed").setValue(true);
-                holder.btnConfirm.setText("Đã duyệt");
-                holder.btnConfirm.setBackgroundColor(Color.parseColor("#af0076"));
-                holder.btnConfirm.setClickable(false);
-                // thong bao chu quan da duyet booking abc ...
-
-                //todo
-                FirebaseDatabase noti = FirebaseDatabase.getInstance();
-
-
-                noti.getReference("restaurant/" + idRes ).addListenerForSingleValueEvent(new ValueEventListener() {
+                tableDatabase.addValueEventListener(new ValueEventListener() {
                     @Override
                     public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        String owner = snapshot.child("ChuQuan").getValue(String.class).toString();
-                        noti.getReference("user/"+owner).addListenerForSingleValueEvent(new ValueEventListener() {
-                            @Override
-                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-
-                                String avt = snapshot.child("avatar").getValue(String.class).toString();
-                                String ad = snapshot.child("hoTen").getValue(String.class).toString();
-                                String label = "<b> Xác nhận đặt bàn <b>";
-                                String content = "Chủ quán đã xác nhận đơn đặt bàn "+table;
-                                Calendar calendar = Calendar.getInstance();
-                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
-                                String currentDate = format.format(calendar.getTime());
-                                String _id =  noti.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
-                                NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
-
-                                noti.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
-                            }
-
-                            @Override
-                            public void onCancelled(@NonNull DatabaseError error) {
+                        if (snapshot.hasChild("Bookings")) {
+                            if (snapshot.child("Bookings").hasChild(date)) {
+                                DataSnapshot bookingDate = snapshot.child("Bookings").child(date);
+                                for (DataSnapshot BookingDetail : bookingDate.getChildren()) {
+                                    String id = BookingDetail.getKey();
+                                    String timeBookedStart = BookingDetail.child("timeS").getValue(String.class);
+                                    String timeBookedEnd = BookingDetail.child("timeE").getValue(String.class);
+                                    String idUser = BookingDetail.child("idUser").getValue(String.class);
+                                    if (GlobalVariables.isDuplicateTime(timeS, timeE, timeBookedStart, timeBookedEnd)) {
+                                        checkTime = true;
+                                    }
+                                }
 
                             }
-                        });
-
-
-
+                        }
                     }
 
                     @Override
                     public void onCancelled(@NonNull DatabaseError error) {
 
-
                     }
                 });
 
+                if(checkTime){
+                    Toast.makeText(context, "Bàn "+ table + " đã được đặt trong thời gian từ " + timeS +" đến "+ timeE, Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    DatabaseReference bookingDatabase = resDatabase.child("BanAn").child(table).child("Bookings");
+                    Map<String, String> temp = new HashMap<>();
+                    temp.put("timeS", dataList.get(position).getTimeStart());
+                    temp.put("timeE", dataList.get(position).getTimeEnd());
+                    temp.put("id", id);
+                    temp.put("idUser", dataList.get(position).getIdUser());
+
+                    bookingDatabase.child(date).child(id).setValue(temp);
+
+
+                    Map<String, Food> foodOrder = new HashMap<>();
+                    List<Food> tempFoods = dataList.get(position).getTableBook().second;
+                    for (int i = 0; i < tempFoods.size(); i++) {
+                        foodOrder.put(tempFoods.get(i).getId(), tempFoods.get(i));
+                    }
+                    bookingDatabase.child(date).child(id).child("orders").setValue(tempFoods);
+
+                    DatabaseReference bookingResDatabase = resDatabase.child("Bookings").child(date).child(id);
+                    bookingResDatabase.child("isConfirmed").setValue(true);
+                    DatabaseReference bookingUserDatabase = database.getReference().child(pathU).child("Bookings").child(GlobalVariables.pathRestaurentID).child(date).child(id);
+                    bookingUserDatabase.child("isConfirmed").setValue(true);
+                    holder.btnConfirm.setText("Đã duyệt");
+                    holder.btnConfirm.setBackgroundColor(Color.parseColor("#af0076"));
+                    holder.btnConfirm.setClickable(false);
+                    // thong bao chu quan da duyet booking abc ...
+
+                    //todo
+                    FirebaseDatabase noti = FirebaseDatabase.getInstance();
+
+
+                    noti.getReference("restaurant/" + idRes).addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            String owner = snapshot.child("ChuQuan").getValue(String.class).toString();
+                            noti.getReference("user/" + owner).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                    String avt = snapshot.child("avatar").getValue(String.class).toString();
+                                    String ad = snapshot.child("hoTen").getValue(String.class).toString();
+                                    String label = "<b> Xác nhận đặt bàn <b>";
+                                    String content = "Chủ quán đã xác nhận đơn đặt bàn " + table;
+                                    Calendar calendar = Calendar.getInstance();
+                                    SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                    String currentDate = format.format(calendar.getTime());
+                                    String _id = noti.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                                    NotificationItem notificationItem = new NotificationItem(_id, avt, label, content, currentDate);
+
+                                    noti.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+
+                        }
+
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
+
+
+                        }
+                    });
+                }
                 //
             }
         });

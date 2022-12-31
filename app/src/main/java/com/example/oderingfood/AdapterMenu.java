@@ -63,7 +63,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
                 super(itemView);
                 foodNameView = itemView.findViewById(R.id.foodName);
                 foodImageView = itemView.findViewById(R.id.foodImage);
-                foodPriceView = itemView.findViewById(R.id.foodPrice);
+                foodPriceView = itemView.findViewById(R.id.foodPrice1);
             }
         }
 
