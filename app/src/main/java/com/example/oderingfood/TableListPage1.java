@@ -141,7 +141,7 @@ public class TableListPage1 extends Fragment {
                     String tenBan = postSnapShot.getKey();
                     int pri;
                     String trangThai = postSnapShot.child("TrangThai").getValue(String.class);
-                    if (trangThai.equals(getContext().getString(R.string.waiting_state))) {
+                    if (trangThai.equals("IsWaiting")) {
                         GlobalVariables.priority++;
                     }
                     try {

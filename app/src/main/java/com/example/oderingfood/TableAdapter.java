@@ -259,7 +259,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
         bookingDatabase.child(date).child(ID).setValue(null);
         DatabaseReference tableDatabase = database.getReference(pathR + "/BanAn");
         tableDatabase.child(table).child("Bookings").child(date).child(ID).setValue(null);
-        DatabaseReference userBookingDatabase = database.getReference(pathU + "Bookings");
+        DatabaseReference userBookingDatabase = database.getReference(pathU + "/Bookings");
         userBookingDatabase.child(idRes).child(date).child(ID).setValue(null);
         // thong bao ly do. User (hoac chu quan) da huy booking vi ly do .....
         //todo
