@@ -42,6 +42,15 @@ public class MonAnActivity extends AppCompatActivity {
     String tablePath;
     String user;
     String idRes;
+
+    Boolean isBooking = false;
+    String ten = "";
+    String phone = "";
+    String date = "";
+    String timeS = "";
+    String timeE = "";
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -59,6 +68,14 @@ public class MonAnActivity extends AppCompatActivity {
             user = b.getString("idUser");
             idRes = b.getString("idRes");
             tablePath = b.getString("key");
+            isBooking = b.getBoolean("isBooking");
+            if(isBooking){
+                ten = b.getString("ten");
+                phone = b.getString("phone");
+                date = b.getString("date");
+                timeS = b.getString("timeS");
+                timeE = b.getString("timeE");
+            }
         }
 
 
@@ -71,6 +88,7 @@ public class MonAnActivity extends AppCompatActivity {
         DatabaseReference mDatabase;
 
         String pathR = "/restaurant/" + GlobalVariables.pathRestaurentID;
+        String pathU = "/user/" + user;
         mDatabase = database.getReference(pathR +"/Menu") ;
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
@@ -112,11 +130,11 @@ public class MonAnActivity extends AppCompatActivity {
                 List<Food> temp = adapter.getMenu();
                 Map<String, Food> data = new HashMap<>();
                 FirebaseDatabase database = FirebaseDatabase.getInstance();
-                DatabaseReference mDatabase;
-                DatabaseReference tableDatabase;
-                tableDatabase = database.getReference(pathR + "/BanAn");
 
-                mDatabase = database.getReference(pathR + "/BanAn/"+ tablePath);
+
+
+
+
                 for(int i=0; i< temp.size(); i++){
                     if (temp.get(i).getQuantity() != 0){
                         data.put(temp.get(i).getId(), temp.get(i));
@@ -127,24 +145,64 @@ public class MonAnActivity extends AppCompatActivity {
                     Toast.makeText(MonAnActivity.this,getString(R.string.chuachonmon), Toast.LENGTH_LONG).show();
 
                 }
-                else
-                {
-                    //check co bao nhieu bang dang doi
-                    //set priority
-                    GlobalVariables.priority ++;
-                    mDatabase.child("Priority").setValue(GlobalVariables.priority);
-                    mDatabase.child("TrangThai").setValue(getString(R.string.waiting_state));
-                    mDatabase.child("Order").setValue(data, new DatabaseReference.CompletionListener() {
-                      @Override
-                      public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
-                          Toast.makeText(MonAnActivity.this,getString(R.string.datmonthanhcong), Toast.LENGTH_SHORT).show();
-                      }
-                  });
-                    finish();
-                }
+                else {
+                    if (isBooking) {
+                        DatabaseReference bookingDatabase;
+                        DatabaseReference userBookingDatabase;
+                        bookingDatabase = database.getReference(pathR + "/Bookings/"+ date);
+                        userBookingDatabase = database.getReference(pathU + "/Bookings/"+idRes + "/"+ date);
 
+                        String id = bookingDatabase.push().getKey();
+                        Map<String,String> myMap = new HashMap<String,String>();
+                        myMap.put("Ten",ten);
+                        myMap.put("Phone",phone);
+                        myMap.put("IdUser", user);
+                        myMap.put("Date",date);
+                        myMap.put("TimeS",timeS);
+                        myMap.put("TimeE",timeE);
+                        myMap.put("id",id);
+                        bookingDatabase.child(id).setValue(myMap);
+                        bookingDatabase.child(id).child("isConfirmed").setValue(false);
+                        userBookingDatabase.child(id).setValue(myMap);
+
+                        bookingDatabase.child(id).child("order").child(tablePath).setValue(data);
+                        userBookingDatabase.child(id).child("isConfirmed").setValue(false);
+                        userBookingDatabase.child(id).child("order").child(tablePath).setValue(data, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(MonAnActivity.this, "Booking thành công.", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        // notice user đã đặt bàn lúc ...
+                        //TODO
+                        //
+                        finish();
+
+                    } else {
+                        DatabaseReference tableDatabase;
+                        tableDatabase = database.getReference(pathR + "/BanAn/"+ tablePath);
+
+                        //check co bao nhieu bang dang doi
+                        //set priority
+                        GlobalVariables.priority++;
+                        tableDatabase.child("Priority").setValue(GlobalVariables.priority);
+                        tableDatabase.child("TrangThai").setValue(getString(R.string.waiting_state));
+                        tableDatabase.child("Order").setValue(data, new DatabaseReference.CompletionListener() {
+                            @Override
+                            public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
+                                Toast.makeText(MonAnActivity.this, getString(R.string.datmonthanhcong), Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                        finish();
+                    }
+                }
             }
         });
+
+        // nut add
+        if(isBooking){
+            addFood.setVisibility(View.GONE);
+        }
         //nhan nut add
         addFood.setOnClickListener(new View.OnClickListener() {
             @Override

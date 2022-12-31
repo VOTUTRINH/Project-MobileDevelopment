@@ -2,7 +2,7 @@ package com.example.oderingfood.models;
 
 import java.io.Serializable;
 
-public class Food implements Serializable {
+public class Food {
     String id;
     String name;
     double price;

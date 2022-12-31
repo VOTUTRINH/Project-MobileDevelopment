@@ -138,7 +138,7 @@ public class Register_Store extends Activity {
 
             database.child(id).setValue(myMap);
             database.child(id).child("SoBanAn").setValue(soban);
-
+            database.child(id).child("DoanhThu").setValue(0);
             DatabaseReference db = database.child(id).child("HinhAnh");
             Map<String,String> mapImage = new HashMap<String,String>();
 

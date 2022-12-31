@@ -19,12 +19,16 @@
         android:theme="@style/Theme.OderingFood"
         tools:targetApi="31">
         <activity
+            android:name=".activityBookingChooseTable"
+            android:exported="false" />
+        <activity
             android:name=".TuyChon_Menu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+
         <activity
             android:name=".DetailWorkTimeActivity"
             android:exported="false">
@@ -32,6 +36,9 @@
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
+        <activity
+            android:name=".addBookingActivity"
+            android:exported="false" />
         <activity
             android:name=".ProfileUserActivity"
             android:exported="false">

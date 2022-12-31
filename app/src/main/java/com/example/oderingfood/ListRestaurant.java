@@ -34,6 +34,7 @@ public class ListRestaurant extends AppCompatActivity {
 
         Intent intent =getIntent();
         user= intent.getStringExtra("Uid");
+        GlobalVariables.IDUser = user;
         viewPager = (ViewPager2) findViewById(R.id.view_pager);
         viewPagerAdapter = new ViewPagerAdapter(this);
         viewPager.setAdapter(viewPagerAdapter);

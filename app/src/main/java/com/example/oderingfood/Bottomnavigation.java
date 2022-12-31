@@ -76,6 +76,7 @@ public class Bottomnavigation extends AppCompatActivity {
                         return true;
                     case R.id.booking:
                         BookingFragment bookingFragment = new BookingFragment();
+                        bookingFragment.setArguments(bundle);
                         getSupportFragmentManager().beginTransaction().replace(R.id.container, bookingFragment).commit();
                         return true;
                     case R.id.order:

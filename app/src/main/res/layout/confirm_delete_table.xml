@@ -29,18 +29,23 @@
         android:orientation="horizontal"
         android:layout_height="wrap_content"
         android:layout_gravity="center">
-        <Button
+        <android.widget.Button
             android:id="@+id/btn_cancel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Hủy"
+            android:background = "@drawable/round_button"
+            android:backgroundTint = "#50dbcf"
+            android:textColor = "#ffffff"
             android:layout_marginRight="30dp"/>
 
-        <Button
+        <android.widget.Button
             android:id="@+id/btn_accept"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Đồng ý"
+            android:background = "@drawable/round_button"
+            android:textColor = "#ffffff"
             android:layout_marginLeft="30dp"/>
     </LinearLayout>
 
