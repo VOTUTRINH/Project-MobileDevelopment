@@ -39,13 +39,8 @@ public class MainActivity extends AppCompatActivity {
         button_signin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                String text_username = username.getText().toString();
-//                String text_password = password.getText().toString();
 
                 loginUser();
-//                Intent intent=new Intent(MainActivity.this,ListRestaurant.class);
-//                startActivity(intent);
-
             }
         });
         

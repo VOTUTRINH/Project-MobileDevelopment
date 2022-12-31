@@ -135,7 +135,6 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
             plus = itemView.findViewById(R.id.btn_plus);
             minus = itemView.findViewById(R.id.btn_minus);
             numOfFoods = itemView.findViewById(R.id.thanhtoan_txt_tenban);
-
         }
     }
 
