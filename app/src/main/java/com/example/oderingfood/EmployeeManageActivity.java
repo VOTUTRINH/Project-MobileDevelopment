@@ -395,7 +395,7 @@ public class EmployeeManageActivity extends Fragment {
                                     String str = snapshot.getValue(String.class).toString();
                                     String label = "<b> Thêm nhân viên <b>";
                                     String content = "Chủ quán vừa thêm nhân viên:" + "<b>" + str + "</b> ";
-                                    String img = "abcd";
+                                    String img = "";
                                     Calendar calendar = Calendar.getInstance();
                                     SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
                                     String currentDate = format.format(calendar.getTime());
@@ -403,12 +403,12 @@ public class EmployeeManageActivity extends Fragment {
 
                                     String _id = database.getReference("restaurant/" + idRestaurent).child("notification").push().getKey().toString();
                                     NotificationItem notificationItem = new NotificationItem(_id,img, label, content, currentDate);
-
+                                    database.getReference("restaurant/" + idRestaurent).child("notification").child(_id).setValue(notificationItem);
                                     database.getReference("user/" + user + "/avatar").addListenerForSingleValueEvent(new ValueEventListener() {
                                         @Override
                                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                                             String avt = snapshot.getValue(String.class).toString();
-                                            notificationItem.setNoticeImg(avt);
+                                            database.getReference("restaurant/" + idRestaurent).child("notification").child(_id).child("noticeImg").setValue(avt);
                                         }
 
                                         @Override
@@ -416,8 +416,6 @@ public class EmployeeManageActivity extends Fragment {
 
                                         }
                                     });
-                                    database.getReference("restaurant/" + idRestaurent).child("notification").child(_id).setValue(notificationItem);
-
 
                                 }
 
@@ -429,6 +427,7 @@ public class EmployeeManageActivity extends Fragment {
 
                             //--------
                             Toast.makeText(context, "Thêm nhân viên thành công", Toast.LENGTH_SHORT).show();
+
 
                         } else {
                             Toast.makeText(context, "Số điện thoại chưa được đăng kí tài khoản", Toast.LENGTH_SHORT).show();

@@ -30,11 +30,17 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
+import com.example.oderingfood.models.NotificationItem;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.common.util.concurrent.AbstractScheduledService;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -156,7 +162,49 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
                 holder.btnConfirm.setBackgroundColor(Color.parseColor("#af0076"));
                 holder.btnConfirm.setClickable(false);
                 // thong bao chu quan da duyet booking abc ...
+
                 //todo
+                FirebaseDatabase noti = FirebaseDatabase.getInstance();
+
+
+                noti.getReference("restaurant/" + idRes ).addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot snapshot) {
+                        String owner = snapshot.child("ChuQuan").getValue(String.class).toString();
+                        noti.getReference("user/"+owner).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                String avt = snapshot.child("avatar").getValue(String.class).toString();
+                                String ad = snapshot.child("hoTen").getValue(String.class).toString();
+                                String label = "<b> Xác nhận đặt bàn <b>";
+                                String content = "Chủ quán đã xác nhận đơn đặt bàn "+table;
+                                Calendar calendar = Calendar.getInstance();
+                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                String currentDate = format.format(calendar.getTime());
+                                String _id =  noti.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                                NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
+
+                                noti.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError error) {
+
+
+                    }
+                });
+
                 //
             }
         });
@@ -263,7 +311,32 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
         userBookingDatabase.child(idRes).child(date).child(ID).setValue(null);
         // thong bao ly do. User (hoac chu quan) da huy booking vi ly do .....
         //todo
+        FirebaseDatabase noti = FirebaseDatabase.getInstance();
 
+
+        noti.getReference("user/" + user ).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                String avt = snapshot.child("avatar").getValue(String.class).toString();
+                String ad = snapshot.child("hoTen").getValue(String.class).toString();
+                String label = "<b> Hủy đặt bàn  <b>";
+                String content = ad +"đã hủy đặt bàn vì lý do:  "+ reason;
+                Calendar calendar = Calendar.getInstance();
+                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                String currentDate = format.format(calendar.getTime());
+                String _id =  noti.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
+
+                noti.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+
+            }
+        });
         //
 
 

@@ -74,6 +74,7 @@ public class Register2 extends Activity {
         Intent i=getIntent();
         String id=i.getStringExtra("id");
         String email=i.getStringExtra("email");
+        String type=i.getStringExtra("type");
 
         add_image1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -139,6 +140,12 @@ public class Register2 extends Activity {
                     User user=new User(avatar,email,name,doBirth,gender,phone,address);
                     reference.child(id).setValue(user);
                     Toast.makeText(Register2.this, "Hoàn tất đăng kí", Toast.LENGTH_SHORT).show();
+                    if(type.equals("signInWithGoogle")){
+                        Intent intent=new Intent(Register2.this,ListRestaurant.class);
+                        intent.putExtra("Uid",id);
+                        startActivity(intent);
+                        finish();
+                    }
                     Intent intent=new Intent(Register2.this,MainActivity.class);
                     startActivity(intent);
                     finish();

@@ -108,28 +108,17 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
-            <Button
-                android:id="@+id/btntwister"
-                style="@style/Widget.MaterialComponents.Button.Icon"
-                app:icon="@drawable/ic_twitter"
+            android:orientation="horizontal"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="15dp"
+            >
+
+            <ImageView
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#03A9F4"
-
-                android:text="Twitter" />
-
-            <Button
-                android:id="@+id/btnfacebook"
-                style="@style/Widget.MaterialComponents.Button.Icon"
-                app:icon="@drawable/ic__facebook"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:backgroundTint="#3F51B5"
-
-                android:text="Facebook" />
+                android:layout_height="50dp"
+                android:src="@drawable/sign_in_google"
+                android:id="@+id/btngoogle"
+                />
         </LinearLayout>
 
 

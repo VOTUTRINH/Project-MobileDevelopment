@@ -23,6 +23,7 @@ import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 
 public class FragmentNotification extends Fragment {
 
@@ -85,6 +86,7 @@ public class FragmentNotification extends Fragment {
                     item.setRead(isRead);
                     items.add(item);
                 }
+                Collections.reverse(items);
                 adapter.notifyDataSetChanged();
             }
 

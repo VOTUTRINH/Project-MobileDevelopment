@@ -19,6 +19,7 @@ import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Food;
+import com.example.oderingfood.models.NotificationItem;
 import com.example.oderingfood.models.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
@@ -27,7 +28,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -175,7 +178,33 @@ public class MonAnActivity extends AppCompatActivity {
                         });
                         // notice user đã đặt bàn lúc ...
                         //TODO
-                        //
+
+                        FirebaseDatabase noti = FirebaseDatabase.getInstance();
+
+
+                        noti.getReference("user/" + user ).addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+
+                                String avt = snapshot.child("avatar").getValue(String.class).toString();
+                                String ad = snapshot.child("hoTen").getValue(String.class).toString();
+                                String label = "<b> Đặt bàn  <b>";
+                                String content = ad +"đã đặt bàn ăn lúc "+timeS;
+                                Calendar calendar = Calendar.getInstance();
+                                SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
+                                String currentDate = format.format(calendar.getTime());
+                                String _id =  noti.getReference("restaurant/" + idRes).child("notification").push().getKey().toString();
+                                NotificationItem notificationItem = new NotificationItem(_id,avt, label, content, currentDate);
+
+                                noti.getReference("restaurant/" + idRes).child("notification").child(_id).setValue(notificationItem);
+                            }
+
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+
+                            }
+                        });                        //
                         finish();
 
                     } else {

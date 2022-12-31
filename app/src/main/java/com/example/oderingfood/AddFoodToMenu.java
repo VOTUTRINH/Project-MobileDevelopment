@@ -100,11 +100,9 @@ public class AddFoodToMenu extends Activity {
     }
 
     private void load_data() {
-
         name = edt_name.getText().toString();
         id = edt_id.getText().toString();
         price = Double.valueOf(edt_price.getText().toString());
-
 
         if(id.isEmpty()){
             Toast.makeText(this, "ID món ăn không dược để trống", Toast.LENGTH_SHORT).show();

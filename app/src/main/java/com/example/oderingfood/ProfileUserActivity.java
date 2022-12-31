@@ -321,7 +321,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         //if user select "No", just cancel this dialog and continue with app
-                        finish();
+
                     }
                 });
 
