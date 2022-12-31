@@ -60,8 +60,6 @@ public class activityBookingChooseTable extends FragmentActivity {
 }
 
 
-
-
 class bookingTableAdapter extends FragmentStateAdapter {
     Bundle bundle;
     public bookingTableAdapter(@NonNull FragmentActivity fragmentActivity, Bundle b) {

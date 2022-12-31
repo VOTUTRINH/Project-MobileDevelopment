@@ -321,7 +321,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
                 String avt = snapshot.child("avatar").getValue(String.class).toString();
                 String ad = snapshot.child("hoTen").getValue(String.class).toString();
                 String label = "<b> Hủy đặt bàn  <b>";
-                String content = ad +"đã hủy đặt bàn vì lý do:  "+ reason;
+                String content = ad +" đã hủy đặt bàn vì lý do:  "+ reason;
                 Calendar calendar = Calendar.getInstance();
                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
                 String currentDate = format.format(calendar.getTime());

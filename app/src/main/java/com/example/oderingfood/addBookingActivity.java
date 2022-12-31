@@ -89,16 +89,13 @@ public class addBookingActivity extends AppCompatActivity {
                     Toast.makeText(addBookingActivity.this, "Không để trống các trường thông tin.", Toast.LENGTH_SHORT).show();
 
                 }
-                    else if (d1.compareTo(LocalDate.now()) < 0) {
-                        Toast.makeText(addBookingActivity.this, "Ngày đặt phải từ hôm nay.", Toast.LENGTH_SHORT).show();
-                    } else if (d1.compareTo(LocalDate.now()) == 0 && t1.minusMinutes(120).compareTo(LocalTime.now()) <= 0) {
-                            Toast.makeText(addBookingActivity.this, "Thời gian bắt đầu phải sau 2 tiếng từ khi đặt bàn.", Toast.LENGTH_SHORT).show();
-
-                    }
-                    else if (t1.compareTo(t2) >= 0) {
-                    Toast.makeText(addBookingActivity.this, "Thời gian kết thức phải lớn hơn thời gian bắt đầu ít nhất 30 phút.", Toast.LENGTH_SHORT).show();
-
-
+                else if (d1.compareTo(LocalDate.now()) < 0) {
+                    Toast.makeText(addBookingActivity.this, "Ngày đặt phải từ hôm nay.", Toast.LENGTH_SHORT).show();
+                } else if (d1.compareTo(LocalDate.now()) == 0 && t1.minusMinutes(120).compareTo(LocalTime.now()) <= 0) {
+                        Toast.makeText(addBookingActivity.this, "Thời gian bắt đầu phải sau 2 tiếng từ khi đặt bàn.", Toast.LENGTH_SHORT).show();
+                }
+                else if (t1.compareTo(t2) >= 0) {
+                Toast.makeText(addBookingActivity.this, "Thời gian kết thức phải lớn hơn thời gian bắt đầu ít nhất 30 phút.", Toast.LENGTH_SHORT).show();
                 }
                 else {
                     Intent intent = new Intent(addBookingActivity.this, activityBookingChooseTable.class);
