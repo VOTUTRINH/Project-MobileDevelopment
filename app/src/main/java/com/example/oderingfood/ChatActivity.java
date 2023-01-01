@@ -121,6 +121,12 @@ public class ChatActivity extends AppCompatActivity {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             dataListMsg.clear();
+                            if(snapshot.getChildrenCount() <= 0){
+                                loadMessageLayout.setVisibility(View.GONE);
+                                chatList.setVisibility(View.VISIBLE);
+                                isCompletedLoadMessage = true;
+                                return;
+                            }
                             for(DataSnapshot snapshotMessage: snapshot.getChildren()){
                                 String id = snapshotMessage.getKey();
                                 String sendby = snapshotMessage.child("sendby").getValue(String.class);

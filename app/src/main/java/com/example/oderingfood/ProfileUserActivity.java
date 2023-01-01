@@ -139,7 +139,6 @@ public class ProfileUserActivity extends AppCompatActivity {
         refRes.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 dataList.clear();
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
                     // Get data
@@ -152,7 +151,6 @@ public class ProfileUserActivity extends AppCompatActivity {
                             Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
 
                             EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
-                            dataList.add(employeeSalary);
                             dataList.add(employeeSalary);
                         }
                     }
@@ -190,7 +188,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                 edt_birthday.setEnabled(true);
 
                 edt_name.setInputType(InputType.TYPE_CLASS_TEXT);
-                edt_phone.setInputType(InputType.TYPE_CLASS_TEXT);
+                edt_phone.setInputType(InputType.TYPE_CLASS_NUMBER);
                 edt_sex.setInputType(InputType.TYPE_CLASS_TEXT);
                 edt_address.setInputType(InputType.TYPE_CLASS_TEXT);
 

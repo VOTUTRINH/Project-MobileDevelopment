@@ -55,7 +55,6 @@ public class StartResActivity extends AppCompatActivity {
         new Thread(new Runnable() {
             public void run() {
                 try {
-
                     while (role.equals("null")) {
                         Thread.sleep(150);
                         countTime += 150;
@@ -110,6 +109,7 @@ public class StartResActivity extends AppCompatActivity {
             @Override
             public void run() {
                 Intent intent = new Intent (StartResActivity.this, ListRestaurant.class);
+                intent.putExtra("Uid",user);
                 startActivity(intent);
                 finish();
             }

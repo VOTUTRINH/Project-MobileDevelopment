@@ -34,7 +34,7 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
     String typeList = "";
 
     public ListEmployeesAdapter(@NonNull Context context, int resource, List<Employee> employeeList, String idRes, String typeList) {
-        super(context, resource, employeeList);
+        super(context, R.layout.a2g18activity_main, employeeList);
         this.context = context;
         this.employeeList = employeeList;
         this.idRes = idRes;
@@ -72,6 +72,7 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
                 switch (typeList){
                     case "ListNV":
                         Intent intent1 = new Intent(view.getContext(),a2g18Activity.class);
+                        intent1.putExtra("idRes", idRes);
                         intent1.putExtra("idUser",employee.getId());
                         view.getContext().startActivity(intent1);
                         break;
