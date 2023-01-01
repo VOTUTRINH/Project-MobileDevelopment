@@ -46,6 +46,9 @@ import com.google.zxing.qrcode.encoder.QRCode;
 
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -136,7 +139,7 @@ public class ScanQRCode extends AppCompatActivity {
                         load_image(uri);
                     }
 
-                } catch (WriterException e) {
+                } catch (WriterException | IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -245,12 +248,27 @@ public class ScanQRCode extends AppCompatActivity {
 
     }
 
-    public Uri getImageUri(Context inContext, Bitmap inImage) {
-        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.PNG,100, bytes);
-        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
-        return Uri.parse(path);
+    //public Uri getImageUri(Context inContext, Bitmap inImage) {
+     //   ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+      //  inImage.compress(Bitmap.CompressFormat.PNG,100, bytes);
+      //  String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+      //  return Uri.parse(path);
 
+    //}
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) throws IOException {
+
+        File tempFile = File.createTempFile("temprentpk", ".png");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.PNG, 100, bytes);
+        byte[] bitmapData = bytes.toByteArray();
+
+        FileOutputStream fileOutPut = new FileOutputStream(tempFile);
+        fileOutPut.write(bitmapData);
+        fileOutPut.flush();
+        fileOutPut.close();
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.fromFile(tempFile);
     }
 
     public void load_image(Uri uri) {
