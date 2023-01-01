@@ -11,6 +11,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -92,7 +93,7 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
         CircleImageView images;
         TextView txt_label, txt_content, txt_time;
         CardView CView;
-        ConstraintLayout viewItem;
+        LinearLayout viewItem;
         public ViewHolder(View view) {
             super(view);
             CView = (CardView) view.findViewById(R.id.nt_card_notice);
@@ -101,7 +102,7 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
             txt_content = (TextView) view.findViewById(R.id.nt_txt_content_notice);
             txt_time = (TextView) view.findViewById(R.id.nt_txt_time);
             status = (ImageView) view.findViewById(R.id.nt_img_not_read);
-            viewItem = (ConstraintLayout) view.findViewById(R.id.view);
+            viewItem = (LinearLayout) view.findViewById(R.id.view);
             view.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {

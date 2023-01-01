@@ -21,6 +21,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Restaurant;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -54,7 +55,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
         // TypeCast Object to int type
         Restaurant restaurant = list.get(position);
         try{
-            Glide.with(context).load(restaurant.getUrlImage()).into(holder.images);
+            Picasso.get().load(restaurant.getUrlImage()).into(holder.images);
         }catch(Exception e){
             holder.images.setImageResource(R.drawable.abc);
         }
