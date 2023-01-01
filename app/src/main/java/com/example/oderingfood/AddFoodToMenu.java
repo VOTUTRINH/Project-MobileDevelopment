@@ -1,10 +1,13 @@
 package com.example.oderingfood;
 
+import static android.text.InputType.TYPE_NULL;
+
 import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -15,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.bumptech.glide.Glide;
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.NotificationItem;
@@ -44,7 +48,7 @@ public class AddFoodToMenu extends Activity {
     Button btn_submit;
     String name ="",id ="", urlImage = "";
     double price =0;
-
+    String oldName = "";
 
     DatabaseReference database ;
     StorageReference reference ;
@@ -53,19 +57,25 @@ public class AddFoodToMenu extends Activity {
 
     String user;
     String idRes;
+    boolean edit;
+    Food food;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.add_food_to_menu_layout);
 
-//        Intent intent = getIntent();
-//        idOwner = intent.getStringExtra("idOwner");
 
         Bundle b = getIntent().getExtras();
 
         if(b !=null){
             user = b.getString("idUser");
             idRes = b.getString("idRes");
+            edit = b.getBoolean("edit");
+            if(edit){
+                food = (Food) b.getSerializable("food");
+                oldName = food.getName();
+            }
+
         }
 
         database = FirebaseDatabase.getInstance().getReference("/restaurant/" + GlobalVariables.pathRestaurentID);
@@ -77,6 +87,15 @@ public class AddFoodToMenu extends Activity {
         edt_price=(EditText) findViewById(R.id.af_input_price);
 
         add_image1=(ImageView) findViewById(R.id.af_add_image_food);
+
+        if(edit){
+            url = food.getUrlImage();
+            Glide.with(this).load(url).into(add_image1);
+            edt_id.setText(food.getId());
+            edt_id.setEnabled(false);
+            edt_name.setText(food.getName());
+            edt_price.setText(Double.toString(food.getPrice()));
+        }
         add_image1.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,14 +135,21 @@ public class AddFoodToMenu extends Activity {
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot postSnapShot: snapshot.getChildren())
                 {
-                    if(postSnapShot.getKey().equals(id))
-                    {
-                        Toast.makeText(AddFoodToMenu.this,"ID món ăn đã tồn tại",Toast.LENGTH_SHORT).show();
-                        return;
+                    if(edit == false) {
+                        if (postSnapShot.getKey().equals(id)) {
+                            Toast.makeText(AddFoodToMenu.this, "ID món ăn đã tồn tại", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
                     }
                 }
-
-                Food food = new Food(id, name, price, url );
+                if(edit){
+                    food.setName(name);
+                    food.setPrice(price);
+                    food.setUrlImage(url);
+                }
+                else {
+                    food = new Food(id, name, price, url);
+                }
                 database.child(id).setValue(food, new DatabaseReference.CompletionListener() {
                     @Override
                     public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
@@ -137,8 +163,15 @@ public class AddFoodToMenu extends Activity {
 
                                 String avt = snapshot.child("avatar").getValue(String.class).toString();
                                 String ad = snapshot.child("hoTen").getValue(String.class).toString();
-                                String label = "<b> Thêm món <b>";
-                                String content = ad + " vừa thêm món "+ name;
+                                String label = "", content ="";
+                                if(edit){
+                                    label = "<b>Chỉnh sửa món <b>";
+                                    content = ad + " vừa thay đổi món " + oldName;
+                                }
+                                else {
+                                    label = "<b> Thêm món <b>";
+                                    content = ad + " vừa thêm món " + name;
+                                }
                                 Calendar calendar = Calendar.getInstance();
                                 SimpleDateFormat format = new SimpleDateFormat("dd/MM/yyyy 'at' HH:mm");
                                 String currentDate = format.format(calendar.getTime());

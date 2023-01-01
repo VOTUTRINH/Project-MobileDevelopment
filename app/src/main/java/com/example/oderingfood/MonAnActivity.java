@@ -84,7 +84,7 @@ public class MonAnActivity extends AppCompatActivity {
         }
 
 
-        adapter = new AdapterMonAn(this, menu);
+        adapter = new AdapterMonAn(this, menu, idRes, user);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         dataList.setLayoutManager(gridLayoutManager);
         dataList.setAdapter(adapter);
@@ -242,6 +242,7 @@ public class MonAnActivity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putString("idRes", idRes);
                 b.putString("idUser", user);
+                b.putBoolean("edit", false);
                 intent.putExtras(b);
                 startActivity(intent);
             }
