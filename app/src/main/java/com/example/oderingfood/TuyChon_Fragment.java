@@ -94,7 +94,12 @@ public class TuyChon_Fragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                Glide.with(getContext()).load(snapshot.child("avatar").getValue(String.class).toString()).into(avt_user);
+                try {
+                    Glide.with(getContext()).load(snapshot.child("avatar").getValue(String.class).toString()).into(avt_user);
+                }
+                catch (Exception err){
+
+                }
                 nav_txt_name.setText(snapshot.child("hoTen").getValue(String.class).toString());
                 nav_txt_sdt.setText(snapshot.child("dienThoai").getValue(String.class).toString());
             }

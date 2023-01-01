@@ -45,6 +45,7 @@ public class MonAnActivity extends AppCompatActivity {
     String tablePath;
     String user;
     String idRes;
+    List<Food> menu;
 
     Boolean isBooking = false;
     String ten = "";
@@ -57,6 +58,7 @@ public class MonAnActivity extends AppCompatActivity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        menu = new ArrayList<>();
         setContentView(R.layout.activity_mon_an);
         dataList = findViewById(R.id.dishesList);
         btnOrder = findViewById(R.id.ac_btn_send);
@@ -82,7 +84,7 @@ public class MonAnActivity extends AppCompatActivity {
         }
 
 
-        adapter = new AdapterMonAn(this, GlobalVariables.menu);
+        adapter = new AdapterMonAn(this, menu);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         dataList.setLayoutManager(gridLayoutManager);
         dataList.setAdapter(adapter);
@@ -96,8 +98,8 @@ public class MonAnActivity extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (GlobalVariables.menu.size() > 0) {
-                    GlobalVariables.menu.clear();
+                if (menu.size() > 0) {
+                    menu.clear();
                 }
 
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
@@ -116,7 +118,7 @@ public class MonAnActivity extends AppCompatActivity {
                         food.setUrlImage(urlImage);
                     }
 
-                    GlobalVariables.menu.add(food);
+                    menu.add(food);
                 }
                 adapter.notifyDataSetChanged();
             }

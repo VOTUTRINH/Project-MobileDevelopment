@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,9 +33,11 @@ public class TuyChon_Menu extends AppCompatActivity {
     String tablePath;
     String user;
     String idRes;
+    List<Food> menu;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        menu = new ArrayList<>();
         setContentView(R.layout.table_list);
         dataList = findViewById(R.id.list_booking);
 
@@ -47,7 +50,7 @@ public class TuyChon_Menu extends AppCompatActivity {
         }
 
 
-        adapter = new AdapterMenu(this, GlobalVariables.menu);
+        adapter = new AdapterMenu(this, menu);
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false);
         dataList.setLayoutManager(gridLayoutManager);
         dataList.setAdapter(adapter);
@@ -60,8 +63,8 @@ public class TuyChon_Menu extends AppCompatActivity {
         mDatabase.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if (GlobalVariables.menu.size() > 0) {
-                    GlobalVariables.menu.clear();
+                if (menu.size() > 0) {
+                    menu.clear();
                 }
 
                 for (DataSnapshot postSnapShot : snapshot.getChildren()) {
@@ -80,7 +83,7 @@ public class TuyChon_Menu extends AppCompatActivity {
                         food.setUrlImage(urlImage);
                     }
 
-                    GlobalVariables.menu.add(food);
+                    menu.add(food);
                 }
                 adapter.notifyDataSetChanged();
             }

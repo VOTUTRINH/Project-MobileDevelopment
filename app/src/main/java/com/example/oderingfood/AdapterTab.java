@@ -67,7 +67,6 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
             public void onClick(View v) {
                 // get id to acess database
                 pathRestaurentID = restaurant.getId();
-                GlobalVariables.menu = new ArrayList<>();
 
                 Intent intent=new Intent(context,StartResActivity.class);
                 Bundle bundle = new Bundle();
