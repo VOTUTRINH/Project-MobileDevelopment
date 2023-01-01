@@ -13,6 +13,7 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DataSnapshot;
@@ -122,7 +123,8 @@ public class StartResActivity extends AppCompatActivity {
             public void run() {
                 Intent intent = new Intent (StartResActivity.this, Bottomnavigation.class);
                 Bundle bundle = new Bundle();
-                bundle.putString("role",role);
+                //bundle.putString("role",role);
+                GlobalVariables.role = role;
                 bundle.putString("user",user);
                 bundle.putString("restaurant", idRes);
                 intent.putExtras(bundle);

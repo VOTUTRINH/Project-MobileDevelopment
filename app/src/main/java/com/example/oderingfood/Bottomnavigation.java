@@ -44,7 +44,8 @@ public class Bottomnavigation extends AppCompatActivity {
         if (bundle != null) {
             user = bundle.getString("user");
             idRes = bundle.getString("restaurant");
-            role = bundle.getString("role");
+            role = GlobalVariables.role;
+            bundle.putString("role",role);
             GlobalVariables.pathRestaurentID = idRes;
         }
 

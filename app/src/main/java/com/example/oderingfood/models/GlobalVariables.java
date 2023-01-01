@@ -16,6 +16,7 @@ public class GlobalVariables {
     public static int priority;
     public static  int tablePriority;
     public static  String IDUser;
+    public static String role;
     public static  String DateBooking;
 
     static public String displayCurrency(Double a) {
