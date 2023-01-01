@@ -275,6 +275,7 @@ public class Res_infor extends AppCompatActivity {
     @Override
     public boolean onContextItemSelected(MenuItem item) {
 //        AdapterView.AdapterContextMenuInfo info = (AdapterView.AdapterContextMenuInfo) item.getMenuInfo();
+
         if(isEditable) {
             int clickedItemPosition = item.getGroupId();
 
@@ -283,6 +284,20 @@ public class Res_infor extends AppCompatActivity {
                 Image image = Img.get(clickedItemPosition);
 
                 myRef.child("HinhAnh").child(image.getId()).removeValue();
+
+                return true;
+            }
+            else if (item.getItemId() == R.id.menu_edit_item) {
+
+                Image image = Img.get(clickedItemPosition);
+
+
+                        // get id to acess database
+                Intent intent = new Intent(Res_infor.this, FullScreenActivity.class);
+                intent.putExtra("id", image.getUrl());
+                startActivity(intent);
+
+               // myRef.child("HinhAnh").child(image.getId()).removeValue();
 
                 return true;
             }

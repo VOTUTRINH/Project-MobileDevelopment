@@ -21,6 +21,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -94,12 +95,8 @@ public class TuyChon_Fragment extends Fragment {
         myRef.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                try {
-                    Glide.with(getContext()).load(snapshot.child("avatar").getValue(String.class).toString()).into(avt_user);
-                }
-                catch (Exception err){
 
-                }
+                Picasso.get().load(snapshot.child("avatar").getValue(String.class).toString()).into(avt_user);
                 nav_txt_name.setText(snapshot.child("hoTen").getValue(String.class).toString());
                 nav_txt_sdt.setText(snapshot.child("dienThoai").getValue(String.class).toString());
             }

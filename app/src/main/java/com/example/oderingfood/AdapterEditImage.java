@@ -47,16 +47,7 @@ public class AdapterEditImage  extends RecyclerView.Adapter<AdapterEditImage.Vie
         // TypeCast Object to int type
         String res = Img.get(position).getUrl().toString();
         Glide.with(context).load(res).into(holder.images);
-        holder.images.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // get id to acess database
-                Intent intent = new Intent(context, FullScreenActivity.class);
-                intent.putExtra("id", res);
-                context.startActivity(intent);
 
-            }
-        });
     }
 
     @Override
@@ -80,7 +71,7 @@ public class AdapterEditImage  extends RecyclerView.Adapter<AdapterEditImage.Vie
         public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
 
             menu.add(getAdapterPosition(), R.id.menu_delete_item, 1, "Xóa");
-
+            menu.add(getAdapterPosition(), R.id.menu_edit_item, 2, "Xem");
         }
 
     }
