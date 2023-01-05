@@ -277,10 +277,10 @@ public class ProfileUserActivity extends AppCompatActivity {
                             }
 
                             String name = edt_name.getText().toString().trim();
-                            String phone = edt_name.getText().toString().trim();
-                            String sex = edt_name.getText().toString().trim();
-                            String address = edt_name.getText().toString().trim();
-                            String ngaySinh = edt_name.getText().toString().trim();
+                            String phone = edt_phone.getText().toString().trim();
+                            String sex = edt_sex.getText().toString().trim();
+                            String address = edt_address.getText().toString().trim();
+                            String ngaySinh = edt_birthday.getText().toString().trim();
                             if(name.isEmpty()){
                                 Toast.makeText(ProfileUserActivity.this,"Tên không được để trống",Toast.LENGTH_SHORT).show();
                             }
