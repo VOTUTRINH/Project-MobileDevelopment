@@ -198,7 +198,8 @@ public class ProfileUserActivity extends AppCompatActivity {
                 edt_sex.setInputType(InputType.TYPE_CLASS_TEXT);
                 edt_address.setInputType(InputType.TYPE_CLASS_TEXT);
 
-                lv_danhsachluong.setVisibility(View.INVISIBLE);
+                lv_danhsachluong.setVisibility(View.GONE);
+                txt_danhsachluong.setVisibility(View.GONE);
 
                 group_button_edit.setVisibility(View.VISIBLE);
 
@@ -262,26 +263,61 @@ public class ProfileUserActivity extends AppCompatActivity {
             public void onClick(View view) {
                 // Edit avatar
                 try {
-                    refUser.child("hoTen").setValue(edt_name.getText().toString());
-                    refUser.child("dienThoai").setValue(edt_phone.getText().toString());
-                    refUser.child("gioiTinh").setValue(edt_sex.getText().toString());
-                    refUser.child("diaChi").setValue(edt_address.getText().toString());
-                    refUser.child("ngaySinh").setValue(edt_birthday.getText().toString());
-
-                    // Cap nhat lai so dien thoai cho nhan vien trong restaurants
-                    DatabaseReference refNhanVienInRes = database.getReference("restaurant");
-                    refNhanVienInRes.addValueEventListener(new ValueEventListener() {
+                    DatabaseReference refUserCheckSdt = database.getReference("user");
+                    refUserCheckSdt.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             for(DataSnapshot postSnapShot: snapshot.getChildren()) {
-                                if(postSnapShot.child("NhanVien") != null)
-                                {
-                                    if(postSnapShot.child("NhanVien").hasChild(user))
-                                    {
-                                        refNhanVienInRes.child(postSnapShot.getKey()).child("NhanVien").child(user).child("dienThoai").setValue(edt_phone.getText().toString());
-                                    }
+                                if(postSnapShot.child("dienThoai").getValue(String.class).equals(edt_phone.getText().toString().trim())){
+                                    Toast.makeText(ProfileUserActivity.this,"Số điện thoại đã được đăng ký ở tài khoản khác",Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
                             }
+                            refUser.child("hoTen").setValue(edt_name.getText().toString().trim());
+                            refUser.child("dienThoai").setValue(edt_phone.getText().toString().trim());
+                            refUser.child("gioiTinh").setValue(edt_sex.getText().toString().trim());
+                            refUser.child("diaChi").setValue(edt_address.getText().toString().trim());
+                            refUser.child("ngaySinh").setValue(edt_birthday.getText().toString().trim());
+
+                            // Cap nhat lai so dien thoai cho nhan vien trong restaurants
+                            DatabaseReference refNhanVienInRes = database.getReference("restaurant");
+                            ValueEventListener eventRefNhanVien = refNhanVienInRes.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(DataSnapshot postSnapShot: snapshot.getChildren()) {
+                                        if(postSnapShot.child("NhanVien") != null)
+                                        {
+                                            if(postSnapShot.child("NhanVien").hasChild(user))
+                                            {
+                                                refNhanVienInRes.child(postSnapShot.getKey()).child("NhanVien").child(user).child("Sdt").setValue(edt_phone.getText().toString());
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            if(uri!=null){
+                                load_image_avt(uri);
+                            }
+
+                            // Edit another info
+                            img_avatar.setVisibility(View.VISIBLE);
+
+                            img_add_avatar.setVisibility(View.GONE);
+                            edt_name.setEnabled(false);
+                            edt_phone.setEnabled(false);
+                            edt_sex.setEnabled(false);
+                            edt_address.setEnabled(false);
+                            edt_birthday.setEnabled(false);
+
+                            lv_danhsachluong.setVisibility(View.VISIBLE);
+
+                            group_button_edit.setVisibility(View.GONE);
                         }
 
                         @Override
@@ -289,23 +325,7 @@ public class ProfileUserActivity extends AppCompatActivity {
 
                         }
                     });
-                    if(uri!=null){
-                        load_image_avt(uri);
-                    }
 
-                    // Edit another info
-                    img_avatar.setVisibility(View.VISIBLE);
-
-                    img_add_avatar.setVisibility(View.GONE);
-                    edt_name.setEnabled(false);
-                    edt_phone.setEnabled(false);
-                    edt_sex.setEnabled(false);
-                    edt_address.setEnabled(false);
-                    edt_birthday.setEnabled(false);
-
-                    lv_danhsachluong.setVisibility(View.VISIBLE);
-
-                    group_button_edit.setVisibility(View.GONE);
                 }catch (Exception e){
 
                 }
