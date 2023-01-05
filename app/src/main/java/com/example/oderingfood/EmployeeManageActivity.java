@@ -54,6 +54,7 @@ public class EmployeeManageActivity extends Fragment {
     FloatingActionButton btnAddEmployee;
     TextView txtNoEmployee;
     TextView txtNoEmployeeWorking;
+    TextView txtDoanhThu;
     Button btnViewListEmployees;
     Button btnViewListEmployeesWorking;
 
@@ -119,9 +120,17 @@ public class EmployeeManageActivity extends Fragment {
         // Do Something
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference dbRefEmployee = database.getReference("restaurant/" + idRestaurent + "/NhanVien");
+        DatabaseReference dbRefDoanhThu = database.getReference("restaurant/" + idRestaurent + "/DoanhThu");
+
         dbRefEmployee.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.getChildrenCount()<=0){
+                    txtTotalEmployees.setText("Số lượng nhân viên: " + employees.size());
+                    txtTotalEmployeesWorking.setText("Số nhân viên đang làm việc: " + employeesWorking.size());
+                    txtNoEmployee.setVisibility(View.VISIBLE);
+                    txtNoEmployeeWorking.setVisibility(View.VISIBLE);
+                }
                 employees.clear();
                 employeesWorking.clear();
                 // Duyet danh sach nhan vien
@@ -169,6 +178,22 @@ public class EmployeeManageActivity extends Fragment {
 
             }
         });
+
+        dbRefDoanhThu.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                Long doanhThu = snapshot.getValue(Long.class);
+                if(doanhThu==null || doanhThu < 0)
+                    doanhThu = Long.valueOf(0);
+
+                txtDoanhThu.setText("Doanh thu: " + String.valueOf(doanhThu) + " VNĐ");
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
 
@@ -187,6 +212,7 @@ public class EmployeeManageActivity extends Fragment {
         txtNoEmployeeWorking = (TextView) employeeManagerFragment.findViewById(R.id.txt_no_employee_working);
         btnViewListEmployees = (Button) employeeManagerFragment.findViewById(R.id.btn_view_list_employees);
         btnViewListEmployeesWorking = (Button) employeeManagerFragment.findViewById(R.id.btn_list_employees_working);
+        txtDoanhThu = (TextView) employeeManagerFragment.findViewById(R.id.doanhthu);
 
         btnViewListEmployees.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -416,7 +442,6 @@ public class EmployeeManageActivity extends Fragment {
 
                                         }
                                     });
-
                                 }
 
                                 @Override

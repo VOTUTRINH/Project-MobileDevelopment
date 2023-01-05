@@ -139,30 +139,34 @@ public class ProfileUserActivity extends AppCompatActivity {
         refRes.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-
                 dataList.clear();
-                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
-                    // Get data
-                    if(postSnapShot.child("NhanVien") != null)
-                    {
-                        if(postSnapShot.child("NhanVien").hasChild(user)){
-                            String idRes = postSnapShot.getKey();
-                            String name = postSnapShot.child("TenQuan").getValue(String.class);
-                            String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
-                            Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
+                try {
+                    for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                        // Get data
+                        if(postSnapShot.child("NhanVien") != null)
+                        {
+                            if(postSnapShot.child("NhanVien").hasChild(user)){
+                                String idRes = postSnapShot.getKey();
+                                String name = postSnapShot.child("TenQuan").getValue(String.class);
+                                String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
+                                Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
 
-                            EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
-                            dataList.add(employeeSalary);
-                            dataList.add(employeeSalary);
+                                EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
+                                dataList.add(employeeSalary);
+                            }
                         }
                     }
+                    if(dataList.size() > 0){
+                        justifyListViewHeightBasedOnChildren(lv_danhsachluong);
+                        txt_danhsachluong.setVisibility(View.VISIBLE);
+                        lv_danhsachluong.setVisibility(View.VISIBLE);
+                    }
+                    adapter.notifyDataSetChanged();
+                }catch (Exception e){
+                    Intent intent = new Intent(ProfileUserActivity.this, ListRestaurant.class);
+                    intent.putExtra("Uid",user);
+                    startActivity(intent);
                 }
-                if(dataList.size() > 0){
-                    justifyListViewHeightBasedOnChildren(lv_danhsachluong);
-                    txt_danhsachluong.setVisibility(View.VISIBLE);
-                    lv_danhsachluong.setVisibility(View.VISIBLE);
-                }
-                adapter.notifyDataSetChanged();
             }
 
             @Override
@@ -190,11 +194,12 @@ public class ProfileUserActivity extends AppCompatActivity {
                 edt_birthday.setEnabled(true);
 
                 edt_name.setInputType(InputType.TYPE_CLASS_TEXT);
-                edt_phone.setInputType(InputType.TYPE_CLASS_TEXT);
+                edt_phone.setInputType(InputType.TYPE_CLASS_NUMBER);
                 edt_sex.setInputType(InputType.TYPE_CLASS_TEXT);
                 edt_address.setInputType(InputType.TYPE_CLASS_TEXT);
 
-                lv_danhsachluong.setVisibility(View.INVISIBLE);
+                lv_danhsachluong.setVisibility(View.GONE);
+                txt_danhsachluong.setVisibility(View.GONE);
 
                 group_button_edit.setVisibility(View.VISIBLE);
 
@@ -240,10 +245,16 @@ public class ProfileUserActivity extends AppCompatActivity {
         img_add_avatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent= new Intent();
-                intent.setType("image/*");
-                intent.setAction(Intent.ACTION_GET_CONTENT);
-                startActivityForResult(Intent.createChooser(intent,"title"),SELECT_IMAGE_CODE);
+                try {
+                    Intent intent= new Intent();
+                    intent.setType("image/*");
+                    intent.setAction(Intent.ACTION_GET_CONTENT);
+                    startActivityForResult(Intent.createChooser(intent,"title"),SELECT_IMAGE_CODE);
+                }catch (Exception e) {
+                    Intent intent = new Intent(ProfileUserActivity.this, ListRestaurant.class);
+                    intent.putExtra("Uid",user);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -251,51 +262,74 @@ public class ProfileUserActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 // Edit avatar
-
-                refUser.child("hoTen").setValue(edt_name.getText().toString());
-                refUser.child("dienThoai").setValue(edt_phone.getText().toString());
-                refUser.child("gioiTinh").setValue(edt_sex.getText().toString());
-                refUser.child("diaChi").setValue(edt_address.getText().toString());
-                refUser.child("ngaySinh").setValue(edt_birthday.getText().toString());
-
-                // Cap nhat lai so dien thoai cho nhan vien trong restaurants
-                DatabaseReference refNhanVienInRes = database.getReference("restaurant");
-                refNhanVienInRes.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot snapshot) {
-                        for(DataSnapshot postSnapShot: snapshot.getChildren()) {
-                            if(postSnapShot.child("NhanVien") != null)
-                            {
-                                if(postSnapShot.child("NhanVien").hasChild(user))
-                                {
-                                    refNhanVienInRes.child(postSnapShot.getKey()).child("NhanVien").child(user).child("dienThoai").setValue(edt_phone.getText().toString());
+                try {
+                    DatabaseReference refUserCheckSdt = database.getReference("user");
+                    refUserCheckSdt.addListenerForSingleValueEvent(new ValueEventListener() {
+                        @Override
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            for(DataSnapshot postSnapShot: snapshot.getChildren()) {
+                                if(postSnapShot.child("dienThoai").getValue(String.class).equals(edt_phone.getText().toString().trim())){
+                                    Toast.makeText(ProfileUserActivity.this,"Số điện thoại đã được đăng ký ở tài khoản khác",Toast.LENGTH_SHORT).show();
+                                    return;
                                 }
                             }
+                            refUser.child("hoTen").setValue(edt_name.getText().toString().trim());
+                            refUser.child("dienThoai").setValue(edt_phone.getText().toString().trim());
+                            refUser.child("gioiTinh").setValue(edt_sex.getText().toString().trim());
+                            refUser.child("diaChi").setValue(edt_address.getText().toString().trim());
+                            refUser.child("ngaySinh").setValue(edt_birthday.getText().toString().trim());
+
+                            // Cap nhat lai so dien thoai cho nhan vien trong restaurants
+                            DatabaseReference refNhanVienInRes = database.getReference("restaurant");
+                            ValueEventListener eventRefNhanVien = refNhanVienInRes.addValueEventListener(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    for(DataSnapshot postSnapShot: snapshot.getChildren()) {
+                                        if(postSnapShot.child("NhanVien") != null)
+                                        {
+                                            if(postSnapShot.child("NhanVien").hasChild(user))
+                                            {
+                                                refNhanVienInRes.child(postSnapShot.getKey()).child("NhanVien").child(user).child("Sdt").setValue(edt_phone.getText().toString());
+                                            }
+                                        }
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+
+                                }
+                            });
+
+                            if(uri!=null){
+                                load_image_avt(uri);
+                            }
+
+                            // Edit another info
+                            img_avatar.setVisibility(View.VISIBLE);
+
+                            img_add_avatar.setVisibility(View.GONE);
+                            edt_name.setEnabled(false);
+                            edt_phone.setEnabled(false);
+                            edt_sex.setEnabled(false);
+                            edt_address.setEnabled(false);
+                            edt_birthday.setEnabled(false);
+
+                            lv_danhsachluong.setVisibility(View.VISIBLE);
+
+                            group_button_edit.setVisibility(View.GONE);
                         }
-                    }
 
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError error) {
+                        @Override
+                        public void onCancelled(@NonNull DatabaseError error) {
 
-                    }
-                });
-                if(uri!=null){
-                    load_image_avt(uri);
+                        }
+                    });
+
+                }catch (Exception e){
+
                 }
 
-                // Edit another info
-                img_avatar.setVisibility(View.VISIBLE);
-
-                img_add_avatar.setVisibility(View.GONE);
-                edt_name.setEnabled(false);
-                edt_phone.setEnabled(false);
-                edt_sex.setEnabled(false);
-                edt_address.setEnabled(false);
-                edt_birthday.setEnabled(false);
-
-                lv_danhsachluong.setVisibility(View.VISIBLE);
-
-                group_button_edit.setVisibility(View.GONE);
             }
         });
 
@@ -360,14 +394,19 @@ public class ProfileUserActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            uri = data.getData();
-            if (uri != null) {
-                img_add_avatar.setImageURI(uri);
-            } else {
-                Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
+        try {
+            if (requestCode == 1) {
+                uri = data.getData();
+                if (uri != null) {
+                    img_add_avatar.setImageURI(uri);
+                } else {
+                    Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
+                }
             }
+        }catch (Exception e){
+
         }
+
     }
 
     private void load_image_avt(Uri uri) {

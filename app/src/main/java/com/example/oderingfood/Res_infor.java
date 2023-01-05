@@ -223,23 +223,27 @@ public class Res_infor extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == 1) {
-            uri = data.getData();
-            if (uri != null){
-                btn_add_image.setVisibility(View.VISIBLE);
-                add_image1.setImageURI(uri);
+        try {
+            if (requestCode == 1) {
+                uri = data.getData();
+                if (uri != null){
+                    btn_add_image.setVisibility(View.VISIBLE);
+                    add_image1.setImageURI(uri);
+                }
+                else {
+                    Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
+                }
+            }else if(requestCode == 2){
+                avt = data.getData();
+                if (avt != null){
+                    add_image.setImageURI(avt);
+                }
+                else {
+                    Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
+                }
             }
-         else {
-            Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
-        }
-        }else if(requestCode == 2){
-            avt = data.getData();
-            if (avt != null){
-                add_image.setImageURI(avt);
-            }
-            else {
-                Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
-            }
+        }catch (Exception e){
+
         }
     }
 
