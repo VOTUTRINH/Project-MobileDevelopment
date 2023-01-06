@@ -3,6 +3,8 @@ package com.example.oderingfood;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,6 +20,8 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import java.util.List;
 
@@ -25,11 +29,15 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
     LayoutInflater inflater;
     Context context;
     List<Food> menu;
+    String idRes;
+    String idUser;
 
-    public AdapterMonAn(Context ctx, List<Food> menu){
+    public AdapterMonAn(Context ctx, List<Food> menu, String idRes, String idUser){
         context = ctx;
         this.inflater = LayoutInflater.from(ctx);
         this.menu = menu;
+        this.idUser = idUser;
+        this.idRes = idRes;
     }
     @NonNull
     @Override
@@ -42,10 +50,22 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
     @SuppressLint("RecyclerView")
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase;
+
+        String pathR = "/restaurant/" + GlobalVariables.pathRestaurentID;
+        mDatabase = database.getReference(pathR +"/Menu") ;
+
+
         Glide.with(context).load(menu.get(position).getUrlImage()).into(holder.foodImageView);
         holder.foodNameView.setText(menu.get(position).getName());
         holder.foodPriceView.setText(GlobalVariables.displayCurrency(menu.get(position).getPrice()));
         holder.numOfFoods.setText(Integer.toString(menu.get(position).getQuantity()));
+        if (menu.get(position).isAvailable() == false){
+            holder.plus.setEnabled(false);
+            holder.minus.setEnabled(false);
+            holder.disableScreen.setVisibility(View.VISIBLE);
+        }
         holder.buttonViewOption.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,19 +85,32 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
                         switch (item.getItemId()) {
                             case R.id.item1_chinhsua:
                                 //handle menu1 click
+                                Intent intent = new Intent(context, AddFoodToMenu.class);
+                                Bundle b = new Bundle();
+                                b.putBoolean("edit", true); //Your id
+                                b.putSerializable("food", menu.get(position));
+                                b.putString("idUser", idUser );
+                                b.putString("idRes", idRes);
+                                intent.putExtras(b);
+                                context.startActivity(intent);
                                 return true;
                             case R.id.item2_sansang:
                                 //handle menu2 click
                                 plus.setEnabled(true);
                                 minus.setEnabled(true);
                                 disableScreen.setVisibility(View.GONE);
+                                mDatabase.child(menu.get(position).getId()).child("available").setValue(true);
                                 return true;
                             case R.id.item3_tamngung:
                                 plus.setEnabled(false);
                                 minus.setEnabled(false);
                                 disableScreen.setVisibility(View.VISIBLE);
+                                mDatabase.child(menu.get(position).getId()).child("available").setValue(false);
 
                                 //handle menu3 click
+                                return true;
+                            case R.id.item4_xoa:
+                                mDatabase.child(menu.get(position).getId()).setValue(null);
                                 return true;
                             default:
                                 return false;

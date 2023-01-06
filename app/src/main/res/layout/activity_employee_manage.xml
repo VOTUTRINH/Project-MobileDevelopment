@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.coordinatorlayout.widget.CoordinatorLayout
-android:orientation="vertical"
+    android:orientation="vertical"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context=".EmployeeManageActivity"
@@ -8,166 +8,193 @@ android:orientation="vertical"
     android:layout_height="match_parent"
     android:layout_width="match_parent">
 
-<!--        xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
+    <!--        xmlns:card_view="http://schemas.android.com/apk/res-auto"-->
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
-
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:cardBackgroundColor="#f3f6f4"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="30dp"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#CDEC808D"
-                >
-                <TextView
-                    android:id="@+id/txt_total_employees"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="Số lượng nhân viên"
-                    android:gravity="center"
-                    android:fontFamily="@font/quicksand_bold"
-                    android:textSize="18sp"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
-
-        <androidx.cardview.widget.CardView
-            android:layout_width="match_parent"
-            android:layout_height="80dp"
-            app:cardBackgroundColor="#f3f6f4"
-            app:cardElevation="2dp"
-            app:cardUseCompatPadding="true"
-            app:cardCornerRadius="10dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
-            android:padding="10dp"
-            >
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:gravity="center"
-                android:background="#CDEC808D"
-                >
-                <TextView
-                    android:id="@+id/txt_total_employees_working"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:textColor="@color/white"
-                    android:text="Số nhân viên đang làm việc"
-                    android:textSize="18sp"
-                    android:gravity="center"
-                    android:fontFamily="@font/quicksand_bold"/>
-            </LinearLayout>
-        </androidx.cardview.widget.CardView>
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp">
-            <Button
-                android:id="@+id/btn_view_list_employees"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Danh sách nhân viên"
-                android:gravity="center_vertical"
-                android:backgroundTint="#ff9298"
-                android:textColor="@color/white"
-                android:drawableRight="@drawable/constraint_size_drawble"
-                />
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/list_employees"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="80dp"
+                app:cardBackgroundColor="#f3f6f4"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
                 >
-
-            </androidx.recyclerview.widget.RecyclerView>
-            <TextView
-                android:id="@+id/txt_no_employee"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:visibility="gone"
-                android:text="Không có nhân viên"/>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:layout_marginTop="30dp">
-            <Button
-                android:id="@+id/btn_list_employees_working"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Nhân viên đang làm việc"
-                android:gravity="center_vertical"
-                android:backgroundTint="#ff9298"
-                android:textColor="@color/white"
-                android:drawableRight="@drawable/constraint_size_drawble"
-                />
-            <LinearLayout
-                android:layout_marginLeft="20dp"
-                android:layout_width="250dp"
-                android:layout_height="45dp"
-                android:orientation="horizontal">
-
-                <com.google.android.material.textfield.TextInputLayout
-                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                    android:layout_width="200dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
-                    android:hint="dd/mm/yyyy"
-                    android:focusable="false"
-                    app:counterEnabled="true"
-                    app:counterMaxLength="20">
-
-                    <com.google.android.material.textfield.TextInputEditText
-                        android:id="@+id/txt_date_chosen"
-                        android:layout_width="match_parent"
+                    android:gravity="center"
+                    android:background="#ff9298"
+                    >
+                    <TextView
+                        android:id="@+id/doanhthu"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:focusable="false"
-                        android:padding="4dp"
-                        android:textColor="@color/black"
-                        />
-                </com.google.android.material.textfield.TextInputLayout>
+                        android:textColor="@color/white"
+                        android:text="Doanh thu: "
+                        android:gravity="center"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            </LinearLayout>
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:cardBackgroundColor="#f3f6f4"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="30dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="#ff9298"
+                    >
+                    <TextView
+                        android:id="@+id/txt_total_employees"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Số lượng nhân viên"
+                        android:gravity="center"
+                        android:fontFamily="@font/quicksand_bold"
+                        android:textSize="18sp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/employee_working"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content">
-
-            </androidx.recyclerview.widget.RecyclerView>
-            <TextView
-                android:id="@+id/txt_no_employee_working"
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="80dp"
+                app:cardBackgroundColor="#f3f6f4"
+                app:cardElevation="2dp"
+                app:cardUseCompatPadding="true"
+                app:cardCornerRadius="10dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="20dp"
+                android:padding="10dp"
+                >
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:background="#ff9298"
+                    >
+                    <TextView
+                        android:id="@+id/txt_total_employees_working"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/white"
+                        android:text="Số nhân viên đang làm việc"
+                        android:textSize="18sp"
+                        android:gravity="center"
+                        android:fontFamily="@font/quicksand_bold"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:padding="20dp"
-                android:visibility="gone"
-                android:text="Không có nhân viên nào đang làm việc"/>
-        </LinearLayout>
+                android:orientation="vertical"
+                android:layout_marginTop="30dp">
+                <Button
+                    android:id="@+id/btn_view_list_employees"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Danh sách nhân viên"
+                    android:gravity="center_vertical"
+                    android:backgroundTint="#ff9298"
+                    android:textColor="@color/white"
+                    android:drawableRight="@drawable/constraint_size_drawble"
+                    />
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/list_employees"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    >
 
-    </LinearLayout>
+                </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/txt_no_employee"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:visibility="gone"
+                    android:text="Không có nhân viên"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_marginTop="30dp">
+                <Button
+                    android:id="@+id/btn_list_employees_working"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:text="Nhân viên đang làm việc"
+                    android:gravity="center_vertical"
+                    android:backgroundTint="#ff9298"
+                    android:textColor="@color/white"
+                    android:drawableRight="@drawable/constraint_size_drawble"
+                    />
+                <LinearLayout
+                    android:layout_marginLeft="20dp"
+                    android:layout_width="250dp"
+                    android:layout_height="45dp"
+                    android:orientation="horizontal">
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="200dp"
+                        android:layout_height="match_parent"
+                        app:startIconDrawable="@android:drawable/ic_menu_my_calendar"
+                        android:hint="dd/mm/yyyy"
+                        android:focusable="false"
+                        app:counterEnabled="true"
+                        app:counterMaxLength="20">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/txt_date_chosen"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:focusable="false"
+                            android:padding="4dp"
+                            android:textColor="@color/black"
+                            />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                </LinearLayout>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/employee_working"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                </androidx.recyclerview.widget.RecyclerView>
+                <TextView
+                    android:id="@+id/txt_no_employee_working"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="20dp"
+                    android:visibility="gone"
+                    android:text="Không có nhân viên nào đang làm việc"/>
+            </LinearLayout>
+
+        </LinearLayout>
     </ScrollView>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
