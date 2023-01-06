@@ -3,6 +3,7 @@ package com.example.oderingfood;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -47,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     FirebaseDatabase rootNode;
     DatabaseReference reference;
     StorageReference storageReference;
-    public int check=0;
+    public int checkInf=1;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -115,6 +116,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         else {
+
             auth.signInWithEmailAndPassword(email, pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -124,14 +126,14 @@ public class MainActivity extends AppCompatActivity {
                         Account account = new Account(uid,email,pass);
                         SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
                         sessionManagement.saveSession(account);
-                        checkInfo(uid);
-                        if(check==1) {
+                        checkInfo(email);
+                        if(checkInf==1) {
                             Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
                             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                             intent.putExtra("Uid", uid);
                             startActivity(intent);
                             finish();
-                        }else if (check==0)
+                        }else if (checkInf==0)
                         {
                             Toast.makeText(getApplicationContext(), "Bạn cần bổ sung thông tin", Toast.LENGTH_SHORT).show();
                             Intent intent = new Intent(getApplicationContext(), Register2.class);
@@ -189,19 +191,48 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private void checkInfo(String id){
-        Query checkPhone=FirebaseDatabase.getInstance().getReference("user").orderByChild("id").equalTo(id);
-        checkPhone.addListenerForSingleValueEvent(new ValueEventListener() {
+    public void checkInfo(String mail){
+        Query checkInfo=FirebaseDatabase.getInstance().getReference("user").orderByChild("email").equalTo(mail);
+        checkInfo.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
-                if(snapshot.exists()){
-                    check=1;
+                if(!snapshot.exists()){
+                    checkInf=0;
+                }
+                else {
+                    checkInf=1;
                 }
             }
 
             @Override
             public void onCancelled(@NonNull DatabaseError error) {
 
+            }
+        });
+    }
+
+
+    private void check2(String mail){
+        DatabaseReference rootRef = FirebaseDatabase.getInstance().getReference();
+        DatabaseReference userRef = rootRef.child("user");
+
+        userRef.addValueEventListener(new ValueEventListener() {
+
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot keyId: dataSnapshot.getChildren()) {
+                    if (keyId.child("email").getValue().equals(mail)) {
+                        checkInf=1;
+                        break;
+                    }
+                }
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError error) {
+                // Failed to read value
+                Log.w("Failed to read value.", error.toException());
             }
         });
     }
