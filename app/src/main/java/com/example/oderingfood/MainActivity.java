@@ -24,6 +24,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.storage.StorageReference;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -36,6 +43,11 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInOptions gso;
     GoogleSignInAccount googleSignInAccount;
     GoogleSignInClient gsc;
+
+    FirebaseDatabase rootNode;
+    DatabaseReference reference;
+    StorageReference storageReference;
+    public int check=0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,11 +124,24 @@ public class MainActivity extends AppCompatActivity {
                         Account account = new Account(uid,email,pass);
                         SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
                         sessionManagement.saveSession(account);
-                        Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("Uid",uid);
-                        startActivity(intent);
-                        finish();
+                        checkInfo(uid);
+                        if(check==1) {
+                            Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("Uid", uid);
+                            startActivity(intent);
+                            finish();
+                        }else if (check==0)
+                        {
+                            Toast.makeText(getApplicationContext(), "Bạn cần bổ sung thông tin", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(getApplicationContext(), Register2.class);
+                            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
+                            intent.putExtra("id",uid);
+                            intent.putExtra("email",email);
+                            intent.putExtra("type","noInfo");
+                            startActivity(intent);
+                            finish();
+                        }
                     } else {
                         String str = ((FirebaseAuthException) task.getException()).getErrorCode();
 
@@ -161,6 +186,24 @@ public class MainActivity extends AppCompatActivity {
         }else {
             //do nothing
         }
+    }
+
+
+    private void checkInfo(String id){
+        Query checkPhone=FirebaseDatabase.getInstance().getReference("user").orderByChild("id").equalTo(id);
+        checkPhone.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                if(snapshot.exists()){
+                    check=1;
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
     }
 
     @Override
