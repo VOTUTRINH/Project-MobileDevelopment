@@ -1,5 +1,7 @@
 package com.example.oderingfood;
 
+import static android.widget.Toast.LENGTH_SHORT;
+
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -152,7 +154,7 @@ public class ScanQRCode extends AppCompatActivity {
         IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
         if (result != null && !role.equals("KhachHang")) {
             if (result.getContents() == null) {
-                Toast.makeText(this, "Thất bại", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Thất bại", LENGTH_SHORT).show();
             } else {
                 try {
                     String contents = result.getContents();
@@ -160,10 +162,17 @@ public class ScanQRCode extends AppCompatActivity {
                     database.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            String str = snapshot.child("Qrcode").getValue(String.class).toString();
-                            if(str.equals(contents)){
-                               setAttendance();
+                            try {
+                                String str = snapshot.child("Qrcode").getValue(String.class).toString();
+
+                                if(str.equals(contents)){
+                                    setAttendance();
+                                }
+                            }catch(Exception e){
+
+                                return;
                             }
+
                         }
                         @Override
                         public void onCancelled(@NonNull DatabaseError error) {
@@ -174,7 +183,7 @@ public class ScanQRCode extends AppCompatActivity {
                 }
             }
         }else{
-            Toast.makeText(this, "Bạn không phải là nhân viên của quán.", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bạn không phải là nhân viên của quán.", LENGTH_SHORT).show();
         }
     }
 
@@ -295,7 +304,7 @@ public class ScanQRCode extends AppCompatActivity {
             @Override
             public void onFailure(@NonNull Exception e) {
                 progress_bar.setVisibility(View.INVISIBLE);
-                Toast.makeText(ScanQRCode.this, "Upload image fail !!", Toast.LENGTH_SHORT).show();
+                Toast.makeText(ScanQRCode.this, "Upload image fail !!", LENGTH_SHORT).show();
             }
         });
     }

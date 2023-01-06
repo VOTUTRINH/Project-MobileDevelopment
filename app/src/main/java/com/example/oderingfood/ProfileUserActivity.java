@@ -267,17 +267,39 @@ public class ProfileUserActivity extends AppCompatActivity {
                     refUserCheckSdt.addListenerForSingleValueEvent(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
-                            for(DataSnapshot postSnapShot: snapshot.getChildren()) {
-                                if(postSnapShot.child("dienThoai").getValue(String.class).equals(edt_phone.getText().toString().trim())){
-                                    Toast.makeText(ProfileUserActivity.this,"Số điện thoại đã được đăng ký ở tài khoản khác",Toast.LENGTH_SHORT).show();
-                                    return;
+                            if(!oldPhone.equals(edt_phone.getText().toString().trim())){
+                                for(DataSnapshot postSnapShot: snapshot.getChildren()) {
+                                    if(postSnapShot.child("dienThoai").getValue(String.class).equals(edt_phone.getText().toString().trim())){
+                                        Toast.makeText(ProfileUserActivity.this,"Số điện thoại đã được đăng ký ở tài khoản khác",Toast.LENGTH_SHORT).show();
+                                        return;
+                                    }
                                 }
                             }
-                            refUser.child("hoTen").setValue(edt_name.getText().toString().trim());
-                            refUser.child("dienThoai").setValue(edt_phone.getText().toString().trim());
-                            refUser.child("gioiTinh").setValue(edt_sex.getText().toString().trim());
-                            refUser.child("diaChi").setValue(edt_address.getText().toString().trim());
-                            refUser.child("ngaySinh").setValue(edt_birthday.getText().toString().trim());
+
+                            String name = edt_name.getText().toString().trim();
+                            String phone = edt_phone.getText().toString().trim();
+                            String sex = edt_sex.getText().toString().trim();
+                            String address = edt_address.getText().toString().trim();
+                            String ngaySinh = edt_birthday.getText().toString().trim();
+                            if(name.isEmpty()){
+                                Toast.makeText(ProfileUserActivity.this,"Tên không được để trống",Toast.LENGTH_SHORT).show();
+                            }
+                            if(phone.isEmpty()){
+                                Toast.makeText(ProfileUserActivity.this,"Điện thoại không được để trống",Toast.LENGTH_SHORT).show();
+
+                            }
+                            if(sex.isEmpty()){
+                                Toast.makeText(ProfileUserActivity.this,"Giới tính không được để trống",Toast.LENGTH_SHORT).show();
+                            }
+                            if(address.isEmpty()){
+                                Toast.makeText(ProfileUserActivity.this,"Địa chỉ không được để trống",Toast.LENGTH_SHORT).show();
+                            }
+
+                            refUser.child("hoTen").setValue(name);
+                            refUser.child("dienThoai").setValue(phone);
+                            refUser.child("gioiTinh").setValue(sex);
+                            refUser.child("diaChi").setValue(address);
+                            refUser.child("ngaySinh").setValue(ngaySinh);
 
                             // Cap nhat lai so dien thoai cho nhan vien trong restaurants
                             DatabaseReference refNhanVienInRes = database.getReference("restaurant");
