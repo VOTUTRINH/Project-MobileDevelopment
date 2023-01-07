@@ -21,6 +21,7 @@ import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
 import java.sql.Time;
@@ -63,7 +64,6 @@ public class addBookingActivity extends AppCompatActivity {
         edt_timeStart = findViewById(R.id.booking_edt_timeStart);
         edt_timeEnd = findViewById(R.id.booking_edt_timeEnd);
         btn_order = findViewById(R.id.booking_btn_book);
-
         edt_date.setInputType(InputType.TYPE_NULL);
         edt_timeStart.setInputType(InputType.TYPE_NULL);
         edt_timeEnd.setInputType(InputType.TYPE_NULL);

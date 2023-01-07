@@ -366,6 +366,8 @@ public class ProfileUserActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         //if user pressed "yes", then he is allowed to exit from application
                         SessionManagement sessionManagement = new SessionManagement(ProfileUserActivity.this);
+                        String id = sessionManagement.getSession();
+                        removeToken(id);
                         sessionManagement.removeSession();
                         FirebaseAuth.getInstance().signOut();
                         Intent intent = new Intent(ProfileUserActivity.this, MainActivity.class);
@@ -488,5 +490,11 @@ public class ProfileUserActivity extends AppCompatActivity {
         par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
         listView.setLayoutParams(par);
         listView.requestLayout();
+    }
+
+    private void removeToken(String id){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refUser = database.getReference("user/" + id);
+        refUser.child("Token").setValue(null);
     }
 }

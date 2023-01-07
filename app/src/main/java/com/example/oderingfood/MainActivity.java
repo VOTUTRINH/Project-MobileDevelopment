@@ -3,6 +3,7 @@ package com.example.oderingfood;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -24,6 +25,13 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthException;
 import com.google.firebase.auth.GoogleAuthProvider;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -112,6 +120,8 @@ public class MainActivity extends AppCompatActivity {
                         Account account = new Account(uid,email,pass);
                         SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
                         sessionManagement.saveSession(account);
+                        setToken(uid);
+
                         Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
                         intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
                         intent.putExtra("Uid",uid);
@@ -151,7 +161,7 @@ public class MainActivity extends AppCompatActivity {
         SessionManagement sessionManagement=new SessionManagement(MainActivity.this);
 
         String uid=sessionManagement.getSession();
-
+        Log.i("session", "checkSession: "+ uid);
         if(!uid.equals("emptyString")){
             Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK|Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -198,6 +208,25 @@ public class MainActivity extends AppCompatActivity {
 
         }
 
+    }
+    private void setToken(String id){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            String  token = task.getResult();
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference refUser = database.getReference("user/" + id);
+                            refUser.child("Token").setValue(token);
+                        }
+                        else{
+                            return;
+                        }
+
+                    }
+                });
     }
 
 }
