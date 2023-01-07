@@ -12,7 +12,8 @@
         android:layout_height="50dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/color_main">
         <TextView
             android:id="@+id/ac_txt_tenquan"
             android:layout_width="match_parent"
@@ -21,7 +22,9 @@
             android:gravity="center_vertical"
             android:paddingLeft="20dp"
             android:textSize="25sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold"
+            android:background="@color/color_main"
+            android:textColor="@color/white"/>
     </androidx.cardview.widget.CardView>
 
     <com.google.android.material.textfield.TextInputLayout

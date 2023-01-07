@@ -69,7 +69,9 @@ public class ListNhanVien extends AppCompatActivity {
 
                             Employee employee = new Employee(id, hoTen, avatar);
 
-                            employees.add(employee);
+                            if(!checkDup(employees,employee)){
+                                employees.add(employee);
+                            }
                             adapterListEmployees.notifyDataSetChanged();
                         }
                         @Override
@@ -179,7 +181,9 @@ public class ListNhanVien extends AppCompatActivity {
                             String avatar = snapshotUser.child("avatar").getValue(String.class);
                             if(hoTen.toLowerCase(Locale.ROOT).contains(name.toLowerCase(Locale.ROOT))){
                                 Employee employee = new Employee(id, hoTen, avatar);
-                                employees.add(employee);
+                                if(!checkDup(employees,employee)){
+                                    employees.add(employee);
+                                }
                             }
                             adapterListEmployees.notifyDataSetChanged();
                         }
