@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -88,6 +89,10 @@ public class a2g18Activity extends Activity {
                     ToastWithMessage("Không nợ tiền nhân viên");
                     return;
                 }
+
+                String label = GlobalVariables.TenNhaHang+" - "+ "Thanh toán lương";
+                String content = "Chủ quán đã gửi yêu cầu thanh toán lương cho bạn. Bạn có 1 phút để xác nhân.";
+                GlobalVariables.SendNotificationToOther(a2g18Activity.this, idUser, label, content);
 
                 Map<String, Object> objThanhToan = new HashMap<String, Object>();
                 objThanhToan.put("ChuXacNhan", true);
