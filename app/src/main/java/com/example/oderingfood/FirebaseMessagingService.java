@@ -68,8 +68,9 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
 
-        Intent resultIntent = new Intent(this, MainActivity.class);
-        PendingIntent pendingIntent = PendingIntent.getActivity(this, 1, resultIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        Intent intent = new Intent(this, MainActivity.class);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+        PendingIntent pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_IMMUTABLE);
 
 
         builder.setContentTitle(remoteMessage.getNotification().getTitle());
@@ -77,7 +78,7 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
         builder.setContentIntent(pendingIntent);
         builder.setStyle(new NotificationCompat.BigTextStyle().bigText(remoteMessage.getNotification().getBody()));
         builder.setAutoCancel(true);
-        builder.setPriority(Notification.PRIORITY_MAX);
+        builder.setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         mNotificationManager =
                 (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);

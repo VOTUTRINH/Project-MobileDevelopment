@@ -21,6 +21,7 @@ import java.util.Locale;
 
 public class GlobalVariables {
     public static String pathRestaurentID;
+    public static String TenNhaHang = "Quán";
     public static String pathMenu;
     public static String pathTable;
     public static int priority;
@@ -70,7 +71,7 @@ public class GlobalVariables {
 
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             DatabaseReference refUser = database.getReference("user/" + idUser);
-            refUser.addValueEventListener(new ValueEventListener() {
+            refUser.addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     String token = snapshot.child("Token").getValue(String.class);
@@ -92,7 +93,7 @@ public class GlobalVariables {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference refUser = database.getReference("/restaurant/" + idRes + "/NhanVien");
-        refUser.addValueEventListener(new ValueEventListener() {
+        refUser.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for (DataSnapshot nhanvienSnapshot : snapshot.getChildren()) {
