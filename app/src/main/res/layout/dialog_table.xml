@@ -5,16 +5,19 @@
     android:orientation="vertical"
     android:layout_height="match_parent">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/booking_tab"
+    <TextView
+        android:id="@+id/textView4"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#ff9298"
+        android:layout_height="50dp"
+        android:background = "#EC808D"
+        android:textColor="@color/white"
+        android:gravity = "center"
+        android:fontFamily="@font/quicksand_bold"
+        android:text="BOOKING"
+        android:textStyle="bold"
+        android:textSize="20dp"
+        />
 
-        app:tabIndicatorColor="@color/black"
-        app:tabIndicatorFullWidth="false"
-        app:tabSelectedTextColor="@color/black"
-        app:tabTextColor="#ffffff"></com.google.android.material.tabs.TabLayout>
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:layout_width="match_parent"
@@ -143,6 +146,7 @@
         android:text="Đặt bàn"
         android:textColor="@color/white"
         android:layout_marginTop="20dp"
+        android:fontFamily="@font/quicksand_bold"
         android:layout_marginLeft = "10dp"
         android:layout_marginRight = "10dp"
         app:layout_constraintBottom_toBottomOf="parent"

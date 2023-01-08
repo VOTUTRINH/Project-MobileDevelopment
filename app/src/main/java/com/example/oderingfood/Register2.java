@@ -141,8 +141,9 @@ public class Register2 extends Activity {
                     User user=new User(avatar,email,name,doBirth,gender,phone,address);
                     reference.child(id).setValue(user);
                     Toast.makeText(Register2.this, "Hoàn tất đăng kí", Toast.LENGTH_SHORT).show();
-                    if(type.equals("signInWithGoogle")){
-                        Intent intent=new Intent(Register2.this, ListRestaurant.class);
+
+                    if(type.equals("signInWithGoogle") || type.equals("noInfo")){
+                        Intent intent=new Intent(Register2.this,ListRestaurant.class);
                         intent.putExtra("Uid",id);
                         startActivity(intent);
                         finish();

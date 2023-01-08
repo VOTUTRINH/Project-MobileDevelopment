@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.MimeTypeMap;
@@ -135,33 +136,56 @@ public class ProfileUserActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 dataList.clear();
-                try {
-                    for (DataSnapshot postSnapShot : snapshot.getChildren()) {
-                        // Get data
-                        if(postSnapShot.child("NhanVien") != null)
-                        {
-                            if(postSnapShot.child("NhanVien").hasChild(user)){
-                                String idRes = postSnapShot.getKey();
-                                String name = postSnapShot.child("TenQuan").getValue(String.class);
-                                String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
-                                Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
+                for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+                    // Get data
+                    if(postSnapShot.hasChild("NhanVien"))
+                    {
+                        if(postSnapShot.child("NhanVien").hasChild(user)){
+                            String idRes = postSnapShot.getKey();
+                            String name = postSnapShot.child("TenQuan").getValue(String.class);
+                            String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
+                            Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
 
-                                EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
-                                dataList.add(employeeSalary);
-                            }
+                            EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
+                            dataList.add(employeeSalary);
                         }
                     }
-                    if(dataList.size() > 0){
-                        justifyListViewHeightBasedOnChildren(lv_danhsachluong);
-                        txt_danhsachluong.setVisibility(View.VISIBLE);
-                        lv_danhsachluong.setVisibility(View.VISIBLE);
-                    }
-                    adapter.notifyDataSetChanged();
-                }catch (Exception e){
-                    Intent intent = new Intent(ProfileUserActivity.this, ListRestaurant.class);
-                    intent.putExtra("Uid",user);
-                    startActivity(intent);
                 }
+                if(dataList.size() > 0){
+                    justifyListViewHeightBasedOnChildren(lv_danhsachluong);
+                    txt_danhsachluong.setVisibility(View.VISIBLE);
+                    lv_danhsachluong.setVisibility(View.VISIBLE);
+                }
+                adapter.notifyDataSetChanged();
+//                try {
+//                    dataList.clear();
+//                    for (DataSnapshot postSnapShot : snapshot.getChildren()) {
+//                        // Get data
+//                        if(postSnapShot.hasChild("NhanVien"))
+//                        {
+//                            if(postSnapShot.child("NhanVien").hasChild(user)){
+//                                String idRes = postSnapShot.getKey();
+//                                String name = postSnapShot.child("TenQuan").getValue(String.class);
+//                                String salary = postSnapShot.child("NhanVien").child(user).child("Luong").getValue(String.class);
+//                                Long tgLamViec = postSnapShot.child("NhanVien").child(user).child("ThoiGianLamViec").getValue(Long.class);
+//
+//                                EmployeeSalary employeeSalary = new EmployeeSalary(idRes, name, salary, tgLamViec);
+//                                dataList.add(employeeSalary);
+//                            }
+//                        }
+//                    }
+//                    if(dataList.size() > 0){
+//                        justifyListViewHeightBasedOnChildren(lv_danhsachluong);
+//                        txt_danhsachluong.setVisibility(View.VISIBLE);
+//                        lv_danhsachluong.setVisibility(View.VISIBLE);
+//                    }
+//                    adapter.notifyDataSetChanged();
+//                }catch (Exception e){
+//                    Intent intent = new Intent(ProfileUserActivity.this, ListRestaurant.class);
+//                    Log.i("Test","1");
+//                    intent.putExtra("Uid",user);
+//                    startActivity(intent);
+//                }
             }
 
             @Override
@@ -247,6 +271,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                     startActivityForResult(Intent.createChooser(intent,"title"),SELECT_IMAGE_CODE);
                 }catch (Exception e) {
                     Intent intent = new Intent(ProfileUserActivity.this, ListRestaurant.class);
+                    Log.i("Test","2");
                     intent.putExtra("Uid",user);
                     startActivity(intent);
                 }
@@ -361,6 +386,8 @@ public class ProfileUserActivity extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int which) {
                         //if user pressed "yes", then he is allowed to exit from application
                         SessionManagement sessionManagement = new SessionManagement(ProfileUserActivity.this);
+                        String id = sessionManagement.getSession();
+                        removeToken(id);
                         sessionManagement.removeSession();
                         FirebaseAuth.getInstance().signOut();
                         Intent intent = new Intent(ProfileUserActivity.this, MainActivity.class);
@@ -483,5 +510,11 @@ public class ProfileUserActivity extends AppCompatActivity {
         par.height = totalHeight + (listView.getDividerHeight() * (adapter.getCount() - 1));
         listView.setLayoutParams(par);
         listView.requestLayout();
+    }
+
+    private void removeToken(String id){
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refUser = database.getReference("user/" + id);
+        refUser.child("Token").setValue(null);
     }
 }

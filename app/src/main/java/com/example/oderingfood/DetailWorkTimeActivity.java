@@ -65,7 +65,7 @@ public class DetailWorkTimeActivity extends AppCompatActivity {
                             String start = postSnapshot.child("Start").getValue(String.class);
                             String end = postSnapshot.child("End").getValue(String.class);
 
-                            String time = "Ca " + String.valueOf(listTimeWorking.size() + 1) + ":  Bắt đầu: " + start + "    -    Kết thúc: " + end;
+                            String time = "Ca " + String.valueOf(listTimeWorking.size() + 1) + ":  Bắt đầu: " + start + "    -    Kết thúc: " + (end.equals("0")?"Hiện tại":end);
                             listTimeWorking.add(time);
                         }
                         txt_tongSoCaLam.setText("Tổng số ca làm: " + String.valueOf(listTimeWorking.size()));

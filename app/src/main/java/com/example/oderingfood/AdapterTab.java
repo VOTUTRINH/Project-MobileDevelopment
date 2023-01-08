@@ -3,6 +3,7 @@ package com.example.oderingfood;
 
 import static com.example.oderingfood.models.GlobalVariables.pathRestaurentID;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,6 +18,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Restaurant;
+import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

@@ -17,6 +17,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
+import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -51,7 +53,7 @@ public class ListRestaurant extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 String avatar = snapshot.child("avatar").getValue(String.class);
-                Glide.with(ListRestaurant.this).load(avatar).into(profileImgView);
+                Picasso.get().load(avatar).into(profileImgView);
 
             }
 
@@ -78,6 +80,7 @@ public class ListRestaurant extends AppCompatActivity {
         profileImgView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent intent = new Intent(ListRestaurant.this, ProfileUserActivity.class);
                 intent.putExtra("Uid", user);
                 startActivity(intent);

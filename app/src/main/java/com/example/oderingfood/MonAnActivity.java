@@ -171,6 +171,9 @@ public class MonAnActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Toast.makeText(MonAnActivity.this, "Booking thành công.", Toast.LENGTH_SHORT).show();
+                                String label = "Đặt bàn";
+                                String content = "Khách hàng vừa thêm một lịch đặt bàn mới." ;
+                                GlobalVariables.SendNotificationToEmployee(MonAnActivity.this, idRes, label, content);
                             }
                         });
                         // notice user đã đặt bàn lúc ...

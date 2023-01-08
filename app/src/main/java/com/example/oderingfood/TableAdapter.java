@@ -25,6 +25,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -226,6 +227,9 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 
                         }
                     });
+                    String label = "Đặt bàn thành công";
+                    String content = "Chủ quán đã xác nhận đơn đặt bàn: "+ dataList.get(position).getName() ;
+                    GlobalVariables.SendNotificationToOther(context,dataList.get(position).getIdUser() , label, content);
                 }
                 //
             }
@@ -308,14 +312,14 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
                     Toast.makeText(TableAdapter.this.getContext(), "Không để trống lý do.", Toast.LENGTH_SHORT).show();
                 }
                 else {
-                    deleteBooking(position, re);
+                    deleteBooking(position, re, role);
                     dialog.dismiss();
                 }
             }
         });
 
     }
-    public void deleteBooking(int pos, String reason){
+    public void deleteBooking(int pos, String reason, String role){
         String pathR = "/restaurant/" + idRes;
         // bien user la nguoi thuc hien xoa, co the la khach hang hoac chu
         String table = dataList.get(pos).getTableBook().first;
@@ -324,7 +328,15 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
         String idUser = dataList.get(pos).getIdUser();
         DatabaseReference res = database.getReference(pathR);
         String pathU ="/user/" + idUser;
-
+        if (role.equals("KhachHang") == false) {
+            String label = "Hủy đặt bàn";
+            String content = "Quán đã hủy đặt bàn "+  dataList.get(pos).getName()+ " vì lý do:  " + reason;
+            GlobalVariables.SendNotificationToOther(context, idUser, label, content);
+        }else {
+            String label = "Hủy đặt bàn";
+            String content = "Khách hàng đã hủy đặt bàn "+  dataList.get(pos).getName()+ " vì lý do:  " + reason;
+            GlobalVariables.SendNotificationToEmployee(context, idRes, label, content);
+        }
         DatabaseReference bookingDatabase = database.getReference(pathR + "/Bookings");
         bookingDatabase.child(date).child(ID).setValue(null);
         DatabaseReference tableDatabase = database.getReference(pathR + "/BanAn");
