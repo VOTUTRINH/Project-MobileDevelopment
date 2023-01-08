@@ -26,6 +26,8 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Date;
+
 public class FirebaseMessagingService extends com.google.firebase.messaging.FirebaseMessagingService {
 
      NotificationManager mNotificationManager;
@@ -97,9 +99,13 @@ public class FirebaseMessagingService extends com.google.firebase.messaging.Fire
 
 
 // notificationId is a unique int for each notification that you must define
-        mNotificationManager.notify(100, builder.build());
+        mNotificationManager.notify(getNotificationID(), builder.build());
 
 
+    }
+
+    private int getNotificationID(){
+        return (int) new Date().getTime();
     }
 
 }
