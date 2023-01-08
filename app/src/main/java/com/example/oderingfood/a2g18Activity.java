@@ -82,6 +82,8 @@ public class a2g18Activity extends Activity {
         DatabaseReference mDatabaseUser;
         mDatabaseUser = database.getReference("/user/" + idUser);
         mDatabase = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
+
+        mDatabase.child("ThanhToan").setValue(null);
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
