@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
@@ -64,7 +63,7 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
             @Override
             public void onClick(View view) {
 
-                Intent intent = new Intent(view.getContext(),a2g18Activity.class);
+                Intent intent = new Intent(view.getContext(), a2g18Activity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("idUser", employee.getId());
                 bundle.putString("idRes", idRes);

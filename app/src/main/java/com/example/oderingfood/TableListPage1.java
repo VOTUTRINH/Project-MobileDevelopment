@@ -1,18 +1,14 @@
 package com.example.oderingfood;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 
-import androidx.annotation.IdRes;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,7 +28,6 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
@@ -122,7 +117,7 @@ public class TableListPage1 extends Fragment {
         user= bottomnavigation.getUser();
         idRes = bottomnavigation.getIdRes();
 
-        tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, tableList);
+        tablesAdapter = new ListTablesAdapter(context, R.layout.table_layout_item, tableList);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;
 

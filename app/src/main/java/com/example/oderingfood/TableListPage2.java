@@ -7,15 +7,12 @@ import android.os.Bundle;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import android.util.Log;
-import android.util.Pair;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
@@ -100,7 +97,7 @@ public class TableListPage2 extends Fragment {
 
 
 
-        tablesAdapter = new ListTablesAdapter(context,R.layout.table_layout_item, listTable);
+        tablesAdapter = new ListTablesAdapter(context, R.layout.table_layout_item, listTable);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference mDatabase;

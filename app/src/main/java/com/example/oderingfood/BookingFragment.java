@@ -1,34 +1,23 @@
 package com.example.oderingfood;
 
+import com.example.oderingfood.R;
+import com.example.oderingfood.TableAdapter;
+import com.example.oderingfood.addBookingActivity;
 import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
-import com.example.oderingfood.models.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.type.DateTime;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.ContextMenu;
 import android.view.LayoutInflater;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
-import android.widget.DatePicker;
-import android.widget.EditText;
-import android.widget.TimePicker;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
@@ -37,7 +26,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 
 public class BookingFragment extends Fragment {
@@ -155,7 +143,7 @@ public class BookingFragment extends Fragment {
         addBooking.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent=new Intent(getContext(),addBookingActivity.class);
+                Intent intent=new Intent(getContext(), addBookingActivity.class);
                 getContext().startActivity(intent);
             }
         });

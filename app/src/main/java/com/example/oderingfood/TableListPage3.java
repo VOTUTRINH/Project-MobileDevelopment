@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Table;
@@ -23,9 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.database.core.ValueEventRegistration;
 
-import java.security.PrivateKey;
 import java.util.ArrayList;
 import java.util.List;
 

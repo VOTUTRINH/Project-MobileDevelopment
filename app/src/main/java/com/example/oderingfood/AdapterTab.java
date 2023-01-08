@@ -6,20 +6,16 @@ import static com.example.oderingfood.models.GlobalVariables.pathRestaurentID;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
-import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Restaurant;
 import com.squareup.picasso.Picasso;
 
@@ -69,7 +65,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
                 // get id to acess database
                 pathRestaurentID = restaurant.getId();
 
-                Intent intent=new Intent(context,StartResActivity.class);
+                Intent intent=new Intent(context, StartResActivity.class);
                 Bundle bundle = new Bundle();
                 bundle.putString("restaurant",restaurant.getId());
                 bundle.putString("user",idUser);

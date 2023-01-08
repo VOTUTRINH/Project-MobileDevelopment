@@ -18,6 +18,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 
+import com.example.oderingfood.models.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -141,12 +142,12 @@ public class Register2 extends Activity {
                     reference.child(id).setValue(user);
                     Toast.makeText(Register2.this, "Hoàn tất đăng kí", Toast.LENGTH_SHORT).show();
                     if(type.equals("signInWithGoogle")){
-                        Intent intent=new Intent(Register2.this,ListRestaurant.class);
+                        Intent intent=new Intent(Register2.this, ListRestaurant.class);
                         intent.putExtra("Uid",id);
                         startActivity(intent);
                         finish();
                     }
-                    Intent intent=new Intent(Register2.this,MainActivity.class);
+                    Intent intent=new Intent(Register2.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                 }

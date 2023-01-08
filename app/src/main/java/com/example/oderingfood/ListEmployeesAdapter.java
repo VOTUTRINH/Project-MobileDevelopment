@@ -16,9 +16,11 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.ListNhanVienDangLamViec;
+import com.example.oderingfood.R;
+import com.example.oderingfood.a2g18Activity;
+import com.example.oderingfood.DetailWorkTimeActivity;
 import com.example.oderingfood.models.Employee;
-import com.example.oderingfood.models.Table;
-import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -71,7 +73,7 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
             public void onClick(View view) {
                 switch (typeList){
                     case "ListNV":
-                        Intent intent1 = new Intent(view.getContext(),a2g18Activity.class);
+                        Intent intent1 = new Intent(view.getContext(), a2g18Activity.class);
                         intent1.putExtra("idRes", idRes);
                         intent1.putExtra("idUser",employee.getId());
                         view.getContext().startActivity(intent1);
