@@ -17,6 +17,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.Restaurant;
 import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
@@ -69,6 +70,7 @@ public class AdapterTab extends RecyclerView.Adapter<AdapterTab.ViewHolder> {
 
                 Intent intent=new Intent(context, StartResActivity.class);
                 Bundle bundle = new Bundle();
+                GlobalVariables.TenNhaHang = restaurant.getName();
                 bundle.putString("restaurant",restaurant.getId());
                 bundle.putString("user",idUser);
                 intent.putExtras(bundle);
