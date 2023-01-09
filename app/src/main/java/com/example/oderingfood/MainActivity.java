@@ -300,7 +300,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
                 for(DataSnapshot postSnapShot: snapshot.getChildren()) {
-                    Log.e("Email",postSnapShot.child("email").getValue(String.class).toString());
+
                     if(postSnapShot.child("email").getValue(String.class).toString().equals(mail)){
 
                         Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
