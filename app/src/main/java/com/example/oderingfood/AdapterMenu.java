@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class AdapterMenu extends RecyclerView.Adapter<AdapterMenu.ViewHolder> {
         @SuppressLint("RecyclerView")
         @Override
         public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-            Glide.with(context).load(menu.get(position).getUrlImage()).into(holder.foodImageView);
+            Picasso.get().load(menu.get(position).getUrlImage()).into(holder.foodImageView);
             holder.foodNameView.setText(menu.get(position).getName());
             holder.foodPriceView.setText(GlobalVariables.displayCurrency(menu.get(position).getPrice()));
            // holder.numOfFoods.setText(Integer.toString(menu.get(position).getQuantity()));

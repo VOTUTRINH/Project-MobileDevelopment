@@ -50,7 +50,6 @@ public class EmployeeManageActivity extends Fragment {
 
     Context context;
 
-    TextInputEditText txtDateChosen;
     FloatingActionButton btnAddEmployee;
     TextView txtNoEmployee;
     TextView txtNoEmployeeWorking;
@@ -138,6 +137,10 @@ public class EmployeeManageActivity extends Fragment {
                     String id = postSnapshotNhanVien.getKey();
                     String trangThai = postSnapshotNhanVien.child("TrangThai").getValue(String.class);
 
+                    if(id.equals(user)){
+                        continue;
+                    }
+
                     // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
                     DatabaseReference dbRefUser = database.getReference("user");
                     dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -202,7 +205,6 @@ public class EmployeeManageActivity extends Fragment {
                              Bundle savedInstanceState) {
         View employeeManagerFragment = inflater.inflate(R.layout.activity_employee_manage, container, false);
 
-        txtDateChosen = (TextInputEditText) employeeManagerFragment.findViewById(R.id.txt_date_chosen);
         listEmployees = (RecyclerView) employeeManagerFragment.findViewById(R.id.list_employees);
         listEmployeesWorking = (RecyclerView) employeeManagerFragment.findViewById(R.id.employee_working);
         txtTotalEmployees = (TextView) employeeManagerFragment.findViewById(R.id.txt_total_employees);
@@ -219,6 +221,7 @@ public class EmployeeManageActivity extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(context, ListNhanVien.class);
                 intent.putExtra("idRes", idRestaurent);
+                intent.putExtra("idUser",user);
                 startActivity(intent);
             }
         });
@@ -239,37 +242,6 @@ public class EmployeeManageActivity extends Fragment {
             }
         });
 
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-        txtDateChosen.setText(simpleDateFormat.format(Calendar.getInstance().getTime()));
-        txtDateChosen.setOnClickListener(new View.OnClickListener() {
-            @RequiresApi(api = Build.VERSION_CODES.N)
-            @Override
-            public void onClick(View view) {
-                Calendar calender = Calendar.getInstance();
-                int year = calender.get(calender.YEAR);
-                int month = calender.get(calender.MONTH);
-                int day = calender.get(calender.DATE);
-                String previousDate = txtDateChosen.getText().toString();
-
-                DatePickerDialog datePickerDialog = new DatePickerDialog(getActivity(), new DatePickerDialog.OnDateSetListener() {
-                    @Override
-                    public void onDateSet(DatePicker datePicker, int i, int i1, int i2) {
-                        calender.set(i, i1, i2);
-                        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd/MM/yyyy");
-                        String newDate = simpleDateFormat.format(calender.getTime());
-
-                        // Nếu ngày chọn mới khác với ngày cũ, thì thực hiện lấy danh sách nhân viên đang làm việc của ngày mới
-                        if (!newDate.equals(previousDate)) {
-                            newDate = newDate.replaceAll("/", "-");
-                            getListEmployeesAreWorkingWithDate(newDate);
-                        }
-
-                        txtDateChosen.setText(newDate);
-                    }
-                }, year, month, day);
-                datePickerDialog.show();
-            }
-        });
 
 
         LinearLayoutManager layoutManager1 = new LinearLayoutManager(getActivity());

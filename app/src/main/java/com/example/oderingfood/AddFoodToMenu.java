@@ -10,6 +10,7 @@ import android.webkit.MimeTypeMap;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -29,6 +30,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -36,7 +38,7 @@ import java.util.Calendar;
 public class AddFoodToMenu extends Activity {
 
     ImageView add_image1;
-
+    TextView title;
     EditText edt_name,edt_price, edt_id;
 
     Button btn_submit;
@@ -79,12 +81,13 @@ public class AddFoodToMenu extends Activity {
         edt_name= (EditText) findViewById(R.id.af_input_namefood);
         edt_id=(EditText) findViewById(R.id.af_input_idmon);
         edt_price=(EditText) findViewById(R.id.af_input_price);
-
+        title = (TextView) findViewById(R.id.af_add_title);
         add_image1=(ImageView) findViewById(R.id.af_add_image_food);
 
         if(edit){
+            title.setText("Chỉnh sửa thông tin món ăn");
             url = food.getUrlImage();
-            Glide.with(this).load(url).into(add_image1);
+            Picasso.get().load(url).into(add_image1);
             edt_id.setText(food.getId());
             edt_id.setEnabled(false);
             edt_name.setText(food.getName());
@@ -115,7 +118,14 @@ public class AddFoodToMenu extends Activity {
     private void load_data() {
         name = edt_name.getText().toString();
         id = edt_id.getText().toString();
-        price = Double.valueOf(edt_price.getText().toString());
+        String priceString = edt_price.getText().toString();
+        if (priceString.isEmpty()){
+            Toast.makeText(this, "Giá không để trống", Toast.LENGTH_SHORT).show();
+        }
+        else {
+            price = Double.valueOf(priceString);
+        }
+
 
         if(id.isEmpty()){
             Toast.makeText(this, "ID món ăn không dược để trống", Toast.LENGTH_SHORT).show();
@@ -206,14 +216,17 @@ public class AddFoodToMenu extends Activity {
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if(requestCode==1){
-            Uri uri=data.getData();
-            if(uri != null ){
-                load_image(uri);
-                add_image1.setImageURI(uri);
-            }else{
-                Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
+        try {
+            if (requestCode == 1) {
+                Uri uri = data.getData();
+                if (uri != null) {
+                    load_image(uri);
+                    add_image1.setImageURI(uri);
+                } else {
+                    Toast.makeText(this, "Thêm hình ảnh thất bại.", Toast.LENGTH_SHORT).show();
+                }
             }
+        }catch (Exception e){
 
         }
     }

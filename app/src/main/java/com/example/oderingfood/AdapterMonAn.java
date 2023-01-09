@@ -22,6 +22,7 @@ import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class AdapterMonAn extends RecyclerView.Adapter<AdapterMonAn.ViewHolder> 
         mDatabase = database.getReference(pathR +"/Menu") ;
 
 
-        Glide.with(context).load(menu.get(position).getUrlImage()).into(holder.foodImageView);
+        Picasso.get().load(menu.get(position).getUrlImage()).into(holder.foodImageView);
         holder.foodNameView.setText(menu.get(position).getName());
         holder.foodPriceView.setText(GlobalVariables.displayCurrency(menu.get(position).getPrice()));
         holder.numOfFoods.setText(Integer.toString(menu.get(position).getQuantity()));

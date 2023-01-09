@@ -32,6 +32,7 @@ public class FragmentTab2 extends Fragment {
     RecyclerView recyclerView2;
     Context context; FloatingActionButton fab;
     String idOwner;
+    String sdt;
     ListRestaurant listRestaurant;
     AdapterTab adapter;
 
@@ -44,6 +45,7 @@ public class FragmentTab2 extends Fragment {
         context=getActivity();
         listRestaurant =(ListRestaurant) getActivity();
         idOwner = listRestaurant.getUser();
+        sdt = listRestaurant.getSdt();
 
         adapter = new AdapterTab(getContext(), Restaurants,idOwner);
         FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -110,6 +112,7 @@ public class FragmentTab2 extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(context, Register_Store.class);
                 intent.putExtra("idOwner",idOwner);
+                intent.putExtra("sdt",sdt);
                 context.startActivity(intent);
 
             }

@@ -54,6 +54,8 @@ public class a2g18Activity extends Activity {
     Long soTienThanhToan = Long.valueOf(0);
     FirebaseDatabase database;
     private FirebaseAuth auth;
+
+    boolean ketthucThanhtoan = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +84,8 @@ public class a2g18Activity extends Activity {
         DatabaseReference mDatabaseUser;
         mDatabaseUser = database.getReference("/user/" + idUser);
         mDatabase = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
+
+        mDatabase.child("ThanhToan").setValue(null);
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -196,17 +200,20 @@ public class a2g18Activity extends Activity {
                                 if(!chuXacNhan){
                                     ToastWithMessage("Nhân viên không chấp nhận thanh toán");
                                     countDownTime = 0;
+                                    ketthucThanhtoan = true;
                                     return;
                                 }
                                 else if(nvXacNhan){
                                     // Thuc hien tru tien
                                     subtractTotalSalary();
                                     countDownTime = 0;
+                                    ketthucThanhtoan = true;
                                     return;
                                 }
                             }
                             else {
                                 countDownTime = 0;
+                                ketthucThanhtoan = true;
                                 return;
                             }
                         }
@@ -215,6 +222,9 @@ public class a2g18Activity extends Activity {
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
+                    if(ketthucThanhtoan){
+                        mDatabase.removeEventListener(thanhtoanEvent);
+                    }
                     while (countDownTime > 0) {
                         updateUI();
                         countDownTime -= 1;

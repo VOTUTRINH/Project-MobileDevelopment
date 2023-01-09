@@ -17,7 +17,6 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.google.firebase.messaging.FirebaseMessaging;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -29,6 +28,7 @@ public class ListRestaurant extends AppCompatActivity {
 
     CircleImageView profileImgView;
     String user ="";
+    String sdt = "";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,6 +52,7 @@ public class ListRestaurant extends AppCompatActivity {
         refUser.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot snapshot) {
+                sdt = snapshot.child("dienThoai").getValue(String.class);
                 String avatar = snapshot.child("avatar").getValue(String.class);
                 Picasso.get().load(avatar).into(profileImgView);
 
@@ -91,4 +92,5 @@ public class ListRestaurant extends AppCompatActivity {
     public String getUser() {
         return user;
     }
+    public String getSdt() {return sdt;}
 }

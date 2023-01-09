@@ -28,6 +28,7 @@
                 android:src="@drawable/ic_baseline_arrow_back_ios_new_24" />
 
             <TextView
+                android:id="@+id/af_add_title"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:gravity="center"
@@ -41,17 +42,18 @@
             android:id="@+id/af_add_image_food"
             android:layout_width="143dp"
             android:layout_height="116dp"
-            android:src="@drawable/add_image"
             android:layout_marginTop="40dp"
+            android:src="@drawable/add_image"
 
             />
+
         <com.google.android.material.textfield.TextInputLayout
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="ID món"
             android:layout_marginTop="10dp"
+            android:hint="ID món"
             app:endIconMode="clear_text"
             app:helperTextEnabled="false">
 
@@ -61,21 +63,21 @@
                 android:layout_height="wrap_content"
                 android:maxLength="25" />
         </com.google.android.material.textfield.TextInputLayout>
+
         <com.google.android.material.textfield.TextInputLayout
 
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Tên món ăn"
             android:layout_marginTop="10dp"
+            android:hint="Tên món ăn"
             app:endIconMode="clear_text"
             app:helperTextEnabled="false">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/af_input_namefood"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                />
+                android:layout_height="wrap_content" />
         </com.google.android.material.textfield.TextInputLayout>
 
 
@@ -84,8 +86,8 @@
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Giá"
             android:layout_marginTop="10dp"
+            android:hint="Giá"
             app:endIconMode="clear_text"
             app:helperTextEnabled="false">
 
@@ -93,22 +95,19 @@
                 android:id="@+id/af_input_price"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:maxLength="25"
-                android:inputType="number"/>
+                android:inputType="number"
+                android:maxLength="25" />
         </com.google.android.material.textfield.TextInputLayout>
-
-
 
 
         <Button
             android:id="@+id/af_btn_submit"
-            android:padding="5dp"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Submit"
-            android:backgroundTint="@color/color_main"
             android:layout_marginTop="50dp"
-            />
+            android:backgroundTint="@color/color_main"
+            android:padding="5dp"
+            android:text="Submit" />
     </LinearLayout>
 
 

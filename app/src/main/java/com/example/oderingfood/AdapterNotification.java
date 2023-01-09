@@ -20,6 +20,7 @@ import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.NotificationItem;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -53,7 +54,7 @@ public class AdapterNotification extends RecyclerView.Adapter<AdapterNotificatio
         // TypeCast Object to int type
         //holder.images.setImageResource(this.items.get(position).getNoticeImg());
 
-        Glide.with(context).load(this.items.get(position).getNoticeImg()).into(holder.images);
+        Picasso.get().load(this.items.get(position).getNoticeImg()).into(holder.images);
         holder.txt_label.setText(Html.fromHtml(this.items.get(position).getNoticeLabel()));
         holder.txt_content.setText(Html.fromHtml(this.items.get(position).getNoticeContent()));
         holder.txt_time.setText(this.items.get(position).getTimeString());

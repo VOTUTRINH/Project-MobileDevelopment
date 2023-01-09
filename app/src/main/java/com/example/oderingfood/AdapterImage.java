@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -41,7 +42,7 @@ public class AdapterImage extends RecyclerView.Adapter<AdapterImage.ViewHolder> 
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         // TypeCast Object to int type
         String res = Img.get(position).toString();
-        Glide.with(context).load(res).into(holder.images);
+        Picasso.get().load(res).into(holder.images);
         holder.images.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
