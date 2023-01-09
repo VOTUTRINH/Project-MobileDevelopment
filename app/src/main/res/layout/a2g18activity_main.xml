@@ -90,7 +90,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Kinh Thanh"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -120,7 +120,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="0123456789"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -150,7 +150,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Nam"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -180,7 +180,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="Thủ Đức, TPHCM, Việt Nam"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -210,7 +210,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="20/04/2002"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 
@@ -240,7 +240,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:fontFamily="sans-serif-light"
-                    android:text="25000"
+                    android:text=""
                     android:textColor="#000000"
                     android:textSize="18sp" />
 

@@ -227,7 +227,7 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
 
                         }
                     });
-                    String label = "Đặt bàn thành công";
+                    String label = GlobalVariables.TenNhaHang+"-"+"Đặt bàn thành công";
                     String content = "Chủ quán đã xác nhận đơn đặt bàn: "+ dataList.get(position).getName() ;
                     GlobalVariables.SendNotificationToOther(context,dataList.get(position).getIdUser() , label, content);
                 }
@@ -329,11 +329,11 @@ public class TableAdapter extends RecyclerView.Adapter<TableAdapter.ViewHolder>
         DatabaseReference res = database.getReference(pathR);
         String pathU ="/user/" + idUser;
         if (role.equals("KhachHang") == false) {
-            String label = "Hủy đặt bàn";
+            String label = GlobalVariables.TenNhaHang+" - "+ "Hủy đặt bàn";
             String content = "Quán đã hủy đặt bàn "+  dataList.get(pos).getName()+ " vì lý do:  " + reason;
             GlobalVariables.SendNotificationToOther(context, idUser, label, content);
         }else {
-            String label = "Hủy đặt bàn";
+            String label = GlobalVariables.TenNhaHang+" - "+"Hủy đặt bàn";
             String content = "Khách hàng đã hủy đặt bàn "+  dataList.get(pos).getName()+ " vì lý do:  " + reason;
             GlobalVariables.SendNotificationToEmployee(context, idRes, label, content);
         }

@@ -42,6 +42,7 @@ public class Register_Store extends Activity {
     String name ="", address ="",discription="",id ="";
     int soban = 0;
     String idOwner;
+    String sdt;
     ArrayList Urlimages = new ArrayList<>();
 
 
@@ -56,6 +57,7 @@ public class Register_Store extends Activity {
 
         Intent intent = getIntent();
         idOwner = intent.getStringExtra("idOwner");
+        sdt = intent.getStringExtra("sdt");
 
         database = FirebaseDatabase.getInstance().getReference("restaurant");
         reference = FirebaseStorage.getInstance().getReference();
@@ -114,7 +116,13 @@ public class Register_Store extends Activity {
         name = edt_name.getText().toString();
         address = edt_address.getText().toString();
         discription = edt_discription.getText().toString();
-        soban = Integer.valueOf(edt_tables.getText().toString());
+        try{
+            soban = Integer.valueOf(edt_tables.getText().toString());
+        }catch(Exception exception){
+
+            soban =0;
+        }
+
 
 
         if(name.isEmpty()){
@@ -154,6 +162,18 @@ public class Register_Store extends Activity {
                 mapTables.put(String.valueOf(i), mapTableValue);
             }
             dbTables.setValue(mapTables);
+
+            DatabaseReference dbNhanVien = database.child(id).child("NhanVien");
+            Map<String, Map<String,Object>> mapNhanVien = new HashMap<String, Map<String,Object>>();
+            Map<String, Object> map = new HashMap<String, Object>();
+            map.put("Luong","0");
+            map.put("Sdt",sdt);
+            map.put("ThoiGianLamViec",0);
+            map.put("TrangThai","KhongLamViec");
+
+            mapNhanVien.put(idOwner,map);
+            dbNhanVien.setValue(mapNhanVien);
+
 
             finish();
 

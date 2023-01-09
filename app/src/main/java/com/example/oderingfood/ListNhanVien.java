@@ -30,6 +30,7 @@ public class ListNhanVien extends AppCompatActivity {
     FirebaseDatabase database = FirebaseDatabase.getInstance();
 
     String idRes;
+    String idUser;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +40,7 @@ public class ListNhanVien extends AppCompatActivity {
         Bundle bundle = intent.getExtras();
         if (bundle != null) {
             idRes = bundle.getString("idRes");
+            idUser = bundle.getString("idUser");
         }
 
         edtSearchEmployee = (EditText) findViewById(R.id.edt_search_employee);
@@ -56,6 +58,10 @@ public class ListNhanVien extends AppCompatActivity {
                 // Duyet danh sach nhan vien
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
+
+                    if(id.equals(idUser)){
+                        continue;
+                    }
 
                     // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
                     DatabaseReference dbRefUser = database.getReference("user/" + id);
@@ -119,6 +125,10 @@ public class ListNhanVien extends AppCompatActivity {
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
 
+                    if(id.equals(idUser)){
+                        continue;
+                    }
+
                     // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
                     DatabaseReference dbRefUser = database.getReference("user/" + id);
                     dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -169,6 +179,10 @@ public class ListNhanVien extends AppCompatActivity {
                 // Duyet danh sach nhan vien
                 for (DataSnapshot postSnapshotNhanVien: snapshot.getChildren()) {
                     String id = postSnapshotNhanVien.getKey();
+
+                    if(id.equals(idUser)){
+                        continue;
+                    }
 
                     // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
                     DatabaseReference dbRefUser = database.getReference("user/" + id);

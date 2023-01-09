@@ -17,6 +17,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.models.GlobalVariables;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -53,6 +54,8 @@ public class a2g18Activity extends Activity {
     Long soTienThanhToan = Long.valueOf(0);
     FirebaseDatabase database;
     private FirebaseAuth auth;
+
+    boolean ketthucThanhtoan = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,6 +84,8 @@ public class a2g18Activity extends Activity {
         DatabaseReference mDatabaseUser;
         mDatabaseUser = database.getReference("/user/" + idUser);
         mDatabase = database.getReference("/restaurant/" + idRes +"/NhanVien/" + idUser);
+
+        mDatabase.child("ThanhToan").setValue(null);
         btnThanhToan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -88,6 +93,10 @@ public class a2g18Activity extends Activity {
                     ToastWithMessage("Không nợ tiền nhân viên");
                     return;
                 }
+
+                String label = GlobalVariables.TenNhaHang+" - "+ "Thanh toán lương";
+                String content = "Chủ quán đã gửi yêu cầu thanh toán lương cho bạn. Bạn có 1 phút để xác nhân.";
+                GlobalVariables.SendNotificationToOther(a2g18Activity.this, idUser, label, content);
 
                 Map<String, Object> objThanhToan = new HashMap<String, Object>();
                 objThanhToan.put("ChuXacNhan", true);
@@ -191,17 +200,20 @@ public class a2g18Activity extends Activity {
                                 if(!chuXacNhan){
                                     ToastWithMessage("Nhân viên không chấp nhận thanh toán");
                                     countDownTime = 0;
+                                    ketthucThanhtoan = true;
                                     return;
                                 }
                                 else if(nvXacNhan){
                                     // Thuc hien tru tien
                                     subtractTotalSalary();
                                     countDownTime = 0;
+                                    ketthucThanhtoan = true;
                                     return;
                                 }
                             }
                             else {
                                 countDownTime = 0;
+                                ketthucThanhtoan = true;
                                 return;
                             }
                         }
@@ -210,6 +222,9 @@ public class a2g18Activity extends Activity {
                         public void onCancelled(@NonNull DatabaseError error) {
                         }
                     });
+                    if(ketthucThanhtoan){
+                        mDatabase.removeEventListener(thanhtoanEvent);
+                    }
                     while (countDownTime > 0) {
                         updateUI();
                         countDownTime -= 1;
