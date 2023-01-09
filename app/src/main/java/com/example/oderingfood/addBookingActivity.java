@@ -4,33 +4,27 @@ import androidx.activity.result.ActivityResult;
 import androidx.activity.result.ActivityResultCallback;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
-import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.DatePickerDialog;
-import android.app.Instrumentation;
 import android.app.TimePickerDialog;
 import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.TimePicker;
 import android.widget.Toast;
 
+import com.google.android.material.tabs.TabLayout;
 import com.google.android.material.textfield.TextInputEditText;
 
-import java.sql.Time;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Calendar;
-import java.util.Date;
 
 public class addBookingActivity extends AppCompatActivity {
 
@@ -63,7 +57,6 @@ public class addBookingActivity extends AppCompatActivity {
         edt_timeStart = findViewById(R.id.booking_edt_timeStart);
         edt_timeEnd = findViewById(R.id.booking_edt_timeEnd);
         btn_order = findViewById(R.id.booking_btn_book);
-
         edt_date.setInputType(InputType.TYPE_NULL);
         edt_timeStart.setInputType(InputType.TYPE_NULL);
         edt_timeEnd.setInputType(InputType.TYPE_NULL);

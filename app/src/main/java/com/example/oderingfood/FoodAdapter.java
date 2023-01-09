@@ -15,6 +15,7 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.R;
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.GlobalVariables;
 import com.google.firebase.database.DataSnapshot;

@@ -1,6 +1,17 @@
 package com.example.oderingfood.models;
 
+import android.app.Activity;
+import android.content.Context;
 import android.util.Log;
+
+import androidx.annotation.NonNull;
+
+import com.example.oderingfood.FcmNotificationsSender;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 import java.text.NumberFormat;
 import java.time.LocalTime;
@@ -10,13 +21,14 @@ import java.util.Locale;
 
 public class GlobalVariables {
     public static String pathRestaurentID;
+    public static String TenNhaHang = "Quán";
     public static String pathMenu;
     public static String pathTable;
     public static int priority;
     public static  int tablePriority;
     public static  String IDUser;
     public static  String DateBooking;
-
+    private static String result = "";
     static public String displayCurrency(Double a) {
         Locale currentLocale = new Locale("vi", "VN");
         Double currencyAmount = a;
@@ -53,5 +65,49 @@ public class GlobalVariables {
         }
 
         return false;
+    }
+
+    public static void SendNotificationToOther(Context context, String idUser, String label, String content){
+
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            DatabaseReference refUser = database.getReference("user/" + idUser);
+            refUser.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                    String token = snapshot.child("Token").getValue(String.class);
+                    FcmNotificationsSender notificationsSender = new FcmNotificationsSender(token,
+                            label, content, context.getApplicationContext(), (Activity)context);
+                    notificationsSender.SendNotifications();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError error) {
+
+                }
+            });
+
+
+    }
+
+    public static void SendNotificationToEmployee(Context context, String idRes, String label, String content){
+
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference refUser = database.getReference("/restaurant/" + idRes + "/NhanVien");
+        refUser.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for (DataSnapshot nhanvienSnapshot : snapshot.getChildren()) {
+                    String id = nhanvienSnapshot.getKey();
+                    SendNotificationToOther(context, id,label, content);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
     }
 }

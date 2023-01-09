@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
+import com.example.oderingfood.R;
 
 
 public class FullScreenActivity extends Activity

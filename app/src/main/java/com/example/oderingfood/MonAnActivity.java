@@ -1,11 +1,8 @@
 package com.example.oderingfood;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.Toast;
 
@@ -14,13 +11,11 @@ import com.example.oderingfood.models.GlobalVariables;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.oderingfood.models.Food;
 import com.example.oderingfood.models.NotificationItem;
-import com.example.oderingfood.models.Table;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -176,6 +171,9 @@ public class MonAnActivity extends AppCompatActivity {
                             @Override
                             public void onComplete(@Nullable DatabaseError error, @NonNull DatabaseReference ref) {
                                 Toast.makeText(MonAnActivity.this, "Booking thành công.", Toast.LENGTH_SHORT).show();
+                                String label = GlobalVariables.TenNhaHang + " - "+ "Đặt bàn";
+                                String content = "Khách hàng vừa thêm một lịch đặt bàn mới." ;
+                                GlobalVariables.SendNotificationToEmployee(MonAnActivity.this, idRes, label, content);
                             }
                         });
                         // notice user đã đặt bàn lúc ...
@@ -238,7 +236,7 @@ public class MonAnActivity extends AppCompatActivity {
         addFood.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MonAnActivity.this,AddFoodToMenu.class);
+                Intent intent = new Intent(MonAnActivity.this, AddFoodToMenu.class);
                 Bundle b = new Bundle();
                 b.putString("idRes", idRes);
                 b.putString("idUser", user);

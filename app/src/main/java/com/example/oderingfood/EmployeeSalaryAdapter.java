@@ -29,6 +29,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.oderingfood.R;
 import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.EmployeeSalary;
 import com.google.firebase.auth.FirebaseAuth;
@@ -52,7 +53,7 @@ public class EmployeeSalaryAdapter extends ArrayAdapter<EmployeeSalary> {
     DatabaseReference refNhanVien;
 
     public EmployeeSalaryAdapter(Context context,int resource, List<EmployeeSalary> dataList, String idUser){
-        super(context,R.layout.item_nhanvien,dataList);
+        super(context, R.layout.item_nhanvien,dataList);
         this.context=context;
         this.dataList = dataList;
         this.idUser = idUser;

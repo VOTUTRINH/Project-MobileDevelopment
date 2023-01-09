@@ -1,7 +1,6 @@
 
 package com.example.oderingfood;
 
-import android.net.wifi.hotspot2.pps.HomeSp;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;

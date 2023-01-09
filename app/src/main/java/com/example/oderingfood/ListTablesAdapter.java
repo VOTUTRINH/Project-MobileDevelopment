@@ -5,7 +5,6 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -19,6 +18,8 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 
+import com.example.oderingfood.R;
+import com.example.oderingfood.A2G7Activity;
 import com.example.oderingfood.models.Booking;
 import com.example.oderingfood.models.GlobalVariables;
 import com.example.oderingfood.models.NotificationItem;
@@ -41,7 +42,7 @@ public class ListTablesAdapter extends ArrayAdapter<Table> {
     String idRes;
 
     public ListTablesAdapter(Context context, int resource, List<Table> listTables) {
-        super(context,R.layout.table_layout_item,listTables);
+        super(context, R.layout.table_layout_item,listTables);
         this.context = context;
         this.listTables = listTables;
 

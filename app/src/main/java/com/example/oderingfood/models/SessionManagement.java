@@ -1,7 +1,9 @@
-package com.example.oderingfood;
+package com.example.oderingfood.models;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+
+import com.example.oderingfood.models.Account;
 
 public class SessionManagement {
     SharedPreferences sharedPreferences;
