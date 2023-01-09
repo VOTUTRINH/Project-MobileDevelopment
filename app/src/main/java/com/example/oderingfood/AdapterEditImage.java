@@ -12,6 +12,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.oderingfood.models.Image;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -45,7 +46,7 @@ public class AdapterEditImage  extends RecyclerView.Adapter<AdapterEditImage.Vie
     public void onBindViewHolder(@NonNull AdapterEditImage.ViewHolder holder, int position) {
         // TypeCast Object to int type
         String res = Img.get(position).getUrl().toString();
-        Glide.with(context).load(res).into(holder.images);
+        Picasso.get().load(res).into(holder.images);
 
     }
 

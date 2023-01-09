@@ -8,6 +8,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.example.oderingfood.R;
+import com.squareup.picasso.Picasso;
 
 
 public class FullScreenActivity extends Activity
@@ -21,5 +22,5 @@ public class FullScreenActivity extends Activity
         Intent intent = getIntent();
         String res = intent.getStringExtra("id");
         imgAvatar = (ImageView) findViewById(R.id.imgAvatar1);
-        Glide.with(getBaseContext()).load(res).into(imgAvatar);    }
+        Picasso.get().load(res).into(imgAvatar);    }
 }
