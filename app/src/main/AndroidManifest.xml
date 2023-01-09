@@ -22,7 +22,7 @@
         tools:targetApi="31">
 
         <service
-            android:name=".FirebaseMessagingService"
+            android:name=".Notification.FirebaseMessagingService"
             android:permission="TODO"
             tools:ignore="ExportedService"
             android:exported="true">
@@ -31,10 +31,10 @@
             </intent-filter>
         </service>
         <activity
-            android:name=".activityBookingChooseTable"
+            android:name=".Restaurant.Order.activityBookingChooseTable"
             android:exported="false" />
         <activity
-            android:name=".TuyChon_Menu"
+            android:name=".Restaurant.More.TuyChon_Menu"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
@@ -42,123 +42,123 @@
         </activity>
 
         <activity
-            android:name=".DetailWorkTimeActivity"
+            android:name=".Restaurant.Manage.DetailWorkTimeActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".addBookingActivity"
+            android:name=".Restaurant.Booking.addBookingActivity"
             android:exported="false" />
         <activity
-            android:name=".ProfileUserActivity"
+            android:name=".ProfileUser.ProfileUserActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Res_infor"
+            android:name=".Restaurant.More.Res_infor"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Voucher"
+            android:name=".Restaurant.More.Voucher"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ListNhanVienDangLamViec"
+            android:name=".Restaurant.Manage.ListNhanVienDangLamViec"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".StartResActivity"
+            android:name=".TransferActivity.StartResActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ScanQRCode"
+            android:name=".Restaurant.QRCode.ScanQRCode"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Profile"
+            android:name=".ProfileUser.Profile"
             android:exported="false" />
         <activity
-            android:name=".Settings"
+            android:name=".Support.Settings"
             android:exported="false" />
         <activity
-            android:name=".ListNhanVien"
+            android:name=".Restaurant.Manage.ListNhanVien"
             android:exported="false" />
         <activity
-            android:name=".EmployeeManageActivity"
+            android:name=".Restaurant.Manage.EmployeeManageActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ChatActivity"
+            android:name=".Restaurant.Chat.ChatActivity"
             android:exported="false" />
         <activity
-            android:name=".FullScreenActivity"
+            android:name=".Support.FullScreenActivity"
             android:exported="false" />
         <activity
-            android:name=".TablesActivity"
+            android:name=".Restaurant.Order.TablesActivity"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Bottomnavigation"
+            android:name=".Restaurant.Bottomnavigation"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".ListRestaurant"
+            android:name=".ListRestaurant.ListRestaurant"
             android:exported="false">
             <meta-data
                 android:name="android.app.lib_name"
                 android:value="" />
         </activity>
         <activity
-            android:name=".Register2"
+            android:name=".Account.Register2"
             android:exported="false" />
         <activity
-            android:name=".Register"
+            android:name=".Account.Register"
             android:exported="false" />
         <activity
-            android:name=".MonAnActivity"
+            android:name=".Restaurant.Menu.MonAnActivity"
             android:exported="false" />
         <activity
-            android:name=".A2G7Activity"
+            android:name=".Restaurant.Menu.A2G7Activity"
             android:exported="false" />
         <activity
-            android:name=".a2g18Activity"
+            android:name=".Restaurant.Manage.a2g18Activity"
             android:exported="false" />
         <activity
-            android:name=".Register_Store"
+            android:name=".RegisterStore.Register_Store"
             android:exported="false" />
         <activity
-            android:name=".AddFoodToMenu"
+            android:name=".Restaurant.Menu.AddFoodToMenu"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".Account.MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

@@ -6,7 +6,7 @@ import android.util.Log;
 
 import androidx.annotation.NonNull;
 
-import com.example.oderingfood.FcmNotificationsSender;
+import com.example.oderingfood.Notification.FcmNotificationsSender;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -16,7 +16,6 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.NumberFormat;
 import java.time.LocalTime;
 import java.util.Currency;
-import java.util.List;
 import java.util.Locale;
 
 public class GlobalVariables {

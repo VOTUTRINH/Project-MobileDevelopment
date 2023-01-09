@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".a2g18Activity"
+    tools:context=".Restaurant.Manage.a2g18Activity"
     android:layout_marginLeft="5dp"
     android:layout_marginRight="5dp"
     android:fillViewport="true"
