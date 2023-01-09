@@ -68,7 +68,7 @@ public class Register extends Activity {
                 }else if(!text_confirm.equals(text_pass)){
                     Toast.makeText(Register.this, "Mật khẩu không trùng khớp.", Toast.LENGTH_SHORT).show();
                 }else if(text_pass.length()<6){
-                    Toast.makeText(Register.this, "Mật khẩu phải chứa ít nhất 6 kĩ tự", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(Register.this, "Mật khẩu phải chứa ít nhất 6 kí tự", Toast.LENGTH_SHORT).show();
                 }
                 else if(flag==0)
                 {
