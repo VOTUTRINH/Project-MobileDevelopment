@@ -51,9 +51,12 @@ public class MainActivity extends AppCompatActivity {
     GoogleSignInAccount googleSignInAccount;
     GoogleSignInClient gsc;
 
-    DatabaseReference reference;
+
+
+    private DatabaseReference mRef;
     ValueEventListener eventListener;
     FirebaseDatabase database;
+    private DatabaseReference checkMail;
     public int checkInf=0;
 
     @Override
@@ -129,68 +132,47 @@ public class MainActivity extends AppCompatActivity {
                         sessionManagement.saveSession(account);
 
 
-//                        Query checkInfo = FirebaseDatabase.getInstance().getReference("user").orderByChild("email").equalTo(email);
-//                        checkInfo.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                if (snapshot.exists()) {
-//
-//                                    Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
-//                                    intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                    intent.putExtra("Uid", uid);
-//                                    startActivity(intent);
-//                                    finish();
-//                                }
-//                                else{
-//                                    checkInf=0;
-//                                }
-//                            }
-//                            @Override
-//                            public void onCancelled(@NonNull DatabaseError error) {
-//
-//                            }
-//                        });
 
 
-//                        DatabaseReference checkMail = database.getReference("user");
-//                        checkMail.addListenerForSingleValueEvent(new ValueEventListener() {
-//                            @Override
-//                            public void onDataChange(@NonNull DataSnapshot snapshot) {
-//                                for(DataSnapshot postSnapShot: snapshot.getChildren()) {
-//                                    if(postSnapShot.child("email").getValue(String.class).toString().equals(email)){
-//
-//                                        Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
-//                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                        intent.putExtra("Uid", uid);
-//                                        startActivity(intent);
-//                                        finish();
-//                                        return;
-//                                        }
-//                                    }
-//                                }
-//
-//                                @Override
-//                                public void onCancelled(@NonNull DatabaseError error) {
-//
-//                                }
-//                            });
+                        mRef =  FirebaseDatabase.getInstance().getReferenceFromUrl("https://orderingfood-ab91f-default-rtdb.firebaseio.com/");
+                        checkMail = mRef.child("user");
+                        checkMail.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                for(DataSnapshot postSnapShot: snapshot.getChildren()) {
+                                    Log.e("Email",postSnapShot.child("email").getValue(String.class).toString());
+                                    if(postSnapShot.child("email").getValue(String.class).toString().equals(email)){
+
+                                        Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
+                                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                        intent.putExtra("Uid", uid);
+                                        startActivity(intent);
+                                        finish();
+                                        return;
+                                    }
+                                }
+                                Toast.makeText(getApplicationContext(), "Bạn cần bổ sung thông tin", Toast.LENGTH_SHORT).show();
+                                Intent intent = new Intent(getApplicationContext(), Register2.class);
+                                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                                intent.putExtra("id", uid);
+                                intent.putExtra("email", email);
+                                intent.putExtra("type", "noInfo");
+                                startActivity(intent);
+                                finish();
+
+                            }
 
 
-                        Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
-                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                        intent.putExtra("Uid", uid);
-                        startActivity(intent);
-                        finish();
 
 
-//                        Toast.makeText(getApplicationContext(), "Bạn cần bổ sung thông tin", Toast.LENGTH_SHORT).show();
-//                        Intent intent = new Intent(getApplicationContext(), Register2.class);
-//                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                        intent.putExtra("id", uid);
-//                        intent.putExtra("email", email);
-//                        intent.putExtra("type", "noInfo");
-//                        startActivity(intent);
-//                        finish();
+                            @Override
+                            public void onCancelled(@NonNull DatabaseError error) {
+
+                            }
+                        });
+
+
+
 
                     } else {
                         String str = ((FirebaseAuthException) task.getException()).getErrorCode();
@@ -292,14 +274,14 @@ public class MainActivity extends AppCompatActivity {
                 SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
                 sessionManagement.saveSession(account);
                 Toast.makeText(getApplicationContext(), "Đăng nhập google thành công", Toast.LENGTH_SHORT).show();
-                checkInfo(email);
-                Intent intent = new Intent(getApplicationContext(), Register2.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("id", uid);
-                intent.putExtra("email", email);
-                intent.putExtra("type", "signInWithGoogle");
-                startActivity(intent);
-                finish();
+                goTo(uid,email);
+//                Intent intent = new Intent(getApplicationContext(), Register2.class);
+//                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+//                intent.putExtra("id", uid);
+//                intent.putExtra("email", email);
+//                intent.putExtra("type", "signInWithGoogle");
+//                startActivity(intent);
+//                finish();
             } catch (ApiException e) {
                 Toast.makeText(MainActivity.this, "Đăng nhập google không thành công", Toast.LENGTH_SHORT).show();
             }
@@ -311,5 +293,44 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    private void goTo(String uid, String mail){
+        mRef =  FirebaseDatabase.getInstance().getReferenceFromUrl("https://orderingfood-ab91f-default-rtdb.firebaseio.com/");
+        checkMail = mRef.child("user");
+        checkMail.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot snapshot) {
+                for(DataSnapshot postSnapShot: snapshot.getChildren()) {
+                    Log.e("Email",postSnapShot.child("email").getValue(String.class).toString());
+                    if(postSnapShot.child("email").getValue(String.class).toString().equals(mail)){
 
+                        Intent intent = new Intent(MainActivity.this, ListRestaurant.class);
+                        intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                        intent.putExtra("Uid", uid);
+                        startActivity(intent);
+                        finish();
+                        return;
+                    }
+                }
+                Toast.makeText(getApplicationContext(), "Bạn cần bổ sung thông tin", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getApplicationContext(), Register2.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("id", uid);
+                intent.putExtra("email", mail);
+                intent.putExtra("type", "signInWithGoogle");
+                startActivity(intent);
+                finish();
+
+            }
+
+
+
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError error) {
+
+            }
+        });
+
+
+    }
 }
