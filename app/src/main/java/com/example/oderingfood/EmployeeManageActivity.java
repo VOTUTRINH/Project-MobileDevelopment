@@ -137,6 +137,10 @@ public class EmployeeManageActivity extends Fragment {
                     String id = postSnapshotNhanVien.getKey();
                     String trangThai = postSnapshotNhanVien.child("TrangThai").getValue(String.class);
 
+                    if(id.equals(user)){
+                        continue;
+                    }
+
                     // Duyet trong danh sach User de lay thong tin (ID, AVATAR, NAME) cua nhan vien dua vao SDT
                     DatabaseReference dbRefUser = database.getReference("user");
                     dbRefUser.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -217,6 +221,7 @@ public class EmployeeManageActivity extends Fragment {
             public void onClick(View view) {
                 Intent intent = new Intent(context, ListNhanVien.class);
                 intent.putExtra("idRes", idRestaurent);
+                intent.putExtra("idUser",user);
                 startActivity(intent);
             }
         });
