@@ -114,7 +114,13 @@ public class Register_Store extends Activity {
         name = edt_name.getText().toString();
         address = edt_address.getText().toString();
         discription = edt_discription.getText().toString();
-        soban = Integer.valueOf(edt_tables.getText().toString());
+        try{
+            soban = Integer.valueOf(edt_tables.getText().toString());
+        }catch(Exception exception){
+
+            soban =0;
+        }
+
 
 
         if(name.isEmpty()){
