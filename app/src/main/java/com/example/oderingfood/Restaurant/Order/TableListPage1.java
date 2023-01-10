@@ -307,7 +307,7 @@ public class TableListPage1 extends Fragment {
         String pathU ="/user/" + tableList.get(pos).getBooking().getIdUser();
         DatabaseReference bookingDatabase = database.getReference(pathR + "/Bookings");
         bookingDatabase.child(date).child(tableList.get(pos).getBooking().getId()).setValue(null);
-        DatabaseReference userBookingDatabase = database.getReference(pathU + "Bookings");
+        DatabaseReference userBookingDatabase = database.getReference(pathU + "/Bookings");
         userBookingDatabase.child(idRes).child(date).child(tableList.get(pos).getBooking().getId()).setValue(null);
     }
 }
