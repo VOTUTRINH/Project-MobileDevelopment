@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -62,7 +63,7 @@ public class ListEmployeesAdapter extends ArrayAdapter<Employee> {
 
         Employee employee = employeeList.get(position);
 
-        Glide.with(context).load(employee.getAvatar()).into(avt);
+        Picasso.get().load(employee.getAvatar()).into(avt);
         name.setText(employee.getName());
 
         item.setOnClickListener(new View.OnClickListener() {

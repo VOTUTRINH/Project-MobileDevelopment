@@ -17,6 +17,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.oderingfood.R;
 import com.example.oderingfood.models.Employee;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -57,7 +58,7 @@ public class EmployeesManagerAdapter extends RecyclerView.Adapter<EmployeesManag
     @Override
     public void onBindViewHolder(@NonNull EmployeesManagerAdapter.MyViewHolder holder, int position) {
         Employee employee = employees.get(position);
-        Glide.with(context).load(employees.get(position).getAvatar()).into(holder.avatar);
+        Picasso.get().load(employees.get(position).getAvatar()).into(holder.avatar);
         holder.name.setText(employee.getName());
 
         holder.item.setOnClickListener(new View.OnClickListener() {

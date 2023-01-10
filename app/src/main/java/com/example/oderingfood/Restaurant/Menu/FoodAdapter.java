@@ -23,6 +23,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -71,7 +72,7 @@ public class FoodAdapter extends BaseAdapter {
         DatabaseReference tableDatabase = database.getReference(pathR + "/BanAn");
 
         Food food = dataList.get(position);
-        Glide.with(activity.getBaseContext()).load(food.getUrlImage()).into(thumbnail);
+        Picasso.get().load(food.getUrlImage()).into(thumbnail);
         name.setText("Tên: " + food.getName());
         price.setText("Giá: " + GlobalVariables.displayCurrency(food.getPrice()));
         quantity.setText("Số lượng: " + String.valueOf(food.getQuantity()));

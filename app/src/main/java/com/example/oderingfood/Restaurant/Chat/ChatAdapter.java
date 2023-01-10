@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide;
 import com.example.oderingfood.R;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.squareup.picasso.Picasso;
 
 import java.util.List;
 
@@ -65,7 +66,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 messageFromOther user = (messageFromOther) listMessagesObject.get(position);
                 FromOtherViewHolder fromOtherViewHolder = (FromOtherViewHolder) holder;
                 fromOtherViewHolder.message.setText(user.getMessage());
-                Glide.with(mContext).load(((messageFromOther) listMessagesObject.get(position)).getImg()).into(fromOtherViewHolder.img);
+                Picasso.get().load(((messageFromOther) listMessagesObject.get(position)).getImg()).into(fromOtherViewHolder.img);
                 fromOtherViewHolder.name.setText(user.name);
                 fromOtherViewHolder.time.setText(user.getDateTime());
 
@@ -87,7 +88,7 @@ public class ChatAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
                 messageToOther you = (messageToOther) listMessagesObject.get(position);
                 ToOtherViewHolder toOtherViewHolder= (ToOtherViewHolder) holder;
                 toOtherViewHolder.message.setText(you.getMessage());
-                Glide.with(mContext).load(((messageToOther) listMessagesObject.get(position)).getImg()).into(toOtherViewHolder.img);
+                Picasso.get().load(((messageToOther) listMessagesObject.get(position)).getImg()).into(toOtherViewHolder.img);
                 toOtherViewHolder.time.setText(you.getDateTime());
                 toOtherViewHolder.itemView.setOnLongClickListener(new View.OnLongClickListener() {
                     @Override

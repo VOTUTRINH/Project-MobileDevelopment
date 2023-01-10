@@ -22,6 +22,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
+import com.squareup.picasso.Picasso;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -127,8 +128,7 @@ public class a2g18Activity extends Activity {
                 }catch (Exception e){
                     urlImage = "https://firebasestorage.googleapis.com/v0/b/orderingfood-ab91f.appspot.com/o/store_default.png?alt=media&token=de6a404a-dd66-4a21-b6ae-eda751d79983";
                 }
-                Glide.with(getApplicationContext()).load(urlImage).into(txtAvatar);
-
+                Picasso.get().load(urlImage).into(txtAvatar);
                 txtName.setText(name);
                 txtPhone.setText(phone);
                 txtEmail.setText(email);

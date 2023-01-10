@@ -40,6 +40,7 @@ import com.google.zxing.common.BitMatrix;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.google.zxing.qrcode.QRCodeWriter;
+import com.squareup.picasso.Picasso;
 
 
 import java.io.ByteArrayOutputStream;
@@ -92,7 +93,7 @@ public class ScanQRCode extends AppCompatActivity {
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     try {
                         String imgQrcode = snapshot.child("ImgQrcode").getValue(String.class).toString();
-                        Glide.with(getApplication()).load(imgQrcode).into(img_qrcode);
+                        Picasso.get().load(imgQrcode).into(img_qrcode);
                     } catch (Exception e) {
 
                     }

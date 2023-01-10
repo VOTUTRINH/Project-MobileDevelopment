@@ -46,6 +46,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -118,7 +119,7 @@ public class ProfileUserActivity extends AppCompatActivity {
                 birthday = birthday.replaceAll("/","-");
                 if(!oldAvatar.equals(avatar)){
                     oldAvatar = avatar;
-                    Glide.with(ProfileUserActivity.this).load(avatar).into(img_avatar);
+                    Picasso.get().load(avatar).into(img_avatar);
                 }
                 edt_name.setText(name);
                 edt_phone.setText(phone);

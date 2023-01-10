@@ -40,6 +40,7 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -130,7 +131,7 @@ public class Res_infor extends AppCompatActivity {
                 catch (Exception exception){
                     avt = "https://firebasestorage.googleapis.com/v0/b/orderingfood-ab91f.appspot.com/o/store_default.png?alt=media&token=de6a404a-dd66-4a21-b6ae-eda751d79983";
                 }
-                Glide.with(getApplication()).load(avt).into(add_image);
+                Picasso.get().load(avt).into(add_image);
                 Img.clear();
                 for(DataSnapshot postSnapshot: snapshot.child("HinhAnh").getChildren()){
                     try{
