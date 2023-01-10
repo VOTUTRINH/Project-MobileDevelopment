@@ -147,7 +147,7 @@ public class a2g18Activity extends Activity {
                 // Get data
                 String salaryPerHour = snapshot.child("Luong").getValue(String.class);
                 Long tgLamViec = snapshot.child("ThoiGianLamViec").getValue(Long.class);
-                Long totalSalary = tgLamViec * Long.parseLong(salaryPerHour);
+                Long totalSalary = tgLamViec * Long.valueOf(salaryPerHour);
 
                 soTienThanhToan = totalSalary;
                 txtSalaryPerHour.setText(salaryPerHour + " VNĐ/h");
