@@ -34,6 +34,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -126,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
                         Account account = new Account(uid, email, pass);
                         SessionManagement sessionManagement = new SessionManagement(MainActivity.this);
                         sessionManagement.saveSession(account);
-
+                        setToken(uid);
 
 
 
@@ -328,5 +329,24 @@ public class MainActivity extends AppCompatActivity {
         });
 
 
+    }
+    private void setToken(String id){
+        FirebaseMessaging.getInstance().getToken()
+                .addOnCompleteListener(new OnCompleteListener<String>() {
+                    @Override
+                    public void onComplete(@NonNull Task<String> task) {
+                        if (task.isSuccessful()) {
+                            String  token = task.getResult();
+
+                            FirebaseDatabase database = FirebaseDatabase.getInstance();
+                            DatabaseReference refUser = database.getReference("user/" + id);
+                            refUser.child("Token").setValue(token);
+                        }
+                        else{
+                            return;
+                        }
+
+                    }
+                });
     }
 }
